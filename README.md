@@ -1,6 +1,5 @@
 # 四川大学Beamer模板
 
-本项目是基于 [thomasWeise/ustcSlides](https://github.com/thomasWeise/ustcSlides) 修改而来，加了几种不同的颜色主题。
 本项目参考了Beamer, Tcolorbox等官方文档, 参考了stackoverflow中的诸多问题；
 
 主要参考了中国科学技术大学Beamer模板 [USTCBeamerSX](https://github.com/ysx2000/USTCBeamerSX/), 少量参考了清华大学Beamer模板 [THU-Beamer-Theme](https://github.com/tuna/THU-Beamer-Theme/) 及其衍生的各大学的Beamer模板, 还参考了中国科学技术大学Beamer模板 [ustcbeamer](https://github.com/ustctug/ustcbeamer/).
