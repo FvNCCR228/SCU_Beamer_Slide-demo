@@ -1,0 +1,541 @@
+%% This is file `main.tex'.
+%% Version: 2021/11/30 v1.0a (Original Version: 2021/11/30 v1.0a).
+%% Auther: 1701 W.
+%% 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
+%% !Mode:: "TeX:UTF-8"
+%% !XeLaTeX & Biber
+%% !使用前请阅读用户手册.
+
+% ================ %
+%      导言区      %
+% ================ %
+\documentclass[hyperref,UTF8,11pt]{beamer}
+
+% --------SCU Beamer 模板宏包--------
+% 提供参数 chinese, minted.
+% 置入参数 chinese 则交叉引用显示为中文, 置入参数 minted 则将代码显示 listings 切换为 minted.
+% ----------------
+\usepackage[fontset=none]{ctex}
+\usepackage[minted,chinese]{scubeamer}
+
+% --------不要调用的宏包--------
+% ----------------
+%\usepackage{pstricks} % pstricks: 绘图. (请勿调用, 本模板中调用的 adjustbox 宏包与之冲突)
+%\usepackage{geometry} % geometry: 页面设置. (请勿在 Beamer 中调用)
+
+% --------宏包调用--------
+% ----------------
+%\usepackage[utf8]{inputenc}
+\usepackage{transparent}
+\usepackage[autoplay]{animate}
+\usepackage{tikz}
+\usetikzlibrary{shadings,arrows,calc,decorations.pathmorphing,patterns}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{algorithm,algorithmic}
+\usepackage{amsmath,amsfonts,amssymb} % math equations, symbols
+\usepackage{mathtools}
+\usepackage[english]{babel}
+\usepackage{color}      % color content
+\usepackage{xcolor}
+\usepackage{url}        % hyperlinks
+\usepackage{multicol}
+\usepackage{ulem} % ulem: 添加线.
+\usepackage{booktabs}
+\usepackage{epstopdf,epsfig}
+\hypersetup{CJKbookmarks=true}
+\usepackage{cprotect}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{varioref,cleveref,tcolorbox,biblatex}
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{pspicture}
+
+% 半透明化尚未出现的内容.
+\setbeamercovered{transparent}
+% 导入参考文献 bib 文件.
+\addbibresource[location=local]{ref.bib}
+% --------newcommand 区--------
+% 建议在此定义常用命令.
+% ----------------
+\newcommand{\fverb}[1]{\texttt{#1}}
+
+% --------导入代码环境设置--------
+% ----------------
+\tcblistset
+
+% --------封面信息输入--------
+% [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
+% ----------------
+\title[四川大学虚拟偶像研究 | Beamer模板使用答辩]{\zihao{3} 四川大学虚拟偶像研究}
+\subtitle{Beamer模板使用答辩} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\author[我不卷, 你才卷]{\noindent 马老卷}
+\institute[Business School, Sichuan University]
+{%
+	\noindent Management Science\\
+	\medskip
+	\noindent Business School, Sichuan University\\
+	\medskip
+	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
+}
+\date[2021/11/31]{\noindent 2021/11/31}
+
+% ---------------- %
+%      正文区      %
+% ---------------- %
+\begin{document}
+
+% --------封面--------
+% ----------------
+{% 取消封面页眉, 请勿删除此部分代码.
+\setbeamertemplate{headline}{}%
+\makeatletter
+\vspace*{-\dimexpr\headheight+\topskip\relax}%
+\makeatother
+\begin{frame}
+	% 使用 tikz 宏包中 tikzpicture 环境移动背景图片.
+	\begin{tikzpicture}[overlay,remember picture]
+	\node(1)[xshift=0ex,yshift=3ex] at (current page.center){%
+		\pgfuseimage{bgoftitle}};
+	\end{tikzpicture}
+	%\transfade 渐变
+	\titlepage % 显示 titlepage.
+\end{frame}
+}
+
+% --------总目录--------
+% 可注释.
+% ----------------
+%	\begin{frame}{目录}
+%		%\transfade%淡入淡出 
+%		\tableofcontents % 显示目录.
+%	\end{frame}
+
+% --------节: 声明--------
+% ----------------
+\section{引言}
+\subsection{研究现状}
+\begin{frame}{关于本模板}%=0.85
+	\begin{itemize}
+		\item 项目地址:
+		\begin{itemize}
+			\item 使用前请前往下列地址中查看模板版本!
+			\item Github: {\color{BSblue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+			\item Gitee: \color{BSblue}\url{https://gitee.com/NCCR/scu_-beamer_-slide-demo}
+		\end{itemize}
+		\item 谢谢支持:
+		\begin{itemize}
+			\item 目前本模板仅在编者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
+			\item 由于编者对\LaTeX 的了解仍处在较浅层次, 故编写的模板可能会存在不兼容、编译后版式错位等现象, 希望各位能多多理解(多次编译可能有意想不到的惊喜);
+			\item 若本校的\LaTeX 大佬百忙之中能对本模板提出批评指正, 鄙人在此万分感谢各位的支持.
+		\end{itemize}
+		\item 联系方式:
+		\begin{itemize}
+			\item 编者: 522869009@qq.com
+		\end{itemize}
+	\end{itemize}
+	感谢模板中所使用部分代码的原作者, 也感谢模板所调用宏包的诸位作者前辈.
+\end{frame}
+
+\begin{frame}{使用注意}
+	\begin{itemize}
+		\item<1-> \LaTeX 编辑器:
+		\begin{itemize}
+			\item<1-> 本地: TeX Live (推荐\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}{\color{BSblue}清华大学开源软件镜像站}安装最新版)配合TeXstudio或VS Code使用. TeX Live安装时间极长, 请各位做好心理准备. 此外Apple设备IDE平台建议知乎;
+			\item<1-> 在线: Overleaf平台, Slager平台 (听说过但未曾使用).
+		\end{itemize}
+		\item<2-> \LaTeX 相关插件:
+		\begin{itemize}
+			\item<2-> 表格转换: Excel2\LaTeX~(\href{https://www.ctan.org/tex-archive/support/excel2latex/}{\color{BSblue}CTAN Excel2\LaTeX});
+			\item<2-> 在线公式: \href{https://www.latexlive.com/}{\color{BSblue}LaTeX公式编辑器}, \href{https://mathpix.com/}{\color{BSblue}
+				Mathpix}~\&~\href{https://mathf.itewqq.cn/}{\color{BSblue}图片在线转LaTeX}.
+		\end{itemize}
+		\item<3-> \color{JXred}!! 编译相关:
+		\begin{itemize}
+			\item<3-> \color{JXred}!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译;
+			\item<3-> 在线编辑请上传整个工作文件夹, 否则会出现严重错误(Bug遍地飞);
+			\item<3-> \color{JXred}!! 对\LaTeX 不熟悉的情况下, 请勿轻易改动".sty"文件(宏包文件)中代码, 也可按照文件中注释进行实验性修改(注意保留备份).
+		\end{itemize}
+		\item<4-> \color{JXred} 建议使用Adobe Acrobat作为PDF浏览器(Ctrl+L全屏食用效果良好).
+	\end{itemize}
+\end{frame}
+
+% --------节: 研究分析--------
+% ----------------
+\section{研究分析}
+\subsection{字}
+\begin{frame}[fragile]{添加线}
+	\begin{multicols}{2}
+		\verb|\uline|\hfill 下划线\qquad\uline{混}\\
+		\verb|\uuline|\hfill 双下划线\qquad\uuline{元}\\
+		\verb|\uwave|\hfill 波浪线\qquad\uwave{形}\\
+		\verb|\sout|\hfill 删除线\qquad\sout{翼}\\
+		\verb|\xout|\hfill 斜删除线\qquad\xout{太}\\
+		\verb|\dashuline|\hfill 虚线\qquad\dashuline{极}\\
+		\verb|\dotuline|\hfill 加点\qquad\dotuline{门}
+	\end{multicols}
+\end{frame}
+
+\subsection{图, 表, 代码}
+\begin{frame}{图}
+	\begin{figure}[h]
+		\begin{subfigure}{.4\columnwidth}
+			\centering
+			\includegraphics%
+			[width=.3\columnwidth]{stop-rd.pdf}
+			\caption{白天的暂停}
+		\end{subfigure}
+		\quad
+		\begin{subfigure}{.4\columnwidth}
+			\centering
+			\includegraphics%
+			[width=.3\columnwidth]{stop-gn.pdf}
+			\caption{晚上的暂停}
+		\end{subfigure}
+		\caption{掌门常用的暂停}
+	\end{figure}
+	\begin{figure}[h]
+		\begin{minipage}[t]{.4\columnwidth}
+			\centering
+			\includegraphics%
+			[width=.3\columnwidth]{stop-rd.pdf}
+			\caption{掌门白天的暂停}
+			\label{fig:ZhangmenBtdzt}
+		\end{minipage}
+		\quad
+		\begin{minipage}[t]{.4\columnwidth}
+			\centering
+			\includegraphics%
+			[width=.3\columnwidth]{stop-gn.pdf}
+			\caption{掌门晚上的暂停}
+			\label{fig:ZhangmenWsdzt}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\cprotEnv\begin{frame}
+	\frametitle{表}
+	表格太麻烦了, 掌门说摸摸鱼, 编者觉得不错, 丢一个三线表示例. 当然也可以看看这个手册前面部分表格的源码.
+	\begin{table}[htbp]
+		\centering
+		\caption{一些国风音乐}
+		\label{tab:YixieGfyy}
+		\begin{tabular}{rlc}
+			\toprule
+			作曲家 & 歌名 & 门中喜欢的友人 \\
+			\midrule
+			李志辉 & 小桥流水人家 & 门主 \\
+			林海 & 无羁(器乐版) & 初号 \\
+			吕秀龄 & 逆伦 & 小初 \\
+			麦振鸿 & 从来只有一个人 & 编者(假的) \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\subsection{代码环境}
+\begin{frame}[fragile]{代码环境演示}
+	\begin{SCUcode}[]{A welcome program.}{c}{}{codecode}
+		#include <stdio.h>
+		int main() {
+			printf("Hello world!\n");
+			return 0;
+		}
+	\end{SCUcode}
+	\begin{SCUshow}[]{A welcome program.}{c}{}{codeshow}
+		#include <stdio.h>
+		int main() {
+			printf("Hello world!\n");
+			return 0;
+		}
+	\end{SCUshow}
+\end{frame}
+
+\subsection{数学}
+\begin{frame}[fragile,allowframebreaks]{数学环境}
+	\begin{SCUproof}{}
+		请读者自证.
+	\end{SCUproof}
+	\begin{SCUalgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
+		\begin{algorithmic}[1]
+		\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
+		\ENSURE 不知道怎么搞
+		\STATE 问门主, 肯定不知道
+		\STATE 问初号, 当然不知道
+		\STATE 问小初, 还是不知道
+		\RETURN 算了, 不问了, 都是不知道
+		\end{algorithmic}
+	\end{SCUalgorithm}
+	\begin{SCUdefinition}{马老卷}{MalaoJ}
+		是混元形翼太极门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
+	\end{SCUdefinition}
+	\begin{SCUlemma}{卷王森林法则}{JuanwangSlfz}
+		源自未知高校学生, 此处略.
+	\end{SCUlemma}
+	\begin{SCUcorollary}{狼人杀的重要性}{LangrenSdzyx}
+		编者实习时听公司导师说面试有可能是趣味性游戏, 狼人杀感觉很符合, 所以玩狼人杀吧.
+	\end{SCUcorollary}
+	\begin{SCUremark}{}{Zhu}
+		\vref{coro:LangrenSdzyx}, 只是推论, 编者瞎说的.
+	\end{SCUremark}
+	\begin{SCUcondition}{面试狼人杀的条件}{MianshiLrsdtj}
+		\vref{coro:LangrenSdzyx}, 此推论有条件, 即真有公司面试用狼人杀.
+	\end{SCUcondition}
+	\begin{SCUconclusion}{爱废话的编者}{AifeiHdbz}
+		由上述可知: 编者爱废话.
+	\end{SCUconclusion}
+	\begin{SCUassumption}{编者不会废话}{BianzheBhfh}
+		我们可以假设编者不会废话, 假设成立, 编者当然不会废话.
+	\end{SCUassumption}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{数学公式}
+	麦克斯韦分布函数$f(v) = \dfrac{\mathrm{d}N}{N\,\mathrm{d}v} = 4\pi \Big(\dfrac{\mu}{2\pi kT}\Big)^{3/2} v^2 \mathrm{exp}\Big(-\dfrac{\mu v^2}{2kT}\Big)$.\\[1ex]
+	最概然速率\[v_p = \sqrt{\dfrac{2kT}{\mu}} = \sqrt{\dfrac{2RT}{M}}\]其中$R$是气体常数, $M = N_A \mu$是物质的摩尔质量.\\[1ex]
+		\begin{equation*}
+			\bar{v} = \int_0^\infty vf(v)\,\mathrm{d}v = \sqrt{\dfrac{8kT}{\pi\mu}} = \sqrt{\dfrac{8RT}{\pi M}}
+		\end{equation*}
+	方均根速率
+		\begin{equation}
+		v_{rms} = \Big(\int_0^\infty v^2f(v)\,\mathrm{d}v\Big)^{1/2} = \sqrt{\dfrac{3kT}{\mu}} = \sqrt{\dfrac{3RT}{M}}
+		\end{equation}
+	$\symbb{R}\symbbit{R}\symcal{R}\symscr{R}\symfrak{R}\symsfup{R}\symsfit{R}\symbfsf{R}\symbfup{R}\symbfit{R}\symbfcal{R}\symbfscr{R}\symbffrak{R}\symbfsfup{R}\symbfsfit{R}$\\[1ex]
+	多行公式 
+		\begin{multline}
+			A=\lim_{n\rightarrow\infty}\Delta x\left(a^{2}+\left(a^{2}+2a\Delta x+\left(\Delta x\right)^{2}\right)\right.\label{eq:reset}\\
+			+\left(a^{2}+2\cdot2a\Delta x+2^{2}\left(\Delta x\right)^{2}\right)\\
+			+\left(a^{2}+2\cdot3a\Delta x+3^{2}\left(\Delta x\right)^{2}\right)\\
+			+\ldots\\
+			\left.+\left(a^{2}+2\cdot(n-1)a\Delta x+(n-1)^{2}\left(\Delta x\right)^{2}\right)\right)\\
+			=\frac{1}{3}\left(b^{3}-a^{3}\right)
+		\end{multline}\\[1ex]
+	质能方程
+		\begin{align}
+			E=m&c^2 & &E=mc^2\\
+			E=~&mc^2 & E&=mc^2 \notag \\
+			E&=mc^2 & E=~&mc^2\\
+			&E=mc^2 & E=m&c^2
+		\end{align}
+	?
+		\begin{equation}
+			\begin{aligned}
+			\dfrac{\mathrm{d}}{\mathrm{d}t} \symbfit{f} &= \dfrac{\mathrm{d}f_x}{\mathrm{d}t} \symbfit{\hat{i}} + \dfrac{\mathrm{d}\symbfit{\hat{i}}}{\mathrm{d}t} f_x + \dfrac{\mathrm{d}f_y}{\mathrm{d}t} \symbfit{\hat{j}} + \dfrac{\mathrm{d}\symbfit{\hat{j}}}{\mathrm{d}t} f_y + \dfrac{\mathrm{d}f_z}{\mathrm{d}t} \symbfit{\hat{k}} + \dfrac{\mathrm{d}\symbfit{\hat{k}}}{\mathrm{d}t} f_z \\
+			&= \dfrac{\mathrm{d}f_x}{\mathrm{d}t} \symbfit{\hat{i}} + \dfrac{\mathrm{d}f_y}{\mathrm{d}t} \symbfit{\hat{j}} + \dfrac{\mathrm{d}f_z}{\mathrm{d}t} \symbfit{\hat{k}} + \big[\symbf{\Omega} \times \big( f_x \symbfit{\hat{i}} + f_y \symbfit{\hat{j}} + f_z \symbfit{\hat{k}}\big) \big] \\
+			&= \Big(\dfrac{\mathrm{d}\symbfit{f}}{\mathrm{d}t}\Big)_r + \symbf{\Omega} \times \symbfit{f}(t)
+			\end{aligned}
+		\end{equation}
+	!
+		\begin{equation}
+			\begin{dcases}
+			\oint_l \symbfit{H} \cdot \mathrm{d}\symbfit{l} = \iint_S \symbfit{J} \cdot \mathrm{d}\symbfit{S} + \iint_S \dfrac{\partial\symbfit{D}}{\partial t} \cdot \mathrm{d}\symbfit{S} \\
+			\oint_l \symbfit{E} \cdot \mathrm{d}\symbfit{l} = - \iint_S \dfrac{\partial\symbfit{B}}{\partial t} \cdot \mathrm{d}\symbfit{S} \\
+			\oint_S \symbfit{B} \cdot \mathrm{d}\symbfit{S} = 0 \\
+			\oint_S \symbfit{D} \cdot \mathrm{d}\symbfit{S} = \iiint_V \rho \mathrm{d}V
+			\end{dcases}
+		\end{equation}
+	单位矩阵
+		\[
+		\begin{bmatrix}
+		E & 0 \\
+		0 & E \\
+		\end{bmatrix}
+		\begin{pmatrix}
+			E & 0 \\
+			0 & E \\
+		\end{pmatrix}
+		\]
+\end{frame}
+
+\subsection{页面相关}
+\begin{lrbox}{\mysavebox}
+	\begin{SCUremark}{卷王森林法则}{JuanwangSlfz}
+		补充自\vref{lemm:JuanwangSlfz}.\par
+		\textbf{\color{JXred}基本公理:}
+		\begin{enumerate}
+			\item 获得研究生资格是当代大学生的第一需要;
+			\item 当代大学生对研究生资格的需求不断增长和扩张, 但研究生资格总量保持不变.
+		\end{enumerate}
+		\textbf{\color{JXred}两大重要概念:}
+		\begin{enumerate}
+			\item 卷疑链: 双方无法判断对方是否正在内卷;\\
+			~~“当代大学生间的善意和恶意. 善和恶这类字眼放到内卷过程中是不严谨的, 所以需要对它们的含义加以限制: 善意就是指不主动内卷和卷灭其他大学生, 恶意则相反. 这是最低的善意了吧. ”
+			\begin{itemize}
+				\item 一个大学生不能判断另一个大学生是善还是恶
+				\item 一个大学生不能判断另一个大学生认为本大学生文明是善还是恶
+				\item 一个大学生不能判断另一个大学生是否会对本大学生发起内卷
+				\item 一个大学生无法判断另一个大学生对自己是善意或恶意的
+				\item 一个大学生无法判断另一个大学生认为自己是善意或恶意的
+				\item 一个大学生无法判断另一个大学生判断自己对他是善意或恶意的
+				\item \dots\dots
+			\end{itemize}	
+			\item 绩点爆炸: 不同大学生绩点进步的速度和加速度几乎不可能是一致的, 弱小的大学生很可能在短时间内超越强大的大学生. 可能由内因或者外因(例如内卷的交流, 内卷的程度突然加深)引发, 继而弱小的大学生能够对强大的大学生构成内卷优势乃至内卷威胁.
+		\end{enumerate}
+	\end{SCUremark}
+\end{lrbox}
+\begin{frame}[fragile,t,allowframebreaks]{环境切割}
+	\framenew{.82}
+\end{frame}
+
+\begin{frame}[fragile,label={fra:Fenlan}]{分栏}
+	\vspace{1ex}
+	\begin{columns}
+		\begin{column}[t]{0.35\linewidth}
+			这里是栏一
+			\begin{figure}[h]
+				\begin{center}
+					\includegraphics[width=.8\columnwidth]{logo_name}
+					\\四川大学校徽及校名\\
+					\vspace{1ex}
+					\includegraphics[width=.4\columnwidth]{Fy}
+					\\四川大学飞扬俱乐部
+				\end{center}
+			\end{figure}
+		\end{column}
+		\pause
+		\begin{column}[t]{0.4\linewidth}
+			这里是栏二
+			\vspace{1ex}
+			\begin{itemize}
+				\item 无序列表环境示例
+				\begin{enumerate}
+					\item 有序列表环境示例
+					\item 有序列表环境示例
+					\item 有序列表环境示例
+				\end{enumerate}
+				\item 无序列表环境示例
+				\item 无序列表环境示例
+			\end{itemize}
+		\end{column}
+		\pause
+		\begin{column}[t]{0.25\linewidth}
+			这里是栏三
+			\par\vskip1ex
+			四川大学校训\\
+			\vskip2ex
+			海纳百川\\[.5ex]
+			有容乃大
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{引用}
+\begin{frame}[fragile]{交叉引用}
+	在Beamer中应避免过多的交叉引用, 此处编者给出了常用的引用命令及其示例.
+	\begin{table}[h]
+		\centering
+		\caption{交叉引用命令表}
+		\label{tab:JiaochaYymlb}
+		\begin{tabular}{lcl}
+			\toprule
+			命令 & 显示项 & 示例 \\
+			\midrule
+			\verb|\ref|\verb|{<label>}| & 序号 & \ref{assu:BianzheBhfh} \\
+			\verb|\ref*|\verb|{<label>}| & 序号 & \ref*{assu:BianzheBhfh} \\
+			\verb|\nameref|\verb|{<label>}| & 标题 & \nameref{assu:BianzheBhfh} \\
+			\verb|\vref|\verb|{<label>}| & 标题页码 & \vref{fra:Fenlan} \\
+			\verb|\pageref|\verb|{<label>}| & 页码 & \pageref{assu:BianzheBhfh} \\
+			\verb|\vpageref|\verb|{<label>}| & 页码 & \vpageref{assu:BianzheBhfh} \\
+			\verb|\cref|\verb|{<label>}| & 标题 & \cref{assu:BianzheBhfh} \\
+			\verb|\crefrange|\verb|{<label>}| & 范围 & \crefrange{fig:ZhangmenBtdzt}{fig:ZhangmenWsdzt} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{参考文献相关}
+	\begin{itemize}[<+-| alert@+>]
+		\item 脚注\footnote{这是方法一.};\\
+		\item 脚注\footnotemark.
+	\end{itemize}
+	\footnotetext{这是方法二.}
+	虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
+	\begin{itemize}
+		\item 虚拟偶像\footnotemark.\footfullcitetext[3]{_ugc_2018}
+		\item 虚拟偶像\footfullcite[8]{__2018}.\\
+	\end{itemize}
+\end{frame}
+
+% --------节: 总结与思考--------
+% ----------------
+\section{总结与思考}
+\subsection{A}
+\begin{frame}{Tcolorbox\&Animate}
+	\begin{minipage}[c]{0.725\columnwidth}
+		\begin{SCUtcb1}{锦程梦研}
+			锦程梦研主题: 锦秀红与宝石蓝为渐变底色.
+		\end{SCUtcb1}
+		\begin{SCUtcb2}{浮莲落杏}
+			浮莲落杏主题: 荷叶绿与银杏黄为渐变底色.
+		\end{SCUtcb2}
+	\end{minipage}~~~~
+	\begin{minipage}[c]{0.225\columnwidth}
+		\begin{tcolorbox}[enhanced,%
+			size=minimal,auto outer arc,%
+			width=2.1cm,octogon arc,%
+			colback=red,colframe=white,colupper=white,%
+			fontupper=\fontsize{7mm}{7mm}\selectfont\bfseries\sffamily,%
+			halign=center,valign=center,%
+			square,arc is angular,%
+			borderline={0.2mm}{-1mm}{red}]
+			STOP
+		\end{tcolorbox}
+	\end{minipage}
+	\begin{center}
+		\begin{animateinline}[loop]{20}%
+			\multiframe{160  }{rx=0+5}{
+				\begin{tikzpicture}[scale=1.5]
+				\pgfmathsetmacro{\x}{4+1*sin(\rx)}	
+				\coordinate  (P) at (\x,0);	
+				\draw [decorate,decoration={coil,segment length= \x pt, pre length=2mm, post length=2mm
+					,amplitude=2mm}] (0,0)--(P);
+				\shade[ball color=black](P)circle (2mm);
+				\fill [pattern = north east lines] (0,0.-0.2) -- ++ (0,0.4) -- ++ (-0.1,0) -- ++(0,-0.4) --cycle
+				(0,-0.2) -- ++(0,-0.1) -- ++ (5.5,0) -- ++ (0,0.1) -- cycle;
+				\draw (0,0.2) -- (0,-0.2) -- (5.5,-0.2);
+				\end{tikzpicture} 	    }
+		\end{animateinline}
+	\end{center}
+\end{frame}
+
+\subsection{B}
+\begin{frame}{Tikz}
+	\begin{minipage}[c]{0.35\linewidth}
+%		\scalebox{20}{}
+		\begin{figure}[h]
+			\include{tikz-huaji}
+			\vskip-5ex
+			\caption{滑稽 - 向禹}
+		\end{figure}
+	\end{minipage}\quad
+	\begin{minipage}[c]{0.6\linewidth}
+%		\scalebox{20}{}
+		\begin{figure}[h]
+			\include{tikz-Dipolar_magnetic_field}
+			\vskip-5ex
+			\caption{Dipolar Magnetic Field - Cyril Langlois}
+		\end{figure}
+	\end{minipage}
+\end{frame}
+
+% --------节: 参考文献--------
+% ----------------
+\section{参考文献}
+\subsection*{参考文献}
+\begin{frame}[allowframebreaks]{文献目录}
+	\nocite{*}
+	\printbibliography[heading=none]
+\end{frame}
+
+% --------节: 致谢--------
+% ----------------
+\section{致谢}
+\subsection*{致谢}
+\begin{frame}{~}
+	\centering
+	\Huge 谢谢
+\end{frame}
+
+\end{document}
+
+%% End of file `main.tex'.

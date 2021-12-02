@@ -1,0 +1,1085 @@
+%% This is file `manual.tex'.
+%% Version: 2021/11/30 v1.0a (Original Version: 2021/11/30 v1.0a).
+%% Auther: 1701 W.
+%% 本文件为 SCU_Beamer_Slide-demo 用户手册源文件.
+%% !Mode:: "TeX:UTF-8"
+%% !XeLaTeX & Biber
+%% !使用前请阅读用户手册.
+
+% ================ %
+%      导言区      %
+% ================ %
+\documentclass[hyperref,UTF8,11pt]{beamer}
+
+% --------SCU Beamer 模板宏包--------
+% 提供参数 chinese, minted.
+% 置入参数 chinese 则交叉引用显示为中文, 置入参数 minted 则将代码显示 listings 切换为 minted.
+% ----------------
+\usepackage[fontset=none]{ctex}
+\usepackage[minted,chinese]{scubeamer}
+
+% --------不要调用的宏包--------
+% ----------------
+%\usepackage{pstricks} % pstricks: 绘图. (请勿调用, 本模板中调用的 adjustbox 宏包与之冲突)
+%\usepackage{geometry} % geometry: 页面设置. (请勿在 Beamer 中调用)
+
+% --------宏包调用--------
+% ----------------
+%\usepackage[utf8]{inputenc}
+\usepackage{transparent}
+\usepackage[autoplay]{animate}
+\usepackage{tikz}
+\usetikzlibrary{shadings,arrows,calc,decorations.pathmorphing,patterns}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{algorithm,algorithmic}
+\usepackage{amsmath,amsfonts,amssymb} % math equations, symbols
+\usepackage{mathtools}
+\usepackage[english]{babel}
+\usepackage{color}      % color content
+\usepackage{xcolor}
+\usepackage{url}        % hyperlinks
+\usepackage{multicol}
+\usepackage{ulem} % ulem: 添加线.
+\usepackage{booktabs}
+\usepackage{epstopdf,epsfig}
+\hypersetup{CJKbookmarks=true}
+\usepackage{cprotect}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{varioref,cleveref,tcolorbox,biblatex}
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{pspicture}
+
+% 半透明化尚未出现的内容.
+\setbeamercovered{transparent}
+% 导入参考文献 bib 文件.
+\addbibresource[location=local]{ref.bib}
+% --------newcommand 区--------
+% 建议在此定义常用命令.
+% ----------------
+\newcommand{\fverb}[1]{\texttt{#1}}
+
+% --------导入代码环境设置--------
+% ----------------
+\tcblistset
+
+% --------封面信息输入--------
+% [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
+% ----------------
+\title[四川大学Beamer模板 | User's Manual]{\zihao{3} 四川大学Beamer模板}
+\subtitle{用户手册~~~~Rev~1.0a} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\author[我不卷, 你才卷]{\noindent 马老卷}
+\institute[Business School, Sichuan University]
+{%
+	\noindent Management Science\\
+	\medskip
+	\noindent Business School, Sichuan University\\
+	\medskip
+	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
+}
+\date[2021/11/20]{\noindent 2021/11/20}
+
+% ---------------- %
+%      正文区      %
+% ---------------- %
+\begin{document}
+
+% --------封面--------
+% ----------------
+{% 取消封面页眉, 请勿删除此部分代码.
+\setbeamertemplate{headline}{}%
+\makeatletter
+\vspace*{-\dimexpr\headheight+\topskip\relax}%
+\makeatother
+\begin{frame}
+	% 使用 tikz 宏包中 tikzpicture 环境移动背景图片.
+	\begin{tikzpicture}[overlay,remember picture]
+	\node(1)[xshift=0ex,yshift=3ex] at (current page.center){%
+		\pgfuseimage{bgoftitle}};
+	\end{tikzpicture}
+	%\transfade 渐变
+	\titlepage % 显示 titlepage.
+\end{frame}
+}
+
+% --------总目录--------
+% 可注释.
+% ----------------
+%	\begin{frame}{目录}
+%		%\transfade%淡入淡出 
+%		\tableofcontents % 显示目录.
+%	\end{frame}
+
+% --------节: 声明--------
+% ----------------
+\section{声明}
+\subsection{编写背景}
+\begin{frame}{关于Beamer}
+	\begin{itemize}
+		\item<1-> \TeX:
+		\begin{itemize}
+			\item<1-> 由著名的计算机科学家Donald E. Knuth发明的排版系统;
+			\item<1-> 学术界中十分流行，特别在数学、物理学、统计学与计算机科学.
+		\end{itemize}
+		\item<2-> \LaTeX:
+		\begin{itemize}
+			\item<2-> 由L. Lamport教授开发的基于\TeX 的排版系统;
+			\item<2-> 应用广泛, 图书、期刊、学位论文、汇报展示、简历、海报等排版;
+			\item<2-> \LaTeX 相比于Word有专业的公式排版, 有大量模板降低排版难度, 有编程语言皆有的注释功能, 更能将专注度集中到文章写作中等.
+		\end{itemize}
+		\item<3-> Beamer:
+		\begin{itemize}
+			\item<3-> 一种强大而灵活的\LaTeX 版式, 可生成外观出色的演示文稿;
+			\item<3-> 常用于学术汇报等演示.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks,t]{关于本模板}%=0.85
+	\begin{itemize}
+		\item 创建初衷:
+		\begin{itemize}
+			\item 编者本人对\LaTeX 稍有涉足, 这也是编者的首个Beamer模板, 模板创建源于本学院李璐老师提出的PPT修改意见;
+			\item 本模板参考了Beamer, Tcolorbox等官方文档, 参考了stackoverflow中的诸多问题;
+			\item 主要参考了中国科学技术大学Beamer模板(Github \href{https://github.com/ysx2000/USTCBeamerSX/}{\color{BSblue}USTCBeamerSX} 项目), 少量参考了清华大学Beamer模板(Github \href{https://github.com/tuna/THU-Beamer-Theme/}{\color{BSblue}THU-Beamer-Theme} 项目)及其衍生的各大学的Beamer模板, 还参考了中国科学技术大学Beamer模板(Github \href{https://github.com/ustctug/ustcbeamer/}{\color{BSblue}ustcbeamer} 项目).
+		\end{itemize}
+		\item 项目地址:
+		\begin{itemize}
+			\item 使用前请前往下列地址中查看模板版本!
+			\item Github: {\color{BSblue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+			\item Gitee: \color{BSblue}\url{https://gitee.com/NCCR/scu_-beamer_-slide-demo}
+		\end{itemize}
+%			\framebreak
+		\pagebreak
+		\item 谢谢支持:
+		\begin{itemize}
+			\item 目前本模板仅在编者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
+			\item 由于编者对\LaTeX 的了解仍处在较浅层次, 故编写的模板可能会存在不兼容、编译后版式错位等现象, 希望各位能多多理解(多次编译可能有意想不到的惊喜);
+			\item 若本校的\LaTeX 大佬百忙之中能对本模板提出批评指正, 鄙人在此万分感谢各位的支持.
+		\end{itemize}
+		\item 联系方式:
+		\begin{itemize}
+			\item 编者: 522869009@qq.com
+		\end{itemize}
+	\end{itemize}
+	感谢模板中所使用部分代码的原作者, 也感谢模板所调用宏包的诸位作者前辈.
+\end{frame}
+
+\begin{frame}{模板设计}
+	\textbf{背景:} 封面与正文板块采用{\color{JXred}不同背景}, 正文背景采用{\color{JXred}低透明度淡色}, 增强正文文本等辨识性.\\[1ex]
+	\textbf{页眉:} 采用双行设计, 首行为{\color{JXred}节标题导航栏}, 显示幻灯整体思路, 还附带四川大学校名; 次行为标题栏, 左侧显示{\color{JXred}小节标题}与{\color{JXred}迷你帧(圆点)形式的当前小节帧进度}, 右侧显示当前{\color{JXred}幻灯标题}. (编者认为小节迷你帧能在较清晰呈现进度的同时, 节约大量空间, 也能避免某节中幻灯页数过多, 导致标题导航挤压溢出)\\[1ex]
+	\textbf{页脚:} 采用双行设计, 首行为导航栏, 左侧显示{\color{JXred}报告标题}, 右侧为{\color{JXred}导航模块}; 次行为信息行, 左中右分别为{\color{JXred}作者}、{\color{JXred}机构}、{\color{JXred}日期与页码}.\\[1ex]
+	\textbf{环境:} 模板定义了{\color{JXred}定理}, {\color{JXred}代码}等多种环境演示.
+\end{frame}
+
+\subsection{使用注意}
+\begin{frame}{使用注意}
+	\begin{itemize}
+		\item<1-> \LaTeX 编辑器:
+		\begin{itemize}
+			\item<1-> 本地: TeX Live (推荐\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}{\color{BSblue}清华大学开源软件镜像站}安装最新版)配合TeXstudio或VS Code使用. TeX Live安装时间极长, 请各位做好心理准备. 此外Apple设备IDE平台建议知乎;
+			\item<1-> 在线: Overleaf平台, Slager平台 (听说过但未曾使用).
+		\end{itemize}
+		\item<2-> \LaTeX 相关插件:
+		\begin{itemize}
+			\item<2-> 表格转换: Excel2\LaTeX~(\href{https://www.ctan.org/tex-archive/support/excel2latex/}{\color{BSblue}CTAN Excel2\LaTeX});
+			\item<2-> 在线公式: \href{https://www.latexlive.com/}{\color{BSblue}LaTeX公式编辑器}, \href{https://mathpix.com/}{\color{BSblue}
+				Mathpix}~\&~\href{https://mathf.itewqq.cn/}{\color{BSblue}图片在线转LaTeX}.
+		\end{itemize}
+		\item<3-> \color{JXred}!! 编译相关:
+		\begin{itemize}
+			\item<3-> \color{JXred}!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译;
+			\item<3-> 在线编辑请上传整个工作文件夹, 否则会出现严重错误(Bug遍地飞);
+			\item<3-> \color{JXred}!! 对\LaTeX 不熟悉的情况下, 请勿轻易改动".sty"文件(宏包文件)中代码, 也可按照文件中注释进行实验性修改(注意保留备份).
+		\end{itemize}
+		\item<4-> \color{JXred} 建议使用Adobe Acrobat作为PDF浏览器(Ctrl+L全屏食用效果良好).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{项目结构}
+	\scriptsize
+	\begin{multicols}{2}
+	\begin{itemize}
+		\item \textbf{``~fonts/~"}\hfill 文件夹\\字体文件夹, 含楷体和黑体两个ttf字体文件;
+		\item \textbf{``~image/~"}\hfill 文件夹\\图片文件夹, 所有在Beamer中使用的图片请放于此文件夹;
+		\item \textbf{``~mintedbuild/~"}\hfill 文件夹\\缓存文件夹, minted代码高亮缓存文件夹;
+		\item \textbf{``~resources/~"}\hfill 文件夹\\素材文件夹, 含此模板中全部素材图片;
+		\item \textbf{``~main.pdf~"}\hfill 文件\\主体pdf文件;
+		\item \textbf{``~main.tex~"}\hfill 文件\\主体tex源文件;
+		\item \textbf{``~manual.pdf~"}\hfill 文件\\手册pdf文件;
+		\item \textbf{``~manual.tex~"}\hfill 文件\\手册tex源文件;
+		\item \textbf{``~README.md~"}\hfill 文件\\MarkDown说明文件;
+		\item \textbf{``~ref.bib~"}\hfill 文件\\bib参考文献数据库文件;
+		\item \textbf{``~scubeamer.sty~"}\hfill 文件\\川大Beamer模板宏包文件;
+		\item \textbf{``~tikz-Dipolar\_magnetic\_field.tex~"}\hfill 文件\\tikz演示tex文件;
+		\item \textbf{``~tikz-huaji.tex~"}\hfill 文件\\tikz演示tex文件;
+	\end{itemize}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{可注释项}
+	以下命令皆为可注释项, 但具体注释时请看对应位置的说明.
+	\begin{table}[h]
+		\centering
+		\caption{可注释项列表}
+		\begin{tabular}{>{\raggedright\arraybackslash}p{0.48\paperwidth}c>{\centering\arraybackslash}p{0.24\paperwidth}}
+			\toprule
+			命令 & 位置 & 启用后 \\
+			\midrule
+			\verb|\AtBeginSection[]{...}| & .sty & 节前加目录 \\[.5ex]
+			\verb|\AtBeginSubsection[]{...}| & .sty & 小节前加目录 \\[.5ex]
+			\verb|\setbeamertemplate{background}| & \multirow{2}{*}{.sty} & \multirow{2}{*}{设置背景图片} \\
+			~~~~\verb|{\pgfuseimage{bg}}| & & \\[.5ex]
+			\verb|\usepackage[<命令>]{scubeamer}| & \multirow{3}{*}{.tex} & 调用此模板宏包 \\
+			~~~~\verb|<命令>添加chinese时| & & 引用显示为中文\\
+			~~~~\verb|<命令>添加minted时| & & minted代码环境\\[.5ex]
+			\verb|\setbeamercovered{transparent}| & .tex & 半透明显示未出现内容 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{些许经验}
+	\scriptsize
+	编者设计此模板时遇到了许多问题, 以下列出部分供参考.
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\raggedright\arraybackslash}p{0.88\paperwidth}}
+			\hline\hline
+			\centerline{\textbf{``\#''的问题(Beamer中)}}
+			\textbf{报错:} \texttt{You can't use `macro parameter character \#' in xx mode.}\\
+			~~a. 普通文本中(包括bibtex参考文献): 使用\verb|\#|进行转义; \\
+			~~b. 使用\verb|\newcommand|等自定义命令时, 对于内部参数, 请用\verb|##1|代替\verb|#1|. (非Beamer类不用)\\
+			\hline
+			\centerline{\textbf{cleveref等交叉引用宏包问题(Beamer中)}}
+			\textbf{在Beamer中部分标签无法正常引用及显示.}\\
+			~~a. 请参考``scubeamer.sty''中Ref Layout板块, 该板块也定义了中文中的引用显示, 调用时请添加可选参数``chinese'';\\
+			~~b. 此外, 请注意varioref和cleveref宏包的调用顺序.\\
+			~~c. 在Beamer类文档中, \verb|\pageref|及其衍生命令仍调用PDF页码, 而非幻灯页码, 我们可通过重定义计数器page(即页码)的值来达到目标需求, 具体代码详见上述板块.\\
+			\hline
+			\centerline{\textbf{``verb''抄录命令的问题(Beamer)}}
+			\textbf{报错:} \verb|\verb| \texttt{illegal in argument.}\verb|\end|\verb!{frame}!.\\
+			~~a. 请在\verb|\begin|\verb!{frame}!前加上\verb|\cprotEnv|命令, 并在导言区调用``cprotect''宏包;\\
+			~~b. \verb|\begin|\verb!{frame}!后添加参数\verb|[fragile]|进行保护. 俩种方法各有优缺点.\\
+			\hline
+			\centerline{\textbf{``minted''高亮代码问题}}
+			\textbf{报错:} \texttt{Package minted Error: You must invoke LaTeX with the...}\\
+			~~需安装Python, 及Pygments组件. 并给XeLeTaX添加~-~-shell-escape参数(具体可\href{https://blog.csdn.net/weixin_39679367/article/details/111403418/}{\color{BSblue}参考}). 若不使用minted, 请注释掉本文件中minted宏包调用, 以及sty文件中Listing Layout板块中指明部分. 此外, 应给XeLeTaX添加~-8bit参数消除Tab被编译为``\verb|^^I|''.\\
+			\hline\hline
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+% --------节: 初阶使用--------
+% ----------------
+\section{初阶使用}
+\subsection{预填信息设置}
+\begin{frame}[fragile]{封面信息}
+	\begin{SCUshow}[comment={%
+			\scriptsize%
+			{\color{JXred}<text.f>}\\
+			\quad 指该部分键入的文字在页脚中显示\\
+			{\color{JXred}<text.t>}\\
+			\quad 指该部分键入的文字在封面页中显示\\\par
+			注意设置页脚显示时, 文字长度尽量不要超出对应位置边框. 实际使用中目标为使显示内容更详细全面, 不必拘泥于模板中信息类型的限制. 如author可置于institute处, institute简写置于author处. \\\par
+			此外, 页脚处的标题可设置为``标题'', ``标题+副标题'', ``副标题''等多种样式.
+		},%
+		listing side comment]{封面信息设置}{latex}{}{FengmianXx}
+		\title[<text.f>] {\zihao{3} <text.t>}
+		\subtitle{<text.t>}
+		\author[<text.f>]{\noindent <text.t>}
+		\institute[<text.f>]
+		{%
+			\noindent <text.t>\\
+			\medskip
+			\noindent <text.t>\\
+			\medskip
+			\noindent \textit{<text.t>}
+		}
+		\date[<text.f>] {\noindent <text.t>}
+	\end{SCUshow}
+\end{frame}
+
+\subsection{字体}
+\begin{frame}[fragile]{字号}
+	\begin{multicols}{3}
+		\verb|\zihao{0} |~初号\\
+		\verb|\zihao{-0}|~小初\\
+		\verb|\zihao{1} |~一号\\
+		\verb|\zihao{-1}|~小一\\
+		\verb|\zihao{2} |~二号\\
+		\verb|\zihao{-2}|~小二\\
+		\verb|\zihao{3} |~三号\\
+		\verb|\zihao{-3}|~小三\\
+		\verb|\zihao{4} |~四号\\
+		\verb|\zihao{-4}|~小四\\
+		\verb|\zihao{5} |~五号\\
+		\verb|\zihao{-5}|~小五\\
+		\verb|\zihao{6} |~六号\\
+		\newpage
+		\verb|\Huge|\\
+		\verb|\huge|\\
+		\verb|\LARGE|\\
+		\verb|\Large|\\
+		\verb|\large|\\
+		\verb|\normalsize|\\
+		\verb|\small|\\
+		\verb|\footnotesize|\\
+		\verb|\scriptsize|\\
+		\verb|\tiny|\\
+		\newpage
+		\zihao{0}{初号}\\
+		\zihao{-1}{小一}\\
+		\zihao{-3}{小三}\\
+		\zihao{6}{六号}\\
+		\Huge{Huge}\\
+		\Large{Large}\\
+		\small{small}\\
+		\footnotesize 初号, 小初, Huge, huge是形翼太极门首席弟子, 实力过于强悍, 掌门都无法请出; tiny是刚收的徒弟, 掌门都教不大. 所以不要用他们.
+	\end{multicols}
+\end{frame}
+	
+\begin{frame}[fragile]{字体族, 字体形状及字体系列}
+	\scriptsize
+	中文字体: 楷体(粗体: \textbf{黑体}); \qquad\qquad\qquad\qquad 英文字体: Computer Modern Bright;\\
+	数学字体: $Latin\ Modern\ Math$~(sty文件中有修改为XITS(与Times风格类似)的命令).
+	\pause
+	\begin{table}[h]
+		\begin{tabular}[scale=0.8]{>{\raggedleft\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.2\paperwidth}>{\centering\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.38\paperwidth}}
+			\toprule
+			字体族 & 带参数命令 & 声明命令 & 效果 \\
+			\midrule
+			罗马 & \verb|\textrm{<文字>}| & \verb|\rmfami1y| & \textrm{Roman font family罗马} \\
+			无衬线 & \verb|\textsf{<文字>}| & \verb|\sffami1y| & \textrm{Sans serif font family无衬线} \\
+			打字机 & \verb|\texttt{<文字>}| & \verb|\ttfamily| & \texttt{Typewriter font fami1y打字机} \\
+			\bottomrule
+		\end{tabular}
+		\pause
+		\vskip1ex
+		\begin{tabular}[scale=0.8]{>{\raggedleft\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.2\paperwidth}>{\centering\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.38\paperwidth}}
+			\toprule
+			字体形状 & 带参数命令 & 声明命令 & 效果(Computer Modern字体族) \\
+			\midrule
+			直立 & \verb|\textup{<文字>}| & \verb|\upshape| & \textup{Upright shape直立} \\
+			意大利 & \verb|\textit{<文字>}| & \verb|\itshape| & \textrm{Italic shape意大利} \\
+			倾斜 & \verb|\textsl{<文字>}| & \verb|\slshape| & \textsl{Slanted shape倾斜} \\
+			小型大写 & \verb|\textsc{<文字>}| & \verb|\scshape| & {\scshape SMALL CAPITALS SHAPE}小型大写 \\
+			\bottomrule
+		\end{tabular}
+		\pause
+		\vskip1ex
+		\begin{tabular}[scale=0.8]{>{\raggedleft\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.2\paperwidth}>{\centering\arraybackslash}p{0.1\paperwidth}>{\centering\arraybackslash}p{0.38\paperwidth}}
+			\toprule
+			字体系列 & 带参数命令 & 声明命令 & 效果 \\
+			\midrule
+			中等 & \verb|\textmd{<文字>}| & \verb|\mdseries| & \textup{Medium series中等} \\
+			加宽加粗 & \verb|\textbf{<文字>}| & \verb|\bfseries| & \textbf{Bold extended series加宽加粗} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	\pause
+	注: 此处, 编者尝试了多次仍未解决小型大写字体不正常显示的问题.
+\end{frame}
+
+\begin{frame}[fragile]{添加线及换行}
+	\onslide<1->
+	添加线:
+	\begin{multicols}{2}
+		\verb|\uline|\hfill 下划线\qquad\uline{混}\\
+		\verb|\uuline|\hfill 双下划线\qquad\uuline{元}\\
+		\verb|\uwave|\hfill 波浪线\qquad\uwave{形}\\
+		\verb|\sout|\hfill 删除线\qquad\sout{翼}\\
+		\verb|\xout|\hfill 斜删除线\qquad\xout{太}\\
+		\verb|\dashuline|\hfill 虚线\qquad\dashuline{极}\\
+		\verb|\dotuline|\hfill 加点\qquad\dotuline{门}
+	\end{multicols}
+	\onslide<2->
+	换行:
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item 两段文字间空一行
+			\item 文字结束使用"\verb!\newline!"
+			\item 文字结束使用"\verb!\par!"
+			\item 文字结束使用"\verb!\\[<长度>]!"\\
+			~~<长度>单位一般为ex\\(当前字体尺寸设置下x的高度), 该\textbf{可选}参数指定与下行间距, 可省略.
+		\end{itemize}
+	\end{multicols}
+\end{frame}
+
+\subsection{版式相关}
+\begin{frame}[fragile]{标点符号与颜色}
+	\scriptsize
+	% 标点符号部分源自武汉大学学位论文模板.
+	\begin{SCUshow}[listing side text]{标点符号}{latex}{}{BiaodianFh}
+		建议使用半角标点符号, 后键入一个空格. (尤其是英文书写!)\\[1ex]
+		双引号由两对左单引号、右单引号构成: ``  ''. 左单引号在键盘上ESC键下方.\\[1ex]
+		建议使用实心的句号, 只要书写的是自然科学类文章.
+	\end{SCUshow}
+	\begin{SCUshow}[listing side text]{颜色}{latex}{}{YanS}
+		模板依VIS手册定义了以下颜色:\\
+		\textcolor{JXred}{锦绣红}
+		\textcolor{YYgrey}{优雅灰}
+		\textcolor{BSblue}{宝石蓝}
+		\textcolor{HYgreen}{荷叶绿}
+		\textcolor{YXyellow}{银杏黄}\\
+		定义颜色请使用\verb|\definecolor|
+	\end{SCUshow}
+\end{frame}
+	
+\cprotEnv\begin{frame}
+	\frametitle{长宽间距}
+	\scriptsize
+	\begin{multicols}{2}
+		\verb|\linewidth|\hfill 当前行的宽度\\
+		\verb|\columnwidth|\hfill 当前分栏的宽度\\
+		\verb|\textwidth|\hfill 整个页面版芯的宽度\\
+		\verb|\textheight|\hfill 整个页面版芯的高度\\
+		\verb|\paperwidth|\hfill 整个页面纸张的宽度\\
+		\verb|\hspace{宽度}|\hfill 水平间距为宽度\\
+		\verb|\hspace*{宽度}|\hfill 不因在行首行尾被删除\\
+		\verb|\vspace{高度}|\hfill 垂直间距为高度\\
+		\verb|\vspace*{高度}|\hfill 不因在页首页尾被删除\\
+		\verb|\hfil|\&\verb|\hfill|\hfill 填充最大水平间距\\
+		\verb|\vfil|\&\verb|\vfill|\hfill 填充最大垂直间距\\
+		\verb|~|\hfill 不折行空格\\
+	\end{multicols}
+	\vskip-2ex
+	\begin{table}[h]
+		\centering
+		\caption{部分空格演示}
+		\begin{tabular}[scale=0.8]{l|l|r|c}
+			\toprule
+			代码 & 效果 & 长度 & 是否需要amsmath宏包 \\
+			\midrule
+			\verb|a~b| & a~b & 不知道 & 否 \\
+			\verb|a\quad b| & a\quad b & 1em & 否 \\
+			\verb|a\qquad b| & a\qquad b & 2em & 否 \\
+			\verb|a\enspace b| & a\enspace b & 0.5em & 否 \\
+			\verb|a\;b| & a\;b & 5/18em & 是 \\
+			\verb|a\:b| & a\:b & 4/18em & 是 \\
+			\verb|a\,b|或者~\verb|a\thinspace b| & a\,b & 3/18em & 否 \\
+			\verb|a\!b|或者~\verb|a\negthinspace b| & a\!b & -3/18em & 是 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\subsection{图与表格}
+\begin{frame}[fragile]{单张图片的插入}
+	\scriptsize
+	支持格式: {\color{JXred}pdf, eps, png, jpg}. 建议使用矢量图片(svg建议下载~\href{https://inkscape.org/}{\color{BSblue}Inkscape}~导出pdf)
+	\begin{minipage}{0.56\linewidth}
+		\begin{SCUshow}[comment={%
+				\scriptsize\vskip1ex%
+				{\color{JXred}<position>}\quad 浮动体摆放的位置\\
+				\quad \textbf{参数}: {\color{BSblue}h}-此处, {\color{BSblue}t}-顶部, {\color{BSblue}b}-底部, {\color{BSblue}p}-独立成页, \\
+				{\color{BSblue}!}-决定位置时忽略限制\\
+				\quad \textbf{注}: 常用{\color{BSblue}h}, {\color{BSblue}htbp}, {\color{BSblue}htbp!}. 参数顺序不作限制\\
+				{\color{JXred}<keys>}\quad 限制图片大小等\\
+				\quad \textbf{参数}: {\color{BSblue}width=?}-宽度, {\color{BSblue}height=?}-高度, \\
+				{\color{BSblue}scale=?}-缩放, {\color{BSblue}angle=?}-逆时针旋转角度\\
+				\quad \textbf{注}: 宽高不建议同时使用, 以columnwidth设置宽度\\
+				{\color{JXred}<file>}\quad 文件名称(不要有空格)\\
+				{\color{JXred}<title>}\quad 图片标题\\
+				{\color{JXred}<label>}\quad 交叉引用标签\\
+			},%
+			listing above comment]{Figure环境}{latex}{}{FigureHj}
+			\begin{figure}[<position>]
+				\centering %居中用
+				\includegraphics[<keys>]{<file>}
+				\caption{<title>}
+				\label{<label>}
+			\end{figure}
+		\end{SCUshow}
+	\end{minipage}\quad
+	\begin{minipage}{0.4\linewidth}
+		\begin{SCUshow}[righthand width=0.2\textwidth,%
+			listing above text]{单图插入演示}{latex}{}{DantuCrys}
+			\begin{figure}[h]
+				\centering
+				\includegraphics%
+				[width=0.36\columnwidth]%
+				{stop-bk.pdf}
+				\caption%
+				{黑色的暂停}
+				\label{fig:stopbk}
+			\end{figure}
+		\end{SCUshow}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[allowframebreaks,fragile]{多图插入(子图, 并列小图)}
+	放不下了: PowerPoint与Excel均可导出svg格式, 再转pdf(Excel作图时请启用``不随单元格变化''), inkscape有批量转pdf的命令, 请百度.
+	
+	很多时候, 我们往往不只在一行中放置一张图片, 我们需要放置并排的图片以提升空间利用率, 增强观感性, 并一定程度上加强图片的关联性. 以下列出三种不同的多图插入情景(仅供参考).
+	\begin{enumerate}
+		\item 在figure环境中插入多个\verb|\includegraphics|, 非子图;
+		\item 使用subcaption环境插入子图;\\
+		\begin{SCUshow}[comment={%
+				\scriptsize\vskip1ex%
+				{\color{JXred}<width>}\quad 子图宽度\\
+				{\color{JXred}<code>}\quad 同上页figure环境\\
+			},%
+			listing side comment]{Subfigure环境}{latex}{}{SubfigureHj}
+			\begin{subfigure}{<width>}
+				<code>
+			\end{subfigure}
+		\end{SCUshow}
+		\item 使用minipage环境插入并排小图, 当然minipage也可插入子图.
+	\end{enumerate}
+	\begin{SCUshow}[listing side text,righthand width=.36\columnwidth]{子图示例}{latex}{}{ZituSl}
+		\begin{figure}[h]
+			\begin{subfigure}{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-rd.pdf}
+				\caption{白天的暂停}
+			\end{subfigure}
+			\quad
+			\begin{subfigure}{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-gn.pdf}
+				\caption{晚上的暂停}
+			\end{subfigure}
+			\caption{掌门常用的暂停}
+		\end{figure}
+	\end{SCUshow}
+	\begin{SCUshow}[listing side text,righthand width=.36\columnwidth]{并列小图示例}{latex}{}{BinlieXtsl}
+		\begin{figure}[h]
+			\begin{minipage}[t]{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-rd.pdf}
+				\caption{掌门白天的暂停}
+				\label{fig:ZhangmenBtdzt}
+			\end{minipage}
+			\quad
+			\begin{minipage}[t]{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-gn.pdf}
+				\caption{掌门晚上的暂停}
+				\label{fig:ZhangmenWsdzt}
+			\end{minipage}
+		\end{figure}
+	\end{SCUshow}
+\end{frame}
+
+\cprotEnv\begin{frame}
+	\frametitle{三线表示例}
+	表格太麻烦了, 掌门说摸摸鱼, 编者觉得不错, 丢一个三线表示例. 当然也可以看看这个手册前面部分表格的源码.
+	\begin{table}[htbp]
+		\centering
+		\caption{一些国风音乐}
+		\label{tab:YixieGfyy}
+		\begin{tabular}{rlc}
+			\toprule
+			作曲家 & 歌名 & 门中喜欢的友人 \\
+			\midrule
+			李志辉 & 小桥流水人家 & 门主 \\
+			林海 & 无羁(器乐版) & 初号 \\
+			吕秀龄 & 逆伦 & 小初 \\
+			麦振鸿 & 从来只有一个人 & 编者(假的) \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	一些三线表中有用的命令: \verb|\hline|-画横线, \verb|\cline|\verb!{x-y}!-画x-y列的横线.\\
+	一些强大的表格宏包: tabularx, longtable, supertabular, xtab. 还有子表(类似于图).\\
+	差点忘了, 还有合并行与列, 套表等.
+\end{frame}
+
+\subsection{代码环境}
+\begin{frame}[fragile]{自定义的代码环境}
+	本模板定义了两种代码环境: {\color{JXred}SCUcode}与{\color{JXred}SCUshow}. 前者可用于单独的代码呈现, 后者可用于代码加演示或批注(模板前续部分使用了大量的此环境; code样式其实也可以实现, 不过编者觉得有点怪异).\\
+	宏包选项``minted"是否启用, 显示效果有显著区别(我技术不行适应一下), 条件允许时建议启用该选项({\color{JXred}不加参数时代码前不要Tab缩进}).
+	\begin{SCUshow}[comment={%
+			\scriptsize%
+			{\color{JXred}<envi>}\quad SCUcode或SCUshow\\
+			{\color{JXred}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
+			{\color{JXred}<title>}\quad 标题\\
+			{\color{JXred}<lang>}\quad 代码语言\\
+			{\color{JXred}<keys.c>}\quad 添加到minted或listings中的参数\\
+			{\color{JXred}<label.t>}\quad 引用标签尾部, 头部已定义(code:)\\
+			{\color{JXred}<code>}\quad 代码\\
+		},%
+		listing above comment]{代码环境定义}{latex}{}{DaimaHjdy}
+		\begin{<envi>}[<keys.t>]{<title>}{<lang>}{<keys.c>}{<label.t>}
+			<code>
+		\end{<envi>}
+	\end{SCUshow}
+\end{frame}
+
+\begin{frame}[fragile]{代码环境演示}
+	\begin{SCUcode}[]{A welcome program.}{c}{}{codecode}
+		#include <stdio.h>
+		int main() {
+			printf("Hello world!\n");
+			return 0;
+		}
+	\end{SCUcode}
+	\begin{SCUshow}[]{A welcome program.}{c}{}{codeshow}
+		#include <stdio.h>
+		int main() {
+			printf("Hello world!\n");
+			return 0;
+		}
+	\end{SCUshow}
+\end{frame}
+
+\subsection{数学环境}
+\begin{frame}[fragile,allowframebreaks]{自定义的代码环境}
+	本模板定义了如下数学环境及对应的标签前缀: 
+	\begin{table}[htbp!]
+		\centering\scriptsize
+		\caption{数学环境定义}
+		\label{tab:ShuxueHjdy}
+		\begin{tabular}{ccc|ccc}
+			\toprule
+			名称 & 环境(SCUxx) & 标签前缀 & 名称 & 环境(SCUxx) & 标签前缀 \\
+			\midrule
+			定理 & \color{JXred}SCUtheorem & theo: & 证明 & \color{JXred}SCUproof & / \\
+			例 & \color{JXred}SCUexample & exam: & 算法 & \color{JXred}SCUalgorithm & algo: \\
+			定义 & \color{JXred}SCUdefinition & def: & 公理 & \color{JXred}SCUaxiom & axio: \\
+			性质 & \color{JXred}SCUproperty & prope: & 命题 & \color{JXred}SCUproposition & propo: \\
+			引理 & \color{JXred}SCUlemma & lemm: & 推论 & \color{JXred}SCUcorollary & coro: \\
+			注 & \color{JXred}SCUremark & rema: & 条件 & \color{JXred}SCUcondition & cond: \\
+			结论 & \color{JXred}SCUconclusion & conc: & 假设 & \color{JXred}SCUassumption & assu: \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	其中证明环境(SCUproof)结尾带有证毕符号(\verb|\qed|).$\textrightarrow$\qed
+	\begin{SCUshow}[comment={%
+			\vskip1ex%
+			\scriptsize%
+			{\color{JXred}<envi>}\quad 环境名称(见\vref{tab:ShuxueHjdy})\\
+			{\color{JXred}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
+			{\color{JXred}<title>}\quad 标题\\
+			{\color{JXred}<label.t>}\quad 引用标签尾部, 头部已定义(code:), {\color{JXred}SCUproof}环境无该选项\\
+			{\color{JXred}<code>}\quad 代码\\
+		},%
+		listing above comment]{数学环境定义}{latex}{}{ShuxueHjdy}
+		\begin{<envi>}[<keys.t>]{<title>}{<label.t>}
+			<code>
+		\end{<envi>}
+	\end{SCUshow}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{数学环境演示}
+	\begin{SCUtheorem}{切比雪夫大数率}{QiebiXfdsl}
+		对独立随机变量序列$\{X_k\}$, 若$E(X_k)$, $D(X_k)$都存在, $k=1,2,\cdots$, 且有常数$C$, 使得$D(X_k)\leq C$, $k=1,2,\cdots$, 则有
+		\begin{equation}
+		\dfrac{1}{n} \sum_{k=1}^{n} X_k - \dfrac{1}{n} \sum_{k=1}^{n} E(X_k) \stackrel{\;P\;}{\longrightarrow} 0
+		\end{equation}
+	\end{SCUtheorem}
+	\begin{SCUproof}{}
+		请读者自证.
+	\end{SCUproof}
+	\begin{SCUexample}{混元形翼太极门的规模}{HunyuanXytjmdgm}
+		本门昨天去了80个人打水, 今天去了79个人打水, 本门的规模有多大?
+	\end{SCUexample}
+	\begin{SCUalgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
+		\begin{algorithmic}[1]
+		\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
+		\ENSURE 不知道怎么搞
+		\STATE 问门主, 肯定不知道
+		\STATE 问初号, 当然不知道
+		\STATE 问小初, 还是不知道
+		\RETURN 算了, 不问了, 都是不知道
+		\end{algorithmic}
+	\end{SCUalgorithm}
+	\begin{SCUdefinition}{马老卷}{MalaoJ}
+		是混元形翼太极门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
+	\end{SCUdefinition}
+	\begin{SCUaxiom}{皮亚诺公理}{PiyaNgl}
+		略.
+	\end{SCUaxiom}
+	\begin{SCUproperty}{刚体的性质}{GangtiDxz}
+		刚体是个理想模型. 虽然理想但是还是那么难整, 进动和章动就不会了.
+	\end{SCUproperty}
+	\begin{SCUproposition}{不确定性原理}{BuqueDxyl}
+		粒子的位置与动量不可同时被确定, 位置的不确定性与动量的不确定性遵守不等式
+		\begin{equation}
+			\Delta x \Delta p \geq \dfrac{h}{4\pi}
+		\end{equation}
+		其中$h$为普朗克常数.
+	\end{SCUproposition}
+	\begin{SCUlemma}{卷王森林法则}{JuanwangSlfz}
+		源自未知高校学生, 此处略.
+	\end{SCUlemma}
+	\begin{SCUcorollary}{狼人杀的重要性}{LangrenSdzyx}
+		编者实习时听公司导师说面试有可能是趣味性游戏, 狼人杀感觉很符合, 所以玩狼人杀吧.
+	\end{SCUcorollary}
+	\begin{SCUremark}{}{Zhu}
+		\vref{coro:LangrenSdzyx}, 只是推论, 编者瞎说的.
+	\end{SCUremark}
+	\begin{SCUcondition}{面试狼人杀的条件}{MianshiLrsdtj}
+		\vref{coro:LangrenSdzyx}, 此推论有条件, 即真有公司面试用狼人杀.
+	\end{SCUcondition}
+	\begin{SCUconclusion}{爱废话的编者}{AifeiHdbz}
+		由上述可知: 编者爱废话.
+	\end{SCUconclusion}
+	\begin{SCUassumption}{编者不会废话}{BianzheBhfh}
+		我们可以假设编者不会废话, 假设成立, 编者当然不会废话.
+	\end{SCUassumption}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{数学公式演示}
+	{\color{JXred}1. 行内公式(无编号):} 使用~\verb|$|~\verb|$|~括起公式.\\
+	如: 麦克斯韦分布函数$f(v) = \dfrac{\mathrm{d}N}{N\,\mathrm{d}v} = 4\pi \Big(\dfrac{\mu}{2\pi kT}\Big)^{3/2} v^2 \mathrm{exp}\Big(-\dfrac{\mu v^2}{2kT}\Big)$.\\[1ex]
+	{\color{JXred}2. 行间公式(无编号):} 使用~\verb|\[|~\verb|\]|~括起公式, 与之等效的是displaymath或equation*环境.\\
+	如: 最概然速率\[v_p = \sqrt{\dfrac{2kT}{\mu}} = \sqrt{\dfrac{2RT}{M}}\]其中$R$是气体常数, $M = N_A \mu$是物质的摩尔质量.\\[1ex]
+		\begin{equation*}
+			\bar{v} = \int_0^\infty vf(v)\,\mathrm{d}v = \sqrt{\dfrac{8kT}{\pi\mu}} = \sqrt{\dfrac{8RT}{\pi M}}
+		\end{equation*}
+	{\color{JXred}3. 行间公式(有编号):} 使用equation环境(环境内可加label标签).\\[1ex]
+	如: 方均根速率
+		\begin{equation}
+		v_{rms} = \Big(\int_0^\infty v^2f(v)\,\mathrm{d}v\Big)^{1/2} = \sqrt{\dfrac{3kT}{\mu}} = \sqrt{\dfrac{3RT}{M}}
+		\end{equation}
+	上述环境均无法使用\verb!\\!换行, 且环境中无法正常实现空格(可在空格前加\verb|\|). 在数学模式中, 若想加入文字请使用\verb|\text|\verb|{}|, 使用正体请使用\verb|\mathrm|\verb|{}|.\\
+	此外, unicode-math宏包中定义了多个数学字体命令, 如\verb|\symbb|$\symbb{R}$, \verb|\symbbit|$\symbbit{R}$, \verb|\symcal|$\symcal{R}$, \verb|\symscr|$\symscr{R}$, \verb|\symfrak|$\symfrak{R}$, \verb|\symsfup|$\symsfup{R}$, \verb|\symsfit|$\symsfit{R}$, \verb|\symbfsf|$\symbfsf{R}$, \verb|\symbfup|$\symbfup{R}$, \verb|\symbfit|$\symbfit{R}$, \verb|\symbfcal|$\symbfcal{R}$, \verb|\symbfscr|$\symbfscr{R}$, \verb|\symbffrak|$\symbffrak{R}$, \verb|\symbfsfup|$\symbfsfup{R}$, \verb|\symbfsfit|$\symbfsfit{R}$.\\[1ex]
+	{\color{JXred}4. 多行公式(长公式折行):} 使用multline环境.
+	如: 
+		\begin{multline}
+			A=\lim_{n\rightarrow\infty}\Delta x\left(a^{2}+\left(a^{2}+2a\Delta x+\left(\Delta x\right)^{2}\right)\right.\label{eq:reset}\\
+			+\left(a^{2}+2\cdot2a\Delta x+2^{2}\left(\Delta x\right)^{2}\right)\\
+			+\left(a^{2}+2\cdot3a\Delta x+3^{2}\left(\Delta x\right)^{2}\right)\\
+			+\ldots\\
+			\left.+\left(a^{2}+2\cdot(n-1)a\Delta x+(n-1)^{2}\left(\Delta x\right)^{2}\right)\right)\\
+			=\frac{1}{3}\left(b^{3}-a^{3}\right)
+		\end{multline}\\[1ex]
+	\pagebreak
+	{\color{JXred}5. 多行公式(有编号, 若不希望编号, 使用加*号的环境):}
+	\begin{itemize}
+		\item 使用align环境(每行都编号, 去掉某行编号请用\verb|\notag|命令).
+	\end{itemize}
+	如: 质能方程
+		\begin{align}
+			E=m&c^2 & &E=mc^2\\
+			E=~&mc^2 & E&=mc^2 \notag \\
+			E&=mc^2 & E=~&mc^2\\
+			&E=mc^2 & E=m&c^2
+		\end{align}
+	\begin{itemize}
+		\item 使用aligned环境(共同编号, 需套用在equation中).
+	\end{itemize}
+		\begin{equation}
+			\begin{aligned}
+			\dfrac{\mathrm{d}}{\mathrm{d}t} \symbfit{f} &= \dfrac{\mathrm{d}f_x}{\mathrm{d}t} \symbfit{\hat{i}} + \dfrac{\mathrm{d}\symbfit{\hat{i}}}{\mathrm{d}t} f_x + \dfrac{\mathrm{d}f_y}{\mathrm{d}t} \symbfit{\hat{j}} + \dfrac{\mathrm{d}\symbfit{\hat{j}}}{\mathrm{d}t} f_y + \dfrac{\mathrm{d}f_z}{\mathrm{d}t} \symbfit{\hat{k}} + \dfrac{\mathrm{d}\symbfit{\hat{k}}}{\mathrm{d}t} f_z \\
+			&= \dfrac{\mathrm{d}f_x}{\mathrm{d}t} \symbfit{\hat{i}} + \dfrac{\mathrm{d}f_y}{\mathrm{d}t} \symbfit{\hat{j}} + \dfrac{\mathrm{d}f_z}{\mathrm{d}t} \symbfit{\hat{k}} + \big[\symbf{\Omega} \times \big( f_x \symbfit{\hat{i}} + f_y \symbfit{\hat{j}} + f_z \symbfit{\hat{k}}\big) \big] \\
+			&= \Big(\dfrac{\mathrm{d}\symbfit{f}}{\mathrm{d}t}\Big)_r + \symbf{\Omega} \times \symbfit{f}(t)
+			\end{aligned}
+		\end{equation}
+	\begin{itemize}
+		\item 使用dcases环境(需调用mathtools宏包). 为什么不用cases呢? 因为这个只支持行内公式, 很多时候会出现行重合现象.
+	\end{itemize}
+		\begin{equation}
+			\begin{dcases}
+			\oint_l \symbfit{H} \cdot \mathrm{d}\symbfit{l} = \iint_S \symbfit{J} \cdot \mathrm{d}\symbfit{S} + \iint_S \dfrac{\partial\symbfit{D}}{\partial t} \cdot \mathrm{d}\symbfit{S} \\
+			\oint_l \symbfit{E} \cdot \mathrm{d}\symbfit{l} = - \iint_S \dfrac{\partial\symbfit{B}}{\partial t} \cdot \mathrm{d}\symbfit{S} \\
+			\oint_S \symbfit{B} \cdot \mathrm{d}\symbfit{S} = 0 \\
+			\oint_S \symbfit{D} \cdot \mathrm{d}\symbfit{S} = \iiint_V \rho \mathrm{d}V
+			\end{dcases}
+		\end{equation}
+	{\color{JXred}6. 矩阵:} amsmath宏包给出了6种常用的矩阵环境, 无定界符: {\color{JXred}matrix}; 有定界符: {\color{JXred}pmatrix}($\big(\cdots\big)$), {\color{JXred}bmatrix}($\big[\cdots\big]$), {\color{JXred}Bmatrix}($\bigl\{\cdots\bigr\}$), {\color{JXred}vmatrix}($|\cdots|$), {\color{JXred}Vmatrix}($||\cdots||)$).
+	如: 单位矩阵
+		\[
+		\begin{bmatrix}
+		E & 0 \\
+		0 & E \\
+		\end{bmatrix}
+		\begin{pmatrix}
+			E & 0 \\
+			0 & E \\
+		\end{pmatrix}
+		\]
+\end{frame}
+
+\subsection{页面相关}
+\cprotEnv\begin{frame}
+	\frametitle{Frame环境}
+	以下主要围绕frame环境展开. (编者不一定能介绍全面, 详细请移步官方文档)
+	\begin{SCUshow}[comment={%
+			\scriptsize%
+			{\color{JXred}<keys>}\quad frame环境选项\\
+			~~常用选项: {\color{BSblue}fragile}: 保护脆弱命令(如代码, 抄录环境需此项)\\
+			~~{\color{BSblue}allowframebreaks(=?)}: 允许内容过多时自动切帧(括号中省略即自动判断). 注: 使用\texttt{pagebreak}或\texttt{framebreak}命令可实现手动位置切帧换页, 但会在一些时候失效(不知道为什么, 得看源码)\\
+			~~{\color{BSblue}t}: 在页面顶部(默认居中)\\
+			{\color{JXred}<title>}\quad 标题\\
+		},%
+		listing side comment]{Frame环境}{latex}{}{FrameHj}
+		\begin{frame}[<keys>]{<title>}
+			<code>
+		\end{frame}
+		或
+		\begin{frame}[<keys>]
+			\frametitle{<title>}
+			<code>
+		\end{frame}
+	\end{SCUshow}
+	对于定理等板块过长导致的无法换页问题, 此处定义了命令来处理. (尽量避免单个过长的环境)
+\end{frame}
+
+\cprotEnv\begin{frame}
+	\frametitle{过长环境切割}
+	\begin{SCUshow}[comment={%
+			\scriptsize%
+			{\color{JXred}<code>}\quad 原本插入frame环境的内容\\
+			{\color{JXred}<scale>}\quad 相对于页面高度放缩比例(需手动调整, 0-1小数制)\\
+			{\color{JXred}<title>}\quad 标题\\
+		},%
+		listing above comment]{过长环境切割}{latex}{}{GuochangHjqg}
+		\begin{lrbox}{\mysavebox}
+			<code>
+		\end{lrbox}
+		\begin{frame}[fragile,t,allowframebreaks]{<title>}
+			\framenew{<scale>}
+		\end{frame}
+	\end{SCUshow}
+\end{frame}
+
+\begin{lrbox}{\mysavebox}
+	\begin{SCUremark}{卷王森林法则}{JuanwangSlfz}
+		补充自\vref{lemm:JuanwangSlfz}.\par
+		\textbf{\color{JXred}基本公理:}
+		\begin{enumerate}
+			\item 获得研究生资格是当代大学生的第一需要;
+			\item 当代大学生对研究生资格的需求不断增长和扩张, 但研究生资格总量保持不变.
+		\end{enumerate}
+		\textbf{\color{JXred}两大重要概念:}
+		\begin{enumerate}
+			\item 卷疑链: 双方无法判断对方是否正在内卷;\\
+			~~“当代大学生间的善意和恶意. 善和恶这类字眼放到内卷过程中是不严谨的, 所以需要对它们的含义加以限制: 善意就是指不主动内卷和卷灭其他大学生, 恶意则相反. 这是最低的善意了吧. ”
+			\begin{itemize}
+				\item 一个大学生不能判断另一个大学生是善还是恶
+				\item 一个大学生不能判断另一个大学生认为本大学生文明是善还是恶
+				\item 一个大学生不能判断另一个大学生是否会对本大学生发起内卷
+				\item 一个大学生无法判断另一个大学生对自己是善意或恶意的
+				\item 一个大学生无法判断另一个大学生认为自己是善意或恶意的
+				\item 一个大学生无法判断另一个大学生判断自己对他是善意或恶意的
+				\item \dots\dots
+			\end{itemize}	
+			\item 绩点爆炸: 不同大学生绩点进步的速度和加速度几乎不可能是一致的, 弱小的大学生很可能在短时间内超越强大的大学生. 可能由内因或者外因(例如内卷的交流, 内卷的程度突然加深)引发, 继而弱小的大学生能够对强大的大学生构成内卷优势乃至内卷威胁.
+		\end{enumerate}
+	\end{SCUremark}
+\end{lrbox}
+\begin{frame}[fragile,t,allowframebreaks]{环境切割示例}
+	\framenew{.82}
+\end{frame}
+
+\subsection{分栏}
+\begin{frame}[fragile,label={fra:Fenlan}]{分栏}
+	此处列出两种分栏方式: \\minipage环境及columns环境嵌套column环境, 其中column环境用法同minipage(见并列小图展示\vpageref{show:BinlieXtsl}), colums环境不需要加参数. 如下列出column环境和两个列表环境的显示效果.
+	\vspace{1ex}
+	\pause
+	\begin{columns}
+		\begin{column}[t]{0.35\linewidth}
+			这里是栏一
+			\begin{figure}[h]
+				\begin{center}
+					\includegraphics[width=.8\columnwidth]{logo_name}
+					\\四川大学校徽及校名\\
+					\vspace{1ex}
+					\includegraphics[width=.4\columnwidth]{Fy}
+					\\四川大学飞扬俱乐部
+				\end{center}
+			\end{figure}
+		\end{column}
+		\pause
+		\begin{column}[t]{0.4\linewidth}
+			这里是栏二
+			\vspace{1ex}
+			\begin{itemize}
+				\item 无序列表环境示例
+				\begin{enumerate}
+					\item 有序列表环境示例
+					\item 有序列表环境示例
+					\item 有序列表环境示例
+				\end{enumerate}
+				\item 无序列表环境示例
+				\item 无序列表环境示例
+			\end{itemize}
+		\end{column}
+		\pause
+		\begin{column}[t]{0.25\linewidth}
+			这里是栏三
+			\par\vskip1ex
+			四川大学校训\\
+			\vskip2ex
+			海纳百川\\[.5ex]
+			有容乃大
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{交叉引用}
+\begin{frame}[fragile]{交叉引用}
+	在Beamer中应避免过多的交叉引用, 此处编者给出了常用的引用命令及其示例.
+	\begin{table}[h]
+		\centering
+		\caption{交叉引用命令表}
+		\label{tab:JiaochaYymlb}
+		\begin{tabular}{lcl}
+			\toprule
+			命令 & 显示项 & 示例 \\
+			\midrule
+			\verb|\ref|\verb|{<label>}| & 序号 & \ref{assu:BianzheBhfh} \\
+			\verb|\ref*|\verb|{<label>}| & 序号 & \ref*{assu:BianzheBhfh} \\
+			\verb|\nameref|\verb|{<label>}| & 标题 & \nameref{assu:BianzheBhfh} \\
+			\verb|\vref|\verb|{<label>}| & 标题页码 & \vref{fra:Fenlan} \\
+			\verb|\pageref|\verb|{<label>}| & 页码 & \pageref{assu:BianzheBhfh} \\
+			\verb|\vpageref|\verb|{<label>}| & 页码 & \vpageref{assu:BianzheBhfh} \\
+			\verb|\cref|\verb|{<label>}| & 标题 & \cref{assu:BianzheBhfh} \\
+			\verb|\crefrange|\verb|{<label>}| & 范围 & \crefrange{fig:ZhangmenBtdzt}{fig:ZhangmenWsdzt} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\subsection{参考文献}
+\begin{frame}[fragile]{参考文献相关}
+	\textbf{注意:} 参考文献请采用{\color{JXred}Biber}编译模式, 即整体编译思路为XeLaTeX - Biber - XeLaTeX.\\
+	模板采用符合国标GB/T7714-2015的gb7714-2015参考文献格式.\\
+	模板已设置了``ref.bib''为参考文献数据库, 使用时覆盖即可(当然, 实在需要请在tex文件导言区寻找命令修改).\\[1ex]
+	引用文献的命令常采用\verb|\cite|\verb|{<item>}|, 如虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
+	此处也可视情况使用脚注形式的详细文献信息引用:
+	\begin{itemize}
+		\item 使用\verb|\footnotemark|计数，配合\verb|\footfullcitetext|\verb|[<num>]|\verb|{<item>}|显示, 如虚拟偶像\footnotemark.\footfullcitetext[3]{_ugc_2018}
+		\item \verb|\footfullcite|\verb|[<num>]|\verb|{<item>}|, 如虚拟偶像\footfullcite[8]{__2018}.\\
+		脚注最后的黑色阿拉伯数字为参考文献序号, 需自行输入, 也即上方的\verb|[<num>]|.
+	\end{itemize}
+\end{frame}
+
+\subsection{杂项}
+\begin{frame}[fragile]{杂项}
+	\textbf{帧的多页显示.}\\
+	非列表环境: \\
+	\verb|\pause|命令, \verb|\onslide<x-y>|命令(在该帧的第x到y页面显示, 为空则默认首页面或尾页面). \\
+	列表环境下: 
+	\begin{itemize}[<+-| alert@+>]
+		\item 直接在\verb|\begin|\verb!{itemize}后加!\verb![<+-| alert@+>]!命令;
+		\item 或在\verb|item|后加\verb|<x-y>|命令(在该帧的第x到y页面显示, 为空则默认首页面或尾页面).
+	\end{itemize}
+	\textbf{脚注.}
+	\begin{itemize}[<+-| alert@+>]
+		\item \verb|\footnote|\verb|{<text>}|命令\footnote{这是方法一.};\\
+		\item \verb|\footnotemark|命令在正文中计数, \verb|\footnotetext|\verb|{<text>}|显示脚注\footnotemark.
+	\end{itemize}
+	\footnotetext{这是方法二.}
+\end{frame}
+
+% --------节: 进阶使用--------
+% ----------------
+\section{进阶使用}
+\subsection{文本框}
+\begin{frame}{Tcolorbox}
+	注: 本节为进阶内容, 使用较困难, 编者本人也不会(如tcolorbox, tikz的说明文档页数分别为500+, 1300+, 均为全英文文档).\newline\par
+	若您掌握一定的Tcolorbox知识, 且希望能有更好的呈现效果, 您可以在宏包模板中修改Tcolorbox设置, 或自定义文本框.\\
+	在模板中, 编者除定义了定理, 代码环境的Tcolorbox文本框外. 还定义了俩种渐变文本框.\\[.5ex]
+	\begin{minipage}[c]{0.725\columnwidth}
+		\begin{SCUtcb1}{锦程梦研}
+			锦程梦研主题: 锦秀红与宝石蓝为渐变底色.
+		\end{SCUtcb1}
+		\begin{SCUtcb2}{浮莲落杏}
+			浮莲落杏主题: 荷叶绿与银杏黄为渐变底色.
+		\end{SCUtcb2}
+	\end{minipage}~~~~
+	\begin{minipage}[c]{0.225\columnwidth}
+		\begin{tcolorbox}[enhanced,%
+			size=minimal,auto outer arc,%
+			width=2.1cm,octogon arc,%
+			colback=red,colframe=white,colupper=white,%
+			fontupper=\fontsize{7mm}{7mm}\selectfont\bfseries\sffamily,%
+			halign=center,valign=center,%
+			square,arc is angular,%
+			borderline={0.2mm}{-1mm}{red}]
+			STOP
+		\end{tcolorbox}
+	\end{minipage}
+	\newline\par
+	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``tcolorbox.pdf''.
+\end{frame}
+
+\subsection{插图}
+\begin{frame}{Tikz}
+	\begin{minipage}[c]{0.35\linewidth}
+%		\scalebox{20}{}
+		\begin{figure}[h]
+			\include{tikz-huaji}
+			\vskip-5ex
+			\caption{滑稽 - 向禹}
+		\end{figure}
+	\end{minipage}\quad
+	\begin{minipage}[c]{0.6\linewidth}
+%		\scalebox{20}{}
+		\begin{figure}[h]
+			\include{tikz-Dipolar_magnetic_field}
+			\vskip-5ex
+			\caption{Dipolar Magnetic Field - Cyril Langlois}
+		\end{figure}
+	\end{minipage}
+	\par
+	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``pgfmanual.pdf''.
+\end{frame}
+
+\subsection{动画}
+\begin{frame}{Animate}
+	编者并不会用此包, 此页面摘自\href{https://zhuanlan.zhihu.com/p/338402487}{\color{BSblue}知乎向禹}.\\
+	注意, 动画显示需使用Adobe Acrobat等支持JavaScript的PDF浏览器查看(我们学校的电脑上应该有).\\
+	这里放一个大佬做的例子(弹簧振子):
+	\begin{center}
+		\begin{animateinline}[loop]{20}%
+			\multiframe{160  }{rx=0+5}{
+				\begin{tikzpicture}[scale=1.5]
+				\pgfmathsetmacro{\x}{4+1*sin(\rx)}	
+				\coordinate  (P) at (\x,0);	
+				\draw [decorate,decoration={coil,segment length= \x pt, pre length=2mm, post length=2mm
+					,amplitude=2mm}] (0,0)--(P);
+				\shade[ball color=black](P)circle (2mm);
+				\fill [pattern = north east lines] (0,0.-0.2) -- ++ (0,0.4) -- ++ (-0.1,0) -- ++(0,-0.4) --cycle
+				(0,-0.2) -- ++(0,-0.1) -- ++ (5.5,0) -- ++ (0,0.1) -- cycle;
+				\draw (0,0.2) -- (0,-0.2) -- (5.5,-0.2);
+				\end{tikzpicture} 	    }
+		\end{animateinline}
+	\end{center}
+	放过我吧, 关于Animate插入GIF动图, 明确告诉你, 不能, 所以具体方法请百度"LaTeX animate", 蟹蟹理解.\par
+	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``animate.pdf''.
+\end{frame}
+
+% --------节: 参考文献--------
+% ----------------
+\section{参考文献}
+\subsection*{参考文献}
+\begin{frame}[allowframebreaks]{文献目录}
+	\nocite{*}
+	\printbibliography[heading=none]
+\end{frame}
+
+% --------节: 致谢--------
+% ----------------
+\section{致谢}
+\subsection*{致谢}
+\begin{frame}{~}
+	\vskip6ex
+	\begin{columns}
+		\begin{column}[c]{0.4\columnwidth}
+			\centering\large
+			用户手册到此结束.\\[2ex]
+			\normalsize This is the end of the User's Manual.
+		\end{column}
+		\begin{column}[c]{0.6\columnwidth}
+			\centering
+			\Large 感谢浏览本手册!\\[2ex]
+			感谢对模板及对编者的支持!
+		\end{column}
+	\end{columns}
+	\centering\vskip4ex
+	SCU Beamer Slide-demo, Rev 1.0a
+\end{frame}
+
+\end{document}
+
+%% End of file `manual.tex'.
