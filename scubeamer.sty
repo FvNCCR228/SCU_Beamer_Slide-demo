@@ -1,5 +1,5 @@
 %% This is file `scubeamer.sty'.
-%% Version: 2021/11/30 v1.0a (Original Version: 2021/11/30 v1.0a).
+%% Version: 2021/12/08 v1.0b (Original Version: 2021/11/30 v1.0a).
 %% Auther: 1701 W.
 %% Provide options: minted, chinese.
 
@@ -7,7 +7,7 @@
 %% !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{scubeamer}[2021/11/30, v1.0a]
+\ProvidesPackage{scubeamer}[2021/12/08 v1.0b]
 %%%% ----------------------------------------------------------------
 
 
@@ -30,7 +30,7 @@
 % ----------------
 % Package Using
 % ----------------
-\RequirePackage[fontset=none]{ctex}%
+\RequirePackage{ctex}%[fontset=none]
 \RequirePackage{xeCJK}% xeCJK: 排版 CJK 文字.
 \RequirePackage{fontspec}% fontspec: 字体设置.
 \RequirePackage{unicode-math}% unicode-math: opentype 数学字体.
@@ -235,9 +235,9 @@ gbstyle=false,url=false,doi=false,isbn=false,sorting=none]{biblatex}% biblatex: 
 % 设置数学字体为 XITS Math 或 Latin Modern Math (自由选择).
 %\setmathfont{XITS Math}
 \setmathfont{Latin Modern Math}
-% 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
+%% 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
 %\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
-\setCJKsansfont[Scale=0.9]{Microsoft YaHei}
+%\setCJKsansfont[Scale=0.9]{Microsoft YaHei}
 \usefonttheme{professionalfonts}
 % ----------------
 
