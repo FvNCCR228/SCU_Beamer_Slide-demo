@@ -1,6 +1,6 @@
 %% This is file `main.tex'.
-%% Version: 2021/12/08 v1.0b (Original Version: 2021/11/30 v1.0a).
-%% Auther: 1701 W.
+%% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
+%% Auther: 1701 Wu.
 %% 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
 %% !Mode:: "TeX:UTF-8"
 %% !XeLaTeX & Biber
@@ -9,13 +9,12 @@
 % ================ %
 %      导言区      %
 % ================ %
-\documentclass[hyperref,UTF8,11pt]{beamer}
+\documentclass[hyperref,UTF8,11pt,CJK]{beamer}
 
 % --------SCU Beamer 模板宏包--------
-% 提供参数 chinese, minted.
-% 置入参数 chinese 则交叉引用显示为中文, 置入参数 minted 则将代码显示 listings 切换为 minted.
+% 提供参数键 MathFont, BlockDisplay, CodeDisplay, ContentMuticols, Background.
 % ----------------
-\usepackage[minted,chinese]{scubeamer}
+\usetheme[chinese,MathFont=LM,BlockDisplay=colorful,CodeDisplay=listing,ContentMuticols=ture,Background=true]{scu}
 
 % --------不要调用的宏包--------
 % ----------------
@@ -30,7 +29,6 @@
 \usepackage{tikz}
 \usetikzlibrary{shadings,arrows,calc,decorations.pathmorphing,patterns}
 \usepackage{array}
-\usepackage{multirow}
 \usepackage{algorithm,algorithmic}
 \usepackage{amsmath,amsfonts,amssymb} % math equations, symbols
 \usepackage{mathtools}
@@ -38,11 +36,10 @@
 \usepackage{color}      % color content
 \usepackage{xcolor}
 \usepackage{url}        % hyperlinks
-\usepackage{multicol}
+\usepackage{multicol,multirow}
 \usepackage{ulem} % ulem: 添加线.
 \usepackage{booktabs}
 \usepackage{epstopdf,epsfig}
-\hypersetup{CJKbookmarks=true}
 \usepackage{cprotect}
 \usepackage{makecell}
 \usepackage{listings}
@@ -51,18 +48,10 @@
 %\usepackage[active,tightpage]{preview}
 %\PreviewEnvironment{pspicture}
 
-% 半透明化尚未出现的内容.
-\setbeamercovered{transparent}
-% 导入参考文献 bib 文件.
-\addbibresource[location=local]{ref.bib}
 % --------newcommand 区--------
 % 建议在此定义常用命令.
 % ----------------
 \newcommand{\fverb}[1]{\texttt{#1}}
-
-% --------导入代码环境设置--------
-% ----------------
-\tcblistset
 
 % --------封面信息输入--------
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
@@ -78,30 +67,12 @@
 	\medskip
 	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
 }
-\date[2021/12/08]{\noindent 2021/12/08}
+\date[2021/12/30]{\noindent 2021/12/30}
 
 % ---------------- %
 %      正文区      %
 % ---------------- %
 \begin{document}
-
-% --------封面--------
-% ----------------
-{% 取消封面页眉, 请勿删除此部分代码.
-\setbeamertemplate{headline}{}%
-\makeatletter
-\vspace*{-\dimexpr\headheight+\topskip\relax}%
-\makeatother
-\begin{frame}
-	% 使用 tikz 宏包中 tikzpicture 环境移动背景图片.
-	\begin{tikzpicture}[overlay,remember picture]
-	\node(1)[xshift=0ex,yshift=3ex] at (current page.center){%
-		\pgfuseimage{bgoftitle}};
-	\end{tikzpicture}
-	%\transfade 渐变
-	\titlepage % 显示 titlepage.
-\end{frame}
-}
 
 % --------总目录--------
 % 可注释.
@@ -117,24 +88,25 @@
 \subsection{研究现状}
 \begin{frame}{关于本模板}%=0.85
 	\begin{itemize}
+		\item 创建初衷:
+		\begin{itemize}
+			\item 编者本人对\LaTeX{} 稍有涉足, 这也是编者的首个Beamer模板, 模板创建源于本学院李璐老师提出的PPT修改意见;
+			\item 项目也源于制作者本人的兴趣, 但本人对\LaTeX{} 的了解仍处在较浅层次, 故编写的模板可能会存在不兼容、编译后版式错位等现象;
+		\end{itemize}
 		\item 项目地址:
 		\begin{itemize}
 			\item 使用前请前往下列地址中查看模板版本!
 			\item Github: {\color{BSblue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
-			\item Gitee: \color{BSblue}\url{https://gitee.com/NCCR/scu_-beamer_-slide-demo}
+			\item Gitee: \color{BSblue}\url{https://gitee.com/NCCR/SCU_Beamer_Slide-demo}
 		\end{itemize}
-		\item 谢谢支持:
-		\begin{itemize}
-			\item 目前本模板仅在编者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
-			\item 由于编者对\LaTeX 的了解仍处在较浅层次, 故编写的模板可能会存在不兼容、编译后版式错位等现象, 希望各位能多多理解(多次编译可能有意想不到的惊喜);
-			\item 若本校的\LaTeX 大佬百忙之中能对本模板提出批评指正, 鄙人在此万分感谢各位的支持.
-		\end{itemize}
+		%			\framebreak
+		%		\pagebreak
 		\item 联系方式:
 		\begin{itemize}
-			\item 编者: 522869009@qq.com
+			\item 制作者: 522869009@qq.com
 		\end{itemize}
 	\end{itemize}
-	感谢模板中所使用部分代码的原作者, 也感谢模板所调用宏包的诸位作者前辈.
+	目前仅在制作者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
 \end{frame}
 
 \begin{frame}{使用注意}
@@ -235,28 +207,28 @@
 
 \subsection{代码环境}
 \begin{frame}[fragile]{代码环境演示}
-	\begin{SCUcode}[]{A welcome program.}{c}{}{codecode}
-		#include <stdio.h>
-		int main() {
-			printf("Hello world!\n");
-			return 0;
-		}
-	\end{SCUcode}
-	\begin{SCUshow}[]{A welcome program.}{c}{}{codeshow}
-		#include <stdio.h>
-		int main() {
-			printf("Hello world!\n");
-			return 0;
-		}
-	\end{SCUshow}
+	\begin{scucode}[]{A welcome program.}{c}{}{codecode}
+#include <stdio.h>
+int main() {
+    printf("Hello world!\n");
+    return 0;
+}
+\end{scucode}
+	\begin{scushow}[]{A welcome program.}{c}{}{codeshow}
+#include <stdio.h>
+int main() {
+    printf("Hello world!\n");
+    return 0;
+}
+\end{scushow}
 \end{frame}
 
 \subsection{数学}
 \begin{frame}[fragile,allowframebreaks]{数学环境}
-	\begin{SCUproof}{}
+	\begin{scuproof}{}
 		请读者自证.
-	\end{SCUproof}
-	\begin{SCUalgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
+	\end{scuproof}
+	\begin{scualgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
 		\begin{algorithmic}[1]
 		\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
 		\ENSURE 不知道怎么搞
@@ -265,28 +237,28 @@
 		\STATE 问小初, 还是不知道
 		\RETURN 算了, 不问了, 都是不知道
 		\end{algorithmic}
-	\end{SCUalgorithm}
-	\begin{SCUdefinition}{马老卷}{MalaoJ}
+	\end{scualgorithm}
+	\begin{scudefinition}{马老卷}{MalaoJ}
 		是混元形翼太极门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
-	\end{SCUdefinition}
-	\begin{SCUlemma}{卷王森林法则}{JuanwangSlfz}
+	\end{scudefinition}
+	\begin{sculemma}{卷王森林法则}{JuanwangSlfz}
 		源自未知高校学生, 此处略.
-	\end{SCUlemma}
-	\begin{SCUcorollary}{狼人杀的重要性}{LangrenSdzyx}
+	\end{sculemma}
+	\begin{scucorollary}{狼人杀的重要性}{LangrenSdzyx}
 		编者实习时听公司导师说面试有可能是趣味性游戏, 狼人杀感觉很符合, 所以玩狼人杀吧.
-	\end{SCUcorollary}
-	\begin{SCUremark}{}{Zhu}
+	\end{scucorollary}
+	\begin{scuremark}{}{Zhu}
 		\vref{coro:LangrenSdzyx}, 只是推论, 编者瞎说的.
-	\end{SCUremark}
-	\begin{SCUcondition}{面试狼人杀的条件}{MianshiLrsdtj}
+	\end{scuremark}
+	\begin{scucondition}{面试狼人杀的条件}{MianshiLrsdtj}
 		\vref{coro:LangrenSdzyx}, 此推论有条件, 即真有公司面试用狼人杀.
-	\end{SCUcondition}
-	\begin{SCUconclusion}{爱废话的编者}{AifeiHdbz}
+	\end{scucondition}
+	\begin{scuconclusion}{爱废话的编者}{AifeiHdbz}
 		由上述可知: 编者爱废话.
-	\end{SCUconclusion}
-	\begin{SCUassumption}{编者不会废话}{BianzheBhfh}
+	\end{scuconclusion}
+	\begin{scuassumption}{编者不会废话}{BianzheBhfh}
 		我们可以假设编者不会废话, 假设成立, 编者当然不会废话.
-	\end{SCUassumption}
+	\end{scuassumption}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{数学公式}
@@ -348,7 +320,7 @@
 
 \subsection{页面相关}
 \begin{lrbox}{\mysavebox}
-	\begin{SCUremark}{卷王森林法则}{JuanwangSlfz}
+	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
 		补充自\vref{lemm:JuanwangSlfz}.\par
 		\textbf{\color{JXred}基本公理:}
 		\begin{enumerate}
@@ -370,7 +342,7 @@
 			\end{itemize}	
 			\item 绩点爆炸: 不同大学生绩点进步的速度和加速度几乎不可能是一致的, 弱小的大学生很可能在短时间内超越强大的大学生. 可能由内因或者外因(例如内卷的交流, 内卷的程度突然加深)引发, 继而弱小的大学生能够对强大的大学生构成内卷优势乃至内卷威胁.
 		\end{enumerate}
-	\end{SCUremark}
+	\end{scuremark}
 \end{lrbox}
 \begin{frame}[fragile,t,allowframebreaks]{环境切割}
 	\framenew{.82}
@@ -461,12 +433,12 @@
 \subsection{A}
 \begin{frame}{Tcolorbox\&Animate}
 	\begin{minipage}[c]{0.725\columnwidth}
-		\begin{SCUtcb1}{锦程梦研}
+		\begin{scutcbrb}{锦程梦研}
 			锦程梦研主题: 锦秀红与宝石蓝为渐变底色.
-		\end{SCUtcb1}
-		\begin{SCUtcb2}{浮莲落杏}
+		\end{scutcbrb}
+		\begin{scutcbyg}{浮莲落杏}
 			浮莲落杏主题: 荷叶绿与银杏黄为渐变底色.
-		\end{SCUtcb2}
+		\end{scutcbyg}
 	\end{minipage}~~~~
 	\begin{minipage}[c]{0.225\columnwidth}
 		\begin{tcolorbox}[enhanced,%
@@ -520,7 +492,7 @@
 % --------节: 参考文献--------
 % ----------------
 \section{参考文献}
-\subsection*{参考文献}
+\subsection{参考文献}
 \begin{frame}[allowframebreaks]{文献目录}
 	\nocite{*}
 	\printbibliography[heading=none]
@@ -529,7 +501,20 @@
 % --------节: 致谢--------
 % ----------------
 \section{致谢}
-\subsection*{致谢}
+\subsection{致谢}
+\begin{frame}{致谢}
+	\begin{center}
+		本模板参考了Beamer, Tcolorbox等手册, 感谢宏包原作者及维护者\\[1ex]
+		本模板参考了知乎, Stack Overflow等平台回答, 感谢相关问题解答者\\[1ex]
+		本模板使用了开源字体——楷体: 霞鹜文楷(Github \href{https://github.com/lxgw/LxgwWenKai/}{\color{BSblue}LxgwWenKai} 项目), 黑体: Source Han Sans (Github \href{https://github.com/adobe-fonts/source-han-sans/}{\color{BSblue}source-han-sans} 项目), 感谢字体设计师设计的优秀字体\\[1ex]
+		本模板参考了中国科学技术大学Beamer模板(Github \href{https://github.com/ysx2000/USTCBeamerSX/}{\color{BSblue}USTCBeamerSX} 项目), 感谢原作者提供部分设计思路\\[1ex]
+		本模板参考了清华大学Beamer模板(Github \href{https://github.com/tuna/THU-Beamer-Theme/}{\color{BSblue}THU-Beamer-Theme} 项目), 中国科学技术大学Beamer模板(Github \href{https://github.com/ustctug/ustcbeamer/}{\color{BSblue}ustcbeamer} 项目), 感谢原作者设计的优秀模板\\[1ex]
+		
+		若在使用过程中发现些许Bug, 感谢诸位理解, 在此也希望诸位能先行尝试多次编译\\[1ex]
+		万分感谢诸位批评指正, 感谢诸位对模板及对制作者的支持!
+	\end{center}
+\end{frame}
+
 \begin{frame}{~}
 	\centering
 	\Huge 谢谢

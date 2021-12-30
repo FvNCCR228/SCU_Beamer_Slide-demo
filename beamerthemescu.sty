@@ -1,0 +1,1177 @@
+%% This is file `beamerthemescu.sty'.
+%% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
+%% Auther: 1701 Wu.
+%% Provide options: 
+%%   MathFont = LM | XITS
+%%   BlockDisplay = colorful | allred | allgrey
+%%   CodeDisplay = listing | minted
+%%   ContentMuticols = true | false
+%%   Background = true | false
+
+%% 本文件为 SCU_Beamer_Slide-demo 宏包文件.
+%% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamerthemescu}[2021/12/30 v1.1a]
+%%%% ----------------------------------------------------------------
+
+
+\mode<presentation>
+
+
+% ----------------
+% Declare of Options
+% ----------------
+% 定义新的 if.
+\newif\ifbeamer@chinese
+\newif\ifbeamer@scu@contentmuticols
+\newif\ifbeamer@scu@background
+
+% 声明参数.
+\DeclareOptionBeamer{MathFont}{\def\beamer@scu@mathfont{#1}}
+\DeclareOptionBeamer{BlockDisplay}{\def\beamer@scu@blockdisplay{#1}}
+\DeclareOptionBeamer{CodeDisplay}{\def\beamer@scu@codedisplay{#1}}
+\DeclareOptionBeamer{chinese}[true]{\csname beamer@chinese#1\endcsname}
+\DeclareOptionBeamer{ContentMuticols}{\csname beamer@scu@contentmuticols#1\endcsname}
+\DeclareOptionBeamer{Background}{\csname beamer@scu@background#1\endcsname}
+
+% 预执行参数.
+\ExecuteOptionsBeamer{%
+	MathFont=LM,BlockDisplay=colorful,%
+	CodeDisplay=listing,ContentMuticols=true,%
+	Background=ture}
+\ProcessOptionsBeamer
+
+% 参数选项名称定义.
+% MathFont.
+\def\beamer@scu@codedisplaytypeminted {minted}
+\def\beamer@scu@codedisplaytypelisting{listing}
+% BlockDisplay.
+\def\beamer@scu@blockdisplaytypecolorful{colorful}
+\def\beamer@scu@blockdisplaytypeallred  {allred}
+\def\beamer@scu@blockdisplaytypeallgrey {allgrey}
+% CodeDisplay.
+\def\beamer@scu@mathfontnameXITS{XITS}
+\def\beamer@scu@mathfontnameLM  {LM}
+
+% 定义命令写法. 源自 lshort-zh-cn.
+\DeclareRobustCommand*\cmd[1]{\texttt{\char`\\#1}}
+\DeclareRobustCommand*\env[1]{\texttt{#1}}
+\DeclareRobustCommand*\marg{\@ifstar\@marg\@margmeta}
+\DeclareRobustCommand*\oarg{\@ifstar\@oarg\@oargmeta}
+\DeclareRobustCommand*\Arg[1]{\@meta{#1}}
+\def\@oarg#1{\textcolor{YYgrey}{\texttt{[#1]}}}
+\def\@oargmeta#1{\@oarg{\@meta{#1}}}
+\def\@marg#1{\texttt{\{#1\}}}
+\def\@margmeta#1{\@marg{\@meta{#1}}}
+\def\@meta#1{$\m@th\langle$\textnormal{\textit{#1}}$\m@th\rangle$}
+% ----------------
+
+
+% ----------------
+% Package Using
+% ----------------
+\RequirePackage[fontset=none]{ctex}% 提供统一的 LaTeX 中文文档框架.
+\RequirePackage{xeCJK}% xeCJK: 排版 CJK 文字.
+\RequirePackage{fontspec}% fontspec: 字体设置.
+\RequirePackage{unicode-math}% unicode-math: OpenType 数学字体.
+\RequirePackage{tikz}% tikz: 绘制图像.
+\RequirePackage{comment}% comment: 提供注释环境.
+\RequirePackage{xparse}% xparse: 指定命令参数.
+\RequirePackage{varioref}% varioref: 交叉引用.
+\RequirePackage{cleveref}% cleveref: 交叉引用.
+\RequirePackage{tcolorbox}% tcolorbox: 绘制彩色文本框.
+\RequirePackage{fbox}
+\ifx\beamer@scu@codedisplay\beamer@scu@codedisplaytypeminted%
+	\RequirePackage[outputdir=mintedbuild]{minted}% 调用 minted 宏包, 临时文件存储在 mintedbuild 文件夹.
+	\tcbuselibrary{most,xparse,listings,minted}
+	\PackageWarningNoLine{beamerthemescu}{%
+		beamerthemscu package loaded with `CodeDisplay=minted' option. %
+		Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+\else%
+	\ifx\beamer@scu@codedisplay\beamer@scu@codedisplaytypelisting%
+		\tcbuselibrary{most,xparse,listings}
+		\PackageWarningNoLine{beamerthemescu}{%
+			beamerthemscu package loaded with `CodeDisplay=listing' option. %
+			If you have configured Python environment, %
+			you are recommended to set `CodeDisplay=minted' option and %
+			install Pygments through pip. %
+			Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+	\fi%
+\fi
+\RequirePackage{adjustbox}% adjustbox: 处理盒子.
+\RequirePackage{xhfill}% xhfill: 定制化线填充.
+\RequirePackage{ifthen}% ifthen: 控制结构语句.
+\RequirePackage{fontawesome}% fontawesome: 提供可缩放矢量图标.
+\RequirePackage{tabularx}% tabularx: 智能表格环境.
+\RequirePackage[backend=biber,autolang=hyphen,%
+	style=gb7714-2015,gbalign=gb7714-2015,%style=gb7714-2015ms
+	gbstyle=false,url=false,doi=false,isbn=false,%
+	sorting=none]{biblatex}% biblatex: 参考文献.
+% ----------------
+
+
+% ----------------
+% Some Settings
+% ----------------
+% 调整左右边距.
+\setbeamersize{text margin left=0.036\paperwidth,text margin right=0.036\paperwidth}
+% 设置目录深度为 2 (显示至 subsection).
+\setcounter{tocdepth}{2}
+% 设置图片路径为项目文件夹下 `image' `images' `figure' `figures'.
+\graphicspath{{image/}{images/}{figure/}{figures/}{resources/}}
+% 导入参考文献 bib 文件.
+\addbibresource[location=local]{ref.bib}
+% 半透明化尚未出现的内容.
+\setbeamercovered{transparent}
+% 导航栏为空.
+\beamertemplatenavigationsymbolsempty
+% 参考文献设置.
+\beamertemplatetextbibitems
+% ----------------
+
+
+% ----------------
+% Page Counter Layout
+% Confirmed in v1.1a.
+% 设置页码显示为"x / total", 以命令"\insertfootlineframe"代指.
+% ----------------
+\newcommand{\insertfootlineframe}%
+	{\insertframenumber{}\;/\;\inserttotalframenumber}
+% ----------------
+
+
+% ----------------
+% Theme Layout
+% Confirmed in v1.1a.
+% 包含外部主题, 内部主题, 颜色主题.
+% ----------------
+% 外部主题 - miniframes (横排显示节, 并以圆圈显示小节).
+%\useoutertheme{miniframes}
+% 内部主题 - rounded (圆形边框).
+\useinnertheme{rounded}
+% 外部颜色 - whale.
+\usecolortheme{whale}
+% 内部颜色 - orchid.
+\usecolortheme{orchid}
+% 取消 itemize 环境编号.
+\setbeamertemplate{itemize items}[default]
+% 设置 enumerate 环境编号为圆形.
+\setbeamertemplate{enumerate items}[circle]
+% 设置目录中章节编号为圆形.
+\setbeamertemplate{sections/subsections in toc}[circle]
+% 图标题编号.
+\setbeamertemplate{caption}[numbered]
+% 定理标题编号.
+\setbeamertemplate{theorems}[numbered]
+% 设置 blocks 区块为 rounded (圆形边框), 阴影开启.
+\setbeamertemplate{blocks}[rounded][shadow=true]
+% 设置 bibliography 列表为 text 显示模式.
+\setbeamertemplate{bibliography item}[text]
+% 压缩模式.
+\beamer@compresstrue
+% ----------------
+
+
+% ----------------
+% Length Define
+% ----------------
+% A paper width for the footline.
+\newlength{\halfpaperwidth}
+% The left margin.
+\newlength{\headingleftmargin}
+% Paper width minus margins.
+\newlength{\headingwidthminusmargins}
+% Height of the heading block.
+\newlength{\headingheight}
+% Height of the footer block.
+\newlength{\footerheight}
+% The height for the titlepageheader in the title page.
+\newlength{\titlepageheaderheight}
+% The height for the footer in the title page.
+\newlength{\titlepagefooterheight}
+% The height for the main title block.
+\newlength{\titlepagemaintitleblockheight}
+% The height for the subtitle block.
+\newlength{\titlepagesubtitleblockheight}
+% The height for the name and date block.
+\newlength{\titlepagenamedateblockheight}
+% The height for the institution block.
+%\newlength{\titlepageinstitutionheight}
+% The lengths for spacing between name and date.
+\newlength{\titlepagespaceundername}
+\newlength{\titlepagespaceunderdate}
+
+% The length for the light thin bar.
+\setlength{\headingleftmargin}{0.05573\paperwidth}
+\setlength{\headingwidthminusmargins}{\paperwidth}
+\addtolength{\headingwidthminusmargins}{-\headingleftmargin}
+\setlength{\headingheight}{0.1\paperheight}
+\setlength{\footerheight}{0.09017\paperheight}
+
+\setlength{\titlepageheaderheight}{0.2\paperheight}
+\setlength{\titlepagefooterheight}{0.0\paperheight}
+\setlength{\titlepagemaintitleblockheight}{0.16\paperheight}
+\setlength{\titlepagesubtitleblockheight}{0.1\paperheight}
+\setlength{\titlepagenamedateblockheight}{0.36\paperheight}
+
+\setlength{\titlepagespaceundername}{16pt}
+\setlength{\titlepagespaceunderdate}{4pt}
+
+\setlength{\bibitemsep}{0.4ex}
+% ----------------
+
+
+% ----------------
+% Background Layout
+% Confirmed in v1.1a.
+% 设置了主题背景选项 "background=ture" & "background=false".
+% 设置了页眉 logo.
+% ----------------
+\ifbeamer@scu@background%
+	% 设置 "background.png" 为图片 "bg".
+	\pgfdeclareimage[width=\paperwidth]%
+		{bg}{./resources/background.png}
+	% 设置图片 "bg" 为背景图片.
+	\usebackgroundtemplate{\pgfuseimage{bg}}
+	% 设置 "backgroundofsubsectiontocpage.png" 为图片 "bgofsubsectoc".
+	\pgfdeclareimage[width=\paperwidth]%
+		{bgofsubsectoc}{./resources/backgroundofsubsectiontocpage.png}
+	% 设置 "backgroundoftitlepage.png" 为图片 "bgoftitle".
+	\pgfdeclareimage[width=\paperwidth]%
+		{bgoftitle}{./resources/backgroundoftitlepage.png}
+\else%
+	% 设置 "backgroundoftitlepage(Light).png" 为图片 "bgoftitle".
+	\pgfdeclareimage[width=\paperwidth]%
+		{bgoftitle}{./resources/backgroundoftitlepage(Light).png}
+\fi
+
+% 设置 "SCUname.pdf" 为图片 "logo".
+\pgfdeclareimage[width=0.16\paperwidth]{lg}{./resources/SCUname.pdf}
+% ----------------
+
+
+% ----------------
+% Color Layout
+% Confirmed in v1.1a.
+% 依据四川大学VIS视觉识别系统(2014), 定义了主题色 JXred, YYgrey, 与辅助色 BSblue, HYgreen, YXyellow. 
+% 上述定义颜色均采用 CMYK 颜色模式.
+% 注: 常用的颜色模式有 RGB 与 CMYK, 对应 LaTeX 中 rgb(0-1小数制, x/255), RGB(原始数值), cmyk(0-1小数制, x/100).
+% ----------------
+% 锦绣红 - CMYK(12,92,95,20).
+\definecolor{JXred}   {cmyk}{0.12,0.92,0.95,0.20}
+% 优雅灰 - CMYK(47,37,37,20).
+\definecolor{YYgrey}  {cmyk}{0.47,0.37,0.37,0.00}
+% 宝石蓝 - CMYK(100,60,0,15).
+\definecolor{BSblue}  {cmyk}{1.00,0.60,0.00,0.15}
+% 荷叶绿 - CMYK(100,0,90,15).
+\definecolor{HYgreen} {cmyk}{1.00,0.00,0.90,0.15}
+% 银杏黄 - CMYK(0,40,100,15).
+\definecolor{YXyellow}{cmyk}{0.00,0.40,1.00,0.15}
+% ----------------
+
+
+% ----------------
+% Element color Layout
+% ----------------
+% 调色板一设置.
+\setbeamercolor{palette primary}{bg=JXred,fg=white}
+% 调色板二设置.
+\setbeamercolor{palette secondary}{bg=YYgrey!90!black,fg=white}
+% 调色板三设置.
+\setbeamercolor{palette tertiary}{bg=JXred!90!black,fg=white}
+% 调色板四设置.
+\setbeamercolor{palette quaternary}{bg=JXred!10!white,fg=black}
+% 页眉页脚颜色设置.
+\setbeamercolor{section in head/foot}{parent=palette primary}
+\setbeamercolor{subsection in head/foot}{parent=palette primary}
+\setbeamercolor{title in head/foot}{parent=structure}
+\setbeamercolor{author in head/foot}{parent=palette primary}
+\setbeamercolor{institute in head/foot}{parent=palette secondary}
+\setbeamercolor{date in head/foot}{parent=palette primary}
+% 封页颜色设置.
+\setbeamercolor{title}{bg=JXred!10!white,fg=JXred}
+\setbeamercolor{subtitle}{bg=JXred!10!white,fg=JXred}
+\setbeamercolor{titlepageheader}{bg=white,fg=black}
+\setbeamercolor{titlepagefooter}{bg=white,fg=black}
+
+\setbeamercolor{block title}{bg=JXred,fg=white}
+\setbeamercolor{block body}{parent=palette quaternary}
+% structure 颜色设置.
+\setbeamercolor{structure}{bg=white,fg=JXred}
+% \setbeamercolor{alerted text}{fg=darkOrange}
+% ----------------
+
+
+% ----------------
+% Font Layout
+% 设置了主题数学字体选项 "mathdisplay=XITS" & "mathdisplay=LM".
+% ----------------
+%\newfontfamily\cmcsc{cmcsc10.mf}
+%\def\scshape{\cmcsc}
+%\setmainfont[SmallCapsFont]{cmcsc10.mf}
+% 设置无衬线字体为 Computer Modern Unicode Bright 字体族(Opentype 格式).
+\setsansfont{CMU Sans Serif}
+
+% 数学字体设置.
+\ifx\beamer@scu@mathfont\beamer@scu@mathfontnameXITS%
+	% 数学字体 - XITS Math.
+	\setmathfont{XITS Math}
+\else%
+	\ifx\beamer@scu@mathfont\beamer@scu@mathfontnameLM%
+		% 数学字体 - Latin Modern Math.
+		\setmathfont{Latin Modern Math}
+	\fi%
+\fi
+
+% 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
+%\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
+%\setCJKsansfont[Scale=0.956]{Microsoft YaHei}
+\setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Bold.otf}]
+%\usefonttheme{professionalfonts}
+% ----------------
+
+
+% ----------------
+% Font Sizes Layout
+% ----------------
+% 幻灯标题字体设置.
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+% 封页字体设置.
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\footnotesize,series=\bfseries}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\scriptsize}
+
+\setbeamerfont{block title}{size=\normalsize}
+\setbeamerfont{structure}{size=\normalsize,series=\bfseries}
+% 脚注字号设置.
+\setbeamerfont{footnote}{size=\scriptsize}
+% 页眉页脚字体设置.
+\setbeamerfont{section in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{subsection in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{author in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{institute in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{date in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{title in head/foot}{size=\scriptsize}
+% itemize 环境序号设置.
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+\setbeamertemplate{itemize subsubitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+% 参考文献目录字号设置为6号.
+\renewcommand*{\bibfont}{\zihao{6}}
+% ----------------
+
+
+% ----------------
+% Mini-frames Layout
+% Confirmed in v1.1a.
+% 参考了: https://tex.stackexchange.com/questions/314847/beamer-theme-antibes-plus-navigation-bar-with-circles-for-subsections/314961#314961.
+% ----------------
+% 计数器 - 小节起始页.
+\newcount\beamer@subsectionstartframe
+\beamer@subsectionstartframe=2
+% 使用 etoolbox 宏包修改 `beamerbasesection.sty' 中 \beamer@subsection 命令.
+\apptocmd{\beamer@subsection}{%
+	\addtocontents{nav}{\protect\headcommand{%
+		\protect\beamer@subsectionframes{%
+			\the\beamer@subsectionstartframe}{\the\c@framenumber}}}}{}{}
+\apptocmd{\beamer@subsection}{%
+	\beamer@subsectionstartframe=\c@framenumber\relax}{}{}
+% document 结束时设置 \headcommand 写入项. (\noexpand 表示不展开命令)
+\AtEndDocument{%
+	\immediate\write\@auxout{\string\@writefile{nav}%
+		{\noexpand\headcommand{%
+			\noexpand\beamer@subsectionframes{%
+				\the\beamer@subsectionstartframe}{\the\c@framenumber}}}}}{}{}
+% 定义小节结束页命令. (实际此处设置为后续小节起始帧, document 结束时设置为结束帧)
+\def\beamer@endframeofsubsection{2}
+\def\beamer@subsectionframes#1#2{%
+	\ifnum\c@framenumber<#1%
+	\else%
+		\ifnum\c@framenumber>#2%
+		\else%
+			\gdef\beamer@subsectionendframe{#2}%
+		\fi%
+	\fi%
+}
+% 按照 beamer 方式储存命令.
+\newcommand\insertsubsectionendframe{\beamer@subsectionendframe}
+% 计数器 - 小节中当前幻灯帧数.
+\newcounter{subsectioncurrentframe}
+% 计数器 - 小节中总幻灯帧数.
+\newcounter{subsectiontotalframes}
+% 长度 - 迷你帧间距.
+\newlength{\beamer@scu@miniframesspace}
+% #1: 迷你帧间距 - 小节幻灯帧数不大于10.
+% #2: 迷你帧间距 - 小节幻灯帧数大于10且不大于15.
+% #3: 迷你帧间距 - 小节幻灯帧数大于15.
+\def\insertsubsectionminiframes#1#2#3{%
+	% 小节当前幻灯帧数设置.
+	\setcounter{subsectioncurrentframe}{\insertframenumber}%
+	\addtocounter{subsectioncurrentframe}{1}%
+	\addtocounter{subsectioncurrentframe}{-\beamer@subsectionstartpage}%
+	% 小节总幻灯帧数设置.
+	\setcounter{subsectiontotalframes}{\insertsubsectionendframe}%
+	\addtocounter{subsectiontotalframes}{0}%
+	\addtocounter{subsectiontotalframes}{-\beamer@subsectionstartpage}%
+	% 迷你帧间距设置.
+	\ifnum\c@subsectiontotalframes>15%
+		\setlength{\beamer@scu@miniframesspace}{#3}%
+	\else%
+		\ifnum\c@subsectiontotalframes>10%
+			\setlength{\beamer@scu@miniframesspace}{#2}%
+		\else%
+			\setlength{\beamer@scu@miniframesspace}{#1}%
+		\fi%
+	\fi%
+	% foreach 循环控制 mini-frames 输出.
+	\hbox{%
+		\ifnum\c@subsectiontotalframes>1%
+			\foreach \i in {1,...,\c@subsectiontotalframes}{%
+				\usebeamercolor{mini frame}%
+				% 帧数小于当前帧, 则输出实心圆, 否则输出空心圆.
+				\ifnum\i<\numexpr\c@subsectioncurrentframe+1%
+					\hskip\beamer@scu@miniframesspace%
+					\usebeamertemplate{mini frame}%
+				\else%
+					\hskip\beamer@scu@miniframesspace%
+					\usebeamertemplate{mini frame in current section}%
+				\fi%
+			}%
+		\fi%
+	}%
+}
+% ----------------
+
+
+% ----------------
+% Headline Layout
+% 格式: SECTION (ALL) | NAME OF SCU.
+% ----------------
+\defbeamertemplate*{headline}{SCU headline theme}%
+{%
+	\leavevmode% 离开垂直模式.
+	\hbox{%
+		\begin{beamercolorbox}[wd=.8\paperwidth,ht=5.75ex,dp=.25ex]{section in head/foot}%
+			\hspace*{1.35em}%
+			\usebeamerfont{section in head/foot}\insertsectionnavigationhorizontal{.7\textwidth}{}{}%
+			\hspace*{1.175em}\normalsize\textbf{|}\vskip.02ex%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.2\paperwidth,ht=5.75ex,dp=.25ex,right]{section in head/foot}%
+			\pgfuseimage{lg}\hspace*{2.6em}%
+		\end{beamercolorbox}%
+	}%
+}
+
+\setbeamertemplate{headline}[SCU headline theme]
+% ----------------
+
+
+% ----------------
+% Frametitle Layout
+% Confirmed in v1.1a.
+% 格式 - SUBSECTION & MINI-FRAMES OF SUBSECTION | FRAMETITLE.
+% ----------------
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]%
+{beamer@frametitleshade}{\paperheight}%
+{%
+	color(0pt)=(frametitle.bg);%
+	color(\paperwidth)=(frametitle right.bg)
+}
+% 颜色 - 标题栏.
+\setbeamercolor{frametitle}{bg=black!15!white,fg=JXred}
+% 设置标题栏.
+\defbeamertemplate*{frametitle}{SCU theme}{%
+	\vskip-0.0042\textheight%
+	\leavevmode%
+	\hbox{%
+		\hskip-0.0388\textwidth%
+		\begin{beamercolorbox}[wd=0.22\paperwidth,ht=2.5ex,dp=1ex]{frametitle}
+			\raggedleft%
+			\vspace*{-1.08ex}%
+			\begingroup%
+			\xrfill[2pt]{2pt}[JXred]~%
+			\endgroup%
+			\usebeamerfont{subsection in head/foot}{\insertsubsectionhead}\par%
+			\mbox{\raisebox{-.388ex}{%
+				\insertsubsectionminiframes{1.8pt}{1.5pt}{1.2pt}%
+				\hspace*{.1em}}}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=0.78\paperwidth,ht=2.5ex,dp=1ex]{frametitle}
+			~\rule[-.12em]{.25em}{1em}~%
+			\usebeamerfont{frametitle}\usebeamercolor[fg]{structure}%
+			\insertframetitle
+		\end{beamercolorbox}%
+	}%
+}
+
+\setbeamertemplate{frametitle}[SCU theme]
+% ----------------
+
+
+% ----------------
+% Footline Layout
+% 格式: AUTHOR | INSTITUTE | DATE FRAMENUMBER.
+% ----------------
+\defbeamertemplate*{footline}{SCU footline theme}%
+{%
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.25\paperwidth,ht=3ex,dp=.75ex,left]{author in head/foot}%
+			\hspace*{1.125em}\usebeamerfont{author in head/foot}\insertshortauthor
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=3ex,dp=.75ex,center]{institute in head/foot}%
+			\usebeamerfont{institute in head/foot}\insertshortinstitute
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.25\paperwidth,ht=3ex,dp=.75ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{.8em}
+			\insertfootlineframe\hspace*{.8em}
+		\end{beamercolorbox}}%
+	\vskip0ex%
+}
+\setbeamertemplate{footline}[SCU footline theme]
+% ----------------
+
+
+% ----------------
+% Navigation Symbols Layout
+% 格式: TITLE | NAVIGATION SYMBOLS.
+% ----------------
+\setbeamertemplate{navigation symbols}{}
+\addtobeamertemplate{footline}{%
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=0.6\paperwidth,ht=3ex,dp=.75ex]{frametitle}%
+			\mbox{\raisebox{0.1ex}{%
+				\hspace*{1.2em}\usebeamerfont{title in head/foot}\usebeamercolor[fg]{structure}\insertshorttitle}}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=0.4\paperwidth,ht=3ex,dp=.75ex,right,rightskip=1.2em]{frametitle}%
+			\usebeamercolor[fg]{navigation symbols}\insertslidenavigationsymbol%
+			\insertframenavigationsymbol%
+			\insertsubsectionnavigationsymbol%
+			\insertsectionnavigationsymbol%
+			\insertdocnavigationsymbol%
+			\insertbackfindforwardnavigationsymbol%
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}{}
+% ----------------
+
+
+% ----------------
+% Title Page Layout
+% ----------------
+\setbeamertemplate{title page}%
+{%	
+	
+	\begin{beamercolorbox}[sep=0cm,right,wd=0.0001\paperwidth,ht=\titlepageheaderheight,%
+		rightskip=\headingleftmargin]{pkured!5!white}
+		\vskip0.0361\titlepageheaderheight
+	\end{beamercolorbox}
+	\begin{beamercolorbox}[center,wd=0.92\paperwidth,ht=\titlepagemaintitleblockheight,%
+		rounded=true,shadow=true]{title}
+		\usebeamerfont{title}\inserttitle
+		\vskip\titlepagespaceunderdate%
+		\usebeamerfont{subtitle}\insertsubtitle
+		\vskip\titlepagespaceunderdate%
+	\end{beamercolorbox}
+	\vskip\titlepagespaceundername%
+	\medskip%
+	\begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagenamedateblockheight]{white}
+		\usebeamerfont{author}\insertauthor\\
+		\vskip\titlepagespaceunderdate%
+		%		\medskip%
+		\usebeamerfont{institute}\insertinstitute\\
+		\vskip\titlepagespaceunderdate%
+		%		\medskip%
+		\usebeamerfont{date}\insertdate \;\;
+		\vskip\titlepagespaceunderdate%
+	\end{beamercolorbox}%
+	\begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagefooterheight]{titlepagefooter}
+	\end{beamercolorbox}
+
+}
+% ----------------
+
+
+% ----------------
+% Tcolorbox Style Layout
+% Confirmed in v1.1a.
+% 定义了多种 Tcolorbox 盒子的基础样式.
+% ----------------
+% 盒子基础样式定义.
+% 普通盒子基础样式定义.
+% #1: 关键字 - 样式类型.
+% #2: 上部颜色.
+% #3: 下部颜色.
+\def\beamer@scu@tcbstyle#1#2#3{%
+	\tcbset{tcb#1style/.style=%
+		{enhanced jigsaw,%
+		drop fuzzy shadow southeast,%
+		toprule=1mm,leftrule=1mm,%
+		boxsep=-.5mm,arc=1.5mm,%
+		left=1.8mm,right=2mm,top=2.5mm,%
+		fonttitle=\normalsize\bfseries,%
+		frame style={%
+			upper left=#2,upper right=#2!50,%
+			lower left=#3!50,lower right=#3},%
+		interior style={white,opacity=.8},%
+		segmentation style={%
+			black,solid,%
+			opacity=.2,line width=1pt},%
+		breakable,break at=.78\textheight,%
+		pad at break=.5ex}%
+	}%
+}
+% 定理盒子基础样式定义.
+% #1: 关键字 - 样式类型.
+% #2: 颜色.
+\def\beamer@scu@tcbstyletheo#1#2{%
+	\tcbset{tcb#1style/.style=%
+		{enhanced jigsaw,%
+		drop fuzzy shadow southeast,%
+		toprule=3mm,leftrule=1mm,%
+		boxsep=-.5mm,%
+		arc=1.5mm,%
+		left=1.8mm,right=2mm,top=2.5mm,%
+		colback=#2!3!white,colframe=#2,%
+		coltitle=black,opacityback=.95,%
+		attach boxed title to top left={%
+			yshift=-4mm,xshift=2mm},%
+		boxed title style={%
+			arc=2.5mm,%
+			top=-.5mm,bottom=-.5mm,%
+			leftrule=1.5mm,rightrule=1.5mm,%
+			colback=#2!8!white,colframe=#2},%
+		fonttitle=\normalsize\bfseries,%
+		breakable,break at=.78\textheight,%
+		pad at break=.5ex}%
+	}%
+}
+% 代码盒子基础样式定义.
+% #1: 关键字 - 样式类型.
+% #2: 颜色.
+\def\beamer@scu@tcbstylelist#1#2{%
+	\tcbset{tcb#1style/.style=%
+		{enhanced jigsaw,%
+		drop fuzzy shadow southeast,%
+		boxsep=-.5mm,%
+		arc=1.5mm,%
+		left=4.5mm,%
+		colback=#2!3!white,colframe=#2,%
+		coltext=black,%
+		listing only,%
+		breakable,break at=.78\textheight,%
+		pad at break=.5ex}%
+	}%
+}
+% #1: 颜色.
+% ##1: 标题.
+% ##2: 后缀 - 标签.
+\def\beamer@scu@tcbstylelistextended#1{%
+	\tcbset{%
+		tcblistextendedcodestyle/.style 2 args=%
+			{boxrule=.5mm,%
+			toptitle=.25mm,bottomtitle=-.25mm,%
+			overlay={%
+				\begin{tcbclipinterior}
+					\fill[#1!15!YXyellow!10!white] (frame.south west)
+					rectangle ([xshift=4mm]frame.north west);
+				\end{tcbclipinterior}},%
+			title={%
+				\begin{tabularx}{\textwidth}{c >{\centering\let\newline\\\arraybackslash}X c}
+					\faCode&%
+					{\textbf{代码~\thetcbcounter}\ifthenelse{\equal{##1}{}}{}{\textbf{:} \textit{##1}}}%
+					&\faCode%
+				\end{tabularx}},%
+			IfValueT={##2}{label={code:##2}}},%
+		tcblistextendedshowstyle/.style 2 args=%
+			{toprule=3mm,leftrule=1mm,%
+			attach boxed title to top left={%
+				yshift=-4mm,xshift=2mm},%
+			boxed title style={%
+				arc=2.5mm,%
+				top=-.5mm,bottom=-.5mm,%
+				leftrule=1.5mm,rightrule=1.5mm,%
+				colback=#1!8!white,colframe=#1},%
+			fonttitle=\normalsize\bfseries,%
+			title={##1},IfValueT={##2}{label={show:##2}},%
+			coltitle=black}%
+	}%
+}
+
+% 基础样式应用.
+\beamer@scu@tcbstyle{rb}{JXred}   {BSblue}
+\beamer@scu@tcbstyle{yg}{YXyellow}{HYgreen}
+\ifx\beamer@scu@blockdisplay\beamer@scu@blockdisplaytypecolorful%
+	\beamer@scu@tcbstyletheo{theo}{JXred}
+	\beamer@scu@tcbstyletheo{exa} {YYgrey}
+	\beamer@scu@tcbstyletheo{def} {BSblue}
+	\beamer@scu@tcbstyletheo{lem} {HYgreen}
+	\beamer@scu@tcbstyletheo{cond}{YXyellow}
+	\beamer@scu@tcbstylelist{list}{JXred}
+	\beamer@scu@tcbstylelistextended{JXred}
+\else%
+	\ifx\beamer@scu@blockdisplay\beamer@scu@blockdisplaytypeallred%
+		\beamer@scu@tcbstyletheo{theo}{JXred}
+		\beamer@scu@tcbstyletheo{exa} {JXred}
+		\beamer@scu@tcbstyletheo{def} {JXred}
+		\beamer@scu@tcbstyletheo{lem} {JXred}
+		\beamer@scu@tcbstyletheo{cond}{JXred}
+		\beamer@scu@tcbstylelist{list}{JXred}
+		\beamer@scu@tcbstylelistextended{JXred}
+	\else%
+		\ifx\beamer@scu@blockdisplay\beamer@scu@blockdisplaytypeallgrey%
+			\beamer@scu@tcbstyletheo{theo}{YYgrey}
+			\beamer@scu@tcbstyletheo{exa} {YYgrey}
+			\beamer@scu@tcbstyletheo{def} {YYgrey}
+			\beamer@scu@tcbstyletheo{lem} {YYgrey}
+			\beamer@scu@tcbstyletheo{cond}{YYgrey}
+			\beamer@scu@tcbstylelist{list}{YYgrey}
+			\beamer@scu@tcbstylelistextended{YYgrey}
+		\fi%
+	\fi%
+\fi
+% ----------------
+
+
+% ----------------
+% Tcolorbox Layout
+% Confirmed in v1.1a.
+% 定义了两个渐变样式( rb 为红蓝渐变, yg 为黄绿渐变)的 Tcolorbox.
+% #1: <可选>附加参数.
+% #2: 标题.
+% ----------------
+\newtcolorbox{scutcbrb}[2][]{%
+	tcbrbstyle,title={#2},#1}
+\newtcolorbox{scutcbyg}[2][]{%
+	tcbygstyle,title={#2},#1}
+% ----------------
+
+
+% ----------------
+% Theorem Layout
+% Confirmed in v1.1a.
+% 使用 tcolorbox 重定义定理环境, 原始的不带 scu 前缀的定理环境仍可使用.
+% ----------------
+% 定理区块名称设置.
+\def\beamer@scu@theonametheorem			{定理}
+\def\beamer@scu@theonameexample			{例}
+\def\beamer@scu@theonamealgorithm		{算法}
+\def\beamer@scu@theonamedefinition	{定义}
+\def\beamer@scu@theonameaxiom				{公理}
+\def\beamer@scu@theonameproperty		{性质}
+\def\beamer@scu@theonameproposition	{命题}
+\def\beamer@scu@theonamelemma				{引理}
+\def\beamer@scu@theonamecorollary		{推论}
+\def\beamer@scu@theonamecondition		{条件}
+\def\beamer@scu@theonameconclusion	{结论}
+\def\beamer@scu@theonameassumption	{假设}
+\def\beamer@scu@theonameremark			{注}
+\def\beamer@scu@theonameproof				{证明}
+
+% theorem, example, algorithm, definition, axiom, property, proposition, lemma, corollary, condition, conclusion, assumption 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@scu@theorem@count}
+\newcounter{beamer@scu@example@count}
+\newcounter{beamer@scu@algorithm@count}
+\newcounter{beamer@scu@definition@count}
+\newcounter{beamer@scu@axiom@count}
+\newcounter{beamer@scu@property@count}
+\newcounter{beamer@scu@proposition@count}
+\newcounter{beamer@scu@lemma@count}
+\newcounter{beamer@scu@corollary@count}
+\newcounter{beamer@scu@condition@count}
+\newcounter{beamer@scu@conclusion@count}
+\newcounter{beamer@scu@assumption@count}
+% 定理区块参数设置.
+% #1: 后缀 - 环境名称.
+% #2: 前缀 - 样式类型.
+% #3: 前缀 - 标签.
+% ##1: <可选>附加参数 - Tcolorbox.
+% ##2: 标题.
+% ##3: 后缀 - 标签.
+\def\beamer@scu@theo#1#2#3{%
+	\newtcolorbox[use counter=beamer@scu@#1@count,%
+	number within=section]{beamerscuoriginal#1}[3][]{%
+		title={\csname beamer@scu@theoname#1\endcsname~%
+			\thetcbcounter\ifstrempty{##2}{}{:~##2}},%
+		IfValueT={##3}{label={#3:##3}},#2style,##1}%
+	\newenvironment<>{scu#1}[3][]%
+		{\begin{actionenv}##4\begin{beamerscuoriginal#1}[##1]{##2}{##3}}%
+		{\end{beamerscuoriginal#1}\end{actionenv}}%
+}
+\beamer@scu@theo{theorem}			{tcbtheo}	{theo}
+\beamer@scu@theo{example}			{tcbexa}	{exam}
+\beamer@scu@theo{algorithm}		{tcbexa}	{algo}
+\beamer@scu@theo{definition}	{tcbdef}	{def}
+\beamer@scu@theo{axiom}				{tcbtheo}	{axio}
+\beamer@scu@theo{property}		{tcbdef}	{prope}
+\beamer@scu@theo{proposition}	{tcbdef}	{propo}
+\beamer@scu@theo{lemma}				{tcblem}	{lemm}
+\beamer@scu@theo{corollary}		{tcblem}	{coro}
+\beamer@scu@theo{condition}		{tcbcond}	{cond}
+\beamer@scu@theo{conclusion}	{tcblem}	{conc}
+\beamer@scu@theo{assumption}	{tcbcond}	{assu}
+
+% scuremark 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@scu@remark@count}
+% 定理区块参数设置.
+% #1: <可选>附加参数 - Tcolorbox.
+% #2: 标题.
+% #3: 后缀 - 标签.
+\newtcolorbox[use counter=beamer@scu@remark@count,%
+	no counter]{beamerscuoriginalremark}[3][]{%
+		title={\beamer@scu@theonameremark%
+			\ifstrempty{#2}{}{:~#2}},%
+		IfValueT={#3}{label={rema:#3}},%
+		tcbexastyle,#1}
+\newenvironment<>{scuremark}[3][]%
+	{\begin{actionenv}#4\begin{beamerscuoriginalremark}[#1]{#2}{#3}}%
+	{\end{beamerscuoriginalremark}\end{actionenv}}
+
+% scuproof 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@scu@proof@count}
+% 定理区块参数设置.
+%\providecommand\pushQED{\def\beamer@qed}
+%\pushQED{\qed}
+% #1: <可选>附加参数 - Tcolorbox.
+% #2: 标题.
+% #3: 后缀 - 标签.
+\newtcolorbox[use counter=beamer@scu@proof@count,%
+	no counter]{beamerscuoriginalproof}[3][]{%
+		title={% \@addpunct: Be intelligently omitted when punctuation is already present.
+			\ifblank{#2}{\beamer@scu@theonameproof}{#2}\@addpunct{.}},%
+		after upper={\par\hfill\qed},%
+		IfValueT={#3}{label={proo:#3}},%
+		tcbexastyle,#1}
+\newenvironment<>{scuproof}[3][]%
+	{\begin{actionenv}#4\begin{beamerscuoriginalproof}[#1]{#2}{#3}}%
+	{\end{beamerscuoriginalproof}\end{actionenv}}
+% Beamer 下原始 proof 环境.
+%\renewenvironment<>{SCUproof}[1][证明]{%
+%	\par
+%	\def\insertproofname{#1\@addpunct{.}}%
+%	\pushQED{\qed}
+%	\usebeamertemplate{proof begin}#2}
+%{\popQED\usebeamertemplate{proof end}}
+
+% 智能引用名称定义.
+\Crefname{beamer@scu@theorem@count}%
+	{\beamer@scu@theonametheorem}%
+	{\beamer@scu@theonametheorem}
+\Crefname{beamer@scu@example@count}%
+	{\beamer@scu@theonameexample}%
+	{\beamer@scu@theonameexample}
+\Crefname{beamer@scu@algorithm@count}%
+	{\beamer@scu@theonamealgorithm}%
+	{\beamer@scu@theonamealgorithm}
+\Crefname{beamer@scu@definition@count}%
+	{\beamer@scu@theonamedefinition}%
+	{\beamer@scu@theonamedefinition}
+\Crefname{beamer@scu@axiom@count}%
+	{\beamer@scu@theonameaxiom}%
+	{\beamer@scu@theonameaxiom}
+\Crefname{beamer@scu@property@count}%
+	{\beamer@scu@theonameproperty}%
+	{\beamer@scu@theonameproperty}
+\Crefname{beamer@scu@proposition@count}%
+	{\beamer@scu@theonameproposition}%
+	{\beamer@scu@theonameproposition}
+\Crefname{beamer@scu@lemma@count}%
+	{\beamer@scu@theonamelemma}%
+	{\beamer@scu@theonamelemma}
+\Crefname{beamer@scu@corollary@count}%
+	{\beamer@scu@theonamecorollary}%
+	{\beamer@scu@theonamecorollary}
+\Crefname{beamer@scu@condition@count}%
+	{\beamer@scu@theonamecondition}%
+	{\beamer@scu@theonamecondition}
+\Crefname{beamer@scu@conclusion@count}%
+	{\beamer@scu@theonameconclusion}%
+	{\beamer@scu@theonameconclusion}
+\Crefname{beamer@scu@assumption@count}%
+	{\beamer@scu@theonameassumption}%
+	{\beamer@scu@theonameassumption}
+\Crefname{beamer@scu@remark@count}%
+	{\beamer@scu@theonameremark}%
+	{\beamer@scu@theonameremark}
+\Crefname{beamer@scu@proof@count}%
+	{\beamer@scu@theonameproof}%
+	{\beamer@scu@theonameproof}
+% ----------------
+
+
+% ----------------
+% Listing Layout
+% Confirmed in v1.1a.
+% listing 设置修改源于: https://guokliu.blog.csdn.net/article/details/113715659.
+% 定义了一个用作代码演示的 Listing, 和一个不带计数的 Listing.
+% ----------------
+% 计数器 - 抄录环境.
+\newcounter{beamer@scu@code@count}
+% 智能引用名称定义.
+\Crefname{beamer@scu@code@count}{代码}{代码}
+% SCUcode, SCUshow 设置.
+% ##1: <可选>附加参数 - Tcolorbox.
+% ##2: 标题.
+% ##3: 代码语言.
+% ##4: 附加参数 - minted & listing.
+% ##5: 后缀 - 标签.
+\def\beamer@scu@tcblistminted{%
+	% 参数 minted 下 SCUcode 与SCUshow 环境设置.
+	\newtcblisting[use counter=beamer@scu@code@count,%
+		number format=\arabic]{scucode}[5][]{%
+			listing engine=minted,minted language={##3},%
+			minted options={%
+				autogobble,linenos,breaklines,%
+				tabsize=4,numbersep=1mm,%
+				fontsize=\scriptsize\ttfamily,##4},%
+			tcbliststyle,%
+			tcblistextendedcodestyle={##2}{##5},%
+			##1}
+	\newtcblisting{scushow}[5][]{%
+		listing engine=minted,minted language={##3},%
+		minted options={%
+			autogobble,linenos,breaklines,%
+			tabsize=4,numbersep=1mm,%
+			fontsize=\scriptsize\ttfamily,##4},%
+		tcbliststyle,%
+		tcblistextendedshowstyle={##2}{##5},%
+		top=2.5mm,##1}%
+}
+\def\beamer@scu@tcblistlisting{%
+	% 参数 listing 下 SCUcode 与SCUshow 环境设置.
+	\newtcblisting[use counter=beamer@scu@code@count,%
+		number format=\arabic]{scucode}[5][]{%
+			listing engine=listings,%
+			listing options={%
+				breaklines,tabsize=4,%style=tcblatex,
+				language={##3},%
+				extendedchars=true,%
+				columns=fixed,%
+				aboveskip=-1mm,belowskip=-1mm,%
+				xrightmargin=-1.5mm,%
+				numbers=left,numbersep=1mm,%
+				numberstyle=\tiny\color{black},%
+				basicstyle=\scriptsize\ttfamily,%
+				keywordstyle=\color{JXred},%
+				commentstyle=\color{HYgreen},%
+				stringstyle=\color{YXyellow},##4},%
+			tcbliststyle,%
+			tcblistextendedcodestyle={##2}{##5},%
+			##1}
+	\newtcblisting{scushow}[5][]{%
+		listing engine=listings,%
+		listing options={%
+			breaklines,tabsize=4,%style=tcblatex,
+			language={##3},%
+			extendedchars=true,%
+			columns=fixed,%
+			aboveskip=-1mm,belowskip=-1mm,%
+			xrightmargin=-4mm,%
+			numbers=left,numbersep=1mm,%
+			numberstyle=\tiny\color{black},%
+			basicstyle=\scriptsize\ttfamily,%
+			keywordstyle=\color{JXred},%
+			commentstyle=\color{HYgreen},%
+			stringstyle=\color{YXyellow},##4},%
+		tcbliststyle,%
+		tcblistextendedshowstyle={##2}{##5},%
+		top=3mm,right=3.5mm,##1}%
+}
+
+% 代码环境选择设置.
+\ifx\beamer@scu@codedisplay\beamer@scu@codedisplaytypeminted%
+	\beamer@scu@tcblistminted
+\else%
+	\ifx\beamer@scu@codedisplay\beamer@scu@codedisplaytypelisting%
+		\beamer@scu@tcblistlisting
+	\fi%
+\fi
+% ----------------
+
+
+% ----------------
+% Automatic Frame Layout
+% Confirmed in v1.1a.
+% 以下设置自动帧输出, 含封页, 小节前目录页.
+% ----------------
+% 添加封页.
+\AtBeginDocument{%
+	\begingroup%
+		\setbeamertemplate{background}{\pgfuseimage{bgoftitle}}%
+		% 取消页眉残留空白.
+		\vspace*{-\dimexpr\headheight+\topskip\relax}%
+		\begin{frame}[plain]
+			%\transfade 渐变
+			\titlepage% 显示 titlepage.
+		\end{frame}
+	\endgroup%
+}
+
+% 定义目录输入命令.
+\def\inserttableofcontent{
+	\ifbeamer@scu@contentmuticols%
+		\begin{multicols}{2}
+			\tableofcontents[%
+				sectionstyle=show/shaded,%
+				subsectionstyle=show/shaded/hide,%
+				subsubsectionstyle=show/shaded/hide]%
+		\end{multicols}
+	\else%
+		\tableofcontents[%
+			sectionstyle=show/shaded,%
+			subsectionstyle=show/shaded/hide,%
+			subsubsectionstyle=show/shaded/hide]%
+	\fi%
+}
+% 小节前加目录.
+\AtBeginSubsection[]{%
+	\begingroup%
+		\ifbeamer@scu@background%
+			\setbeamertemplate{background}{\pgfuseimage{bgofsubsectoc}}%
+		\fi%
+		\begin{frame}{目录}
+			\inserttableofcontent%
+		\end{frame}
+	\endgroup%
+}
+% ----------------
+
+
+% ----------------
+% Environment Break Layout
+% 实现 tcolorbox 等环境的分页显示, 目前仍有 bug 如 tcolorbox 的阴影, 以及需要手动控制距离实现分页.
+% 若内容长度未超过当页, 仍能正常显示.
+% 代码来源于 https://tex.stackexchange.com/questions/509208/breakable-tcolorbox-inside-a-beamer-slide/.
+% ----------------
+\newsavebox{\mysavebox}
+\newlength{\myrest}
+
+\newlength{\Textheight}
+
+\newif\iffirstframe
+\firstframetrue
+
+\newcommand\framenew[1]{%
+\setlength{\Textheight}{#1\textheight}%
+\ifdim\ht\mysavebox>\Textheight%
+\setlength{\myrest}{\ht\mysavebox}%
+\loop\ifdim\myrest>\Textheight%
+\iffirstframe%
+\firstframefalse%
+\else%
+\newpage\par\noindent%
+\fi%
+\clipbox{0 {\myrest-\Textheight} 0 {\ht\mysavebox-\myrest}}{\usebox{\mysavebox}}%
+\addtolength{\myrest}{-\Textheight}%
+\repeat%
+\newpage\par\noindent%
+\clipbox{0 0 0 {\ht\mysavebox-\myrest}}{\usebox{\mysavebox}}%
+\else%
+\usebox{\mysavebox}%
+\fi}
+% ----------------
+
+
+% ----------------
+% Ref Layout
+% 重定义了 \vref & \cref 命令, 实现跳转.
+% 重定义了页码计数器 page, 实现环境 frame 输出后值与计数器 framenumber 相同, 从而实现引用时页码不为 pdf 页码.
+% 定义了中文下的 varioref 和 cleveref 包的显示项. (部分具体定义未知, 故未翻译)
+% ----------------
+% 重定义 \vref & \cref.
+\let\soscref\cref % 储存 \cref 原始命令.
+\let\sosvref\vref % 储存 \vref 原始命令.
+\renewcommand{\cref}[1]{\hyperlink{#1}{\soscref{#1}}}
+\renewcommand{\vref}[1]{\hyperlink{#1}{\sosvref{#1}}}
+
+% 重定义计数器 page.
+\AtBeginEnvironment{beamer@framepauses}{\setcounter{page}{\c@framenumber}}
+
+% 定义 varioref 和 cleveref 包的中文显示项.
+\ifbeamer@chinese
+	\vref@addto\extraschinese{%
+		\def\reftextfaceafter {见\reftextvario{对}{下}页}%
+		\def\reftextfacebefore{见\reftextvario{对}{前}页}%
+		\def\reftextafter     {见\reftextvario{下}{后}页}%
+		\def\reftextbefore    {见\reftextvario{上}{前}页}%
+		\def\reftextcurrent   {见\reftextvario{本}{此}页}%
+		\def\reftextfaraway#1{见第\pageref{#1}~页}%
+		\def\reftextpagerange#1#2{见第\pageref{#1}~到第\pageref{#2}~页}%
+		\def\reftextlabelrange#1#2{\ref{#1}到~\ref{#2}}%
+		\def\vrefformat#1#2{\ref{#2}（\vpageref[#1]{#2}）}%
+		\def\Vrefformat#1#2{\Ref{#2}（\vpageref[#1]{#2}）}%
+		\def\fullrefformat#1{\ref{#1}（\reftextfaraway{#1}）}%
+		\def\vrefrangeformat#1#2#3{\reftextlabelrange{#2}{#3}%
+			（\vpagerefrange[{#1}]{#2}{#3}）}%
+	}
+		%\cref@addlanguagedefs\extraschinese{%
+		\newcommand{\crefrangeconjunction}{ 到\nobreakspace}%
+		\newcommand\crefrangepreconjunction{}%
+		\newcommand\crefrangepostconjunction{}%
+		\newcommand{\crefpairconjunction}{ 和\nobreakspace}%
+		\newcommand{\crefmiddleconjunction}{, }%
+		\newcommand{\creflastconjunction}{ 和\nobreakspace}%
+		\newcommand{\crefpairgroupconjunction}{ 和\nobreakspace}%
+		\newcommand{\crefmiddlegroupconjunction}{, }%
+		\newcommand{\creflastgroupconjunction}{, 和\nobreakspace}%
+	% crefname
+	\Crefname{framenumber}{幻灯}{幻灯}
+	\Crefname{equation}{式}{式}%
+	\Crefname{figure}{图}{图}%
+	\Crefname{subfigure}{图}{图}%
+	\Crefname{table}{表}{表}%
+	\Crefname{subtable}{表}{表}%
+	\Crefname{page}{页}{页}%
+	\Crefname{part}{Part}{Parts}%
+	\Crefname{chapter}{章}{章}%
+	\Crefname{section}{节}{节}%
+	\Crefname{subsection}{节}{节}%
+	\Crefname{subsubsection}{节}{节}%
+	\Crefname{appendix}{附录}{附录}%
+	\Crefname{subappendix}{附录}{附录}%
+	\Crefname{subsubappendix}{附录}{附录}%
+	\Crefname{subsubsubappendix}{附录}{附录}%
+	\Crefname{enumi}{点}{点}%
+	\Crefname{enumii}{点}{点}%
+	\Crefname{enumiii}{点}{点}%
+	\Crefname{enumiv}{点}{点}%
+	\Crefname{enumv}{点}{点}%
+	\Crefname{footnote}{脚注}{脚注}%
+	\Crefname{theorem}{定理}{定理}%
+	\Crefname{lemma}{引理}{引理}%
+	\Crefname{corollary}{推论}{推论}%
+	\Crefname{proposition}{命题}{命题}%
+	\Crefname{definition}{定义}{定义}%
+	\Crefname{result}{结果}{结果}%
+	\Crefname{example}{例}{例}%
+	\Crefname{remark}{注}{注}%
+	\Crefname{note}{注}{注}%
+	\Crefname{algorithm}{算法}{算法}%
+	\Crefname{listing}{代码}{代码}%
+	\Crefname{line}{Line}{Lines}%
+	%}
+\fi
+% ----------------
+
+
+% ----------------
+% Bib Layout
+% Confirmed in v1.1a.
+% ----------------
+% 设置参考文献脚注引用.
+\newcommand{\footfullcitetext}[2][]{%
+	\footnotetext{\fullcite[#1]{#2}}}
+% ----------------
+
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+%% End of file `scubeamer.sty'.
