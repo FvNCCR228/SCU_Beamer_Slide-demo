@@ -1,10 +1,11 @@
-%% This is file `manual.tex'.
-%% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
-%% Auther: 1701 Wu.
-%% 本文件为 SCU_Beamer_Slide-demo 用户手册源文件.
-%% !Mode:: "TeX:UTF-8"
-%% !Tex program = XeLaTeX & Biber
-%% !使用前请阅读用户手册.
+% !TeX encoding = UTF-8
+% !BIB TS-program = biber
+% !TeX TS-program = xelatex
+% This is file `manual.tex'.
+% Copyright (C) 2021-2022 by Linrong Wu.
+% Version: 2022/03/10 v1.2a (Original Version: 2021/11/30 v1.0a).
+% 本文件为 SCU_Beamer_Slide-demo 用户手册源文件.
+% !使用前请阅读用户手册.
 
 % ================ %
 %      导言区      %
@@ -34,7 +35,6 @@
 \usepackage{mathtools}
 \usepackage[english]{babel}
 \usepackage{color}      % color content
-\usepackage{xcolor}
 \usepackage{url}        % hyperlinks
 \usepackage{multicol,multirow}
 \usepackage{ulem} % ulem: 添加线.
@@ -57,17 +57,16 @@
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
 % ----------------
 \title[四川大学Beamer模板 | User's Manual]{\zihao{3} 四川大学Beamer模板}
-\subtitle{用户手册~~~~Rev~1.1a} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\subtitle{用户手册~~~~Rev~v1.2a} % subtitle 未设置页脚显示项, 请在 title 中设置.
 \author[我不卷, 你才卷]{\noindent 马老卷}
-\institute[Business School, Sichuan University]
-{%
+\institute{%
 	\noindent Management Science\\
 	\medskip
 	\noindent Business School, Sichuan University\\
 	\medskip
 	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
 }
-\date[2021/12/30]{\noindent 2021/12/30}
+\date{\noindent 2022/03/10}
 
 % ---------------- %
 %      正文区      %
@@ -117,24 +116,26 @@
 		\item 项目地址:
 		\begin{itemize}
 			\item 使用前请前往下列地址中查看模板版本!
-			\item Github: {\color{BSblue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
-			\item Gitee: \color{BSblue}\url{https://gitee.com/NCCR/SCU_Beamer_Slide-demo}
+			\item Github: {\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+			\item Gitee: \color{scublue}\url{https://gitee.com/NCCR/SCU_Beamer_Slide-demo}
 		\end{itemize}
 %			\framebreak
 %		\pagebreak
 		\item 联系方式:
 		\begin{itemize}
-			\item 制作者: 522869009@qq.com
+			\item 制作者: linrong.wu.interact@outlook.com
+			
+			OR linrong.wu.work@outlook.com
 		\end{itemize}
 	\end{itemize}
 	目前仅在制作者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
 \end{frame}
 
 \begin{frame}{模板设计}
-	\textbf{背景:} 封面与正文板块采用{\color{JXred}不同背景}, 正文背景采用{\color{JXred}低透明度淡色}, 增强正文文本等辨识性.\\[1ex]
-	\textbf{页眉:} 采用双行设计, 首行为{\color{JXred}节标题导航栏}, 显示幻灯整体思路, 还附带四川大学校名; 次行为标题栏, 左侧显示{\color{JXred}小节标题}与{\color{JXred}迷你帧(圆点)形式的当前小节帧进度}, 右侧显示当前{\color{JXred}幻灯标题}. (编者认为小节迷你帧能在较清晰呈现进度的同时, 节约大量空间, 也能避免某节中幻灯页数过多, 导致标题导航挤压溢出)\\[1ex]
-	\textbf{页脚:} 采用双行设计, 首行为导航栏, 左侧显示{\color{JXred}报告标题}, 右侧为{\color{JXred}导航模块}; 次行为信息行, 左中右分别为{\color{JXred}作者}、{\color{JXred}机构}、{\color{JXred}日期与页码}.\\[1ex]
-	\textbf{环境:} 模板定义了{\color{JXred}定理}, {\color{JXred}代码}等多种环境演示.
+	\textbf{背景:} 封面与正文板块采用{\color{scured}不同背景}, 正文背景采用{\color{scured}低透明度淡色}, 增强正文文本等辨识性.\\[1ex]
+	\textbf{页眉:} 采用双行设计, 首行为{\color{scured}节标题导航栏}, 显示幻灯整体思路, 还附带四川大学校名; 次行为标题栏, 左侧显示{\color{scured}小节标题}与{\color{scured}迷你帧(圆点)形式的当前小节帧进度}, 右侧显示当前{\color{scured}幻灯标题}. (编者认为小节迷你帧能在较清晰呈现进度的同时, 节约大量空间, 也能避免某节中幻灯页数过多, 导致标题导航挤压溢出)\\[1ex]
+	\textbf{页脚:} 采用双行设计, 首行为导航栏, 左侧显示{\color{scured}报告标题}, 右侧为{\color{scured}导航模块}; 次行为信息行, 左中右分别为{\color{scured}作者}、{\color{scured}机构}、{\color{scured}日期与页码}.\\[1ex]
+	\textbf{环境:} 模板定义了{\color{scured}定理}, {\color{scured}代码}等多种环境演示.
 \end{frame}
 
 \subsection{使用注意}
@@ -142,22 +143,22 @@
 	\begin{itemize}
 		\item<1-> \LaTeX 编辑器:
 		\begin{itemize}
-			\item<1-> 本地: TeX Live (推荐\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}{\color{BSblue}清华大学开源软件镜像站}安装最新版)配合TeXstudio或VS Code使用. TeX Live安装时间极长, 请各位做好心理准备. 此外Apple设备IDE平台建议知乎;
+			\item<1-> 本地: TeX Live (推荐\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}{\color{scublue}清华大学开源软件镜像站}安装最新版)配合TeXstudio或VS Code使用. TeX Live安装时间极长, 请各位做好心理准备. 此外Apple设备IDE平台建议知乎;
 			\item<1-> 在线: Overleaf平台, Slager平台 (听说过但未曾使用).
 		\end{itemize}
 		\item<2-> \LaTeX 相关插件:
 		\begin{itemize}
-			\item<2-> 表格转换: Excel2\LaTeX~(\href{https://www.ctan.org/tex-archive/support/excel2latex/}{\color{BSblue}CTAN Excel2\LaTeX});
-			\item<2-> 在线公式: \href{https://www.latexlive.com/}{\color{BSblue}LaTeX公式编辑器}, \href{https://mathpix.com/}{\color{BSblue}
-				Mathpix}~\&~\href{https://mathf.itewqq.cn/}{\color{BSblue}图片在线转LaTeX}.
+			\item<2-> 表格转换: Excel2\LaTeX~(\href{https://www.ctan.org/tex-archive/support/excel2latex/}{\color{scublue}CTAN Excel2\LaTeX});
+			\item<2-> 在线公式: \href{https://www.latexlive.com/}{\color{scublue}LaTeX公式编辑器}, \href{https://mathpix.com/}{\color{scublue}
+				Mathpix}~\&~\href{https://mathf.itewqq.cn/}{\color{scublue}图片在线转LaTeX}.
 		\end{itemize}
-		\item<3-> \color{JXred}!! 编译相关:
+		\item<3-> \color{scured}!! 编译相关:
 		\begin{itemize}
-			\item<3-> \color{JXred}!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译;
+			\item<3-> \color{scured}!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译;
 			\item<3-> 在线编辑请上传整个工作文件夹, 否则会出现严重错误(Bug遍地飞);
-			\item<3-> \color{JXred}!! 对\LaTeX{} 不熟悉的情况下, 请勿轻易改动".sty"文件(宏包文件)中代码, 也可按照文件中注释进行实验性修改(注意保留备份).
+			\item<3-> \color{scured}!! 对\LaTeX{} 不熟悉的情况下, 请勿轻易改动".sty"文件(宏包文件)中代码, 也可按照文件中注释进行实验性修改(注意保留备份).
 		\end{itemize}
-		\item<4-> \color{JXred} 建议使用Adobe Acrobat作为PDF浏览器(Ctrl+L全屏食用效果良好).
+		\item<4-> \color{scured} 建议使用Adobe Acrobat作为PDF浏览器(Ctrl+L全屏食用效果良好).
 	\end{itemize}
 \end{frame}
 
@@ -207,7 +208,7 @@
 			\hline
 			\centerline{\textbf{``minted''高亮代码问题}}
 			\textbf{报错:} \texttt{Package minted Error: You must invoke LaTeX with the...}\\
-			~~需安装Python, 及Pygments组件. 并给XeLeTaX添加~-~-shell-escape参数(具体可\href{https://blog.csdn.net/weixin_39679367/article/details/111403418/}{\color{BSblue}参考}). 若不使用minted, 请注释掉本文件中minted宏包调用, 以及sty文件中Listing Layout板块中指明部分. 此外, 应给XeLeTaX添加~-8bit参数消除Tab被编译为``\verb|^^I|''.\\
+			~~需安装Python, 及Pygments组件. 并给XeLeTaX添加~-~-shell-escape参数(具体可\href{https://blog.csdn.net/weixin_39679367/article/details/111403418/}{\color{scublue}参考}). 若不使用minted, 请注释掉本文件中minted宏包调用, 以及sty文件中Listing Layout板块中指明部分. 此外, 应给XeLeTaX添加~-8bit参数消除Tab被编译为``\verb|^^I|''.\\
 			\hline\hline
 		\end{tabular}
 	\end{table}
@@ -218,22 +219,22 @@
 \section{基础设置}
 \subsection{宏包参数}
 \begin{frame}[fragile]{宏包参数}
-	\textbf{本小节将介绍模板使用中宏包参数设置. }(\textcolor{HYgreen}{v1.1a(2021/12/30)}新增)\\[1ex]
-	注: 自\textcolor{HYgreen}{v1.1a(2021/12/30)}起, 本手册将不再列出\textcolor{JXred}{\textbf{可注释项}}小节.\\
-	\quad\textcolor{HYgreen}{v1.1a(2021/12/30)}中, option \Arg{chinese}尚未修改, 请继续沿用此参数, 但其余所有参数均无法继续兼容.\\[2ex]
+	\textbf{本小节将介绍模板使用中宏包参数设置. }(\textcolor{scugreen}{v1.1a(2021/12/30)}新增)\\[1ex]
+	注: 自\textcolor{scugreen}{v1.1a(2021/12/30)}起, 本手册将不再列出\textcolor{scured}{\textbf{可注释项}}小节.\\
+	\quad\textcolor{scugreen}{v1.1a(2021/12/30)}中, option \Arg{chinese}尚未修改, 请继续沿用此参数, 但其余所有参数均无法继续兼容.\\[2ex]
 	\textbf{相关命令}: \cmd{usetheme}\oarg*{\Arg{key1}=\Arg{value1},\ldots}\marg{scu}
 	\begin{table}[h]
 		\centering
 		\caption{可选参数键值对照}
 		\scriptsize
 		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.18\paperwidth}>{\raggedleft\arraybackslash}p{0.18\paperwidth}			>{\raggedleft\arraybackslash}p{0.18\paperwidth}>{\raggedleft\arraybackslash}p{0.18\paperwidth}}
-			\textcolor{JXred}{\Arg{key}}        &                                       &                                      &                                          \\
+			\textcolor{scured}{\Arg{key}}        &                                       &                                      &                                          \\
 			\Arg{value}                         & \multicolumn{3}{l}{`Default' means the value here is the default one.}                                                  \\ \hline
-			\textcolor{JXred}{\Arg{MathFont}}   & \textcolor{JXred}{\Arg{BlockDisplay}} & \textcolor{JXred}{\Arg{CodeDisplay}} & \textcolor{JXred}{\Arg{ContentMuticols}} \\
+			\textcolor{scured}{\Arg{MathFont}}   & \textcolor{scured}{\Arg{BlockDisplay}} & \textcolor{scured}{\Arg{CodeDisplay}} & \textcolor{scured}{\Arg{ContentMuticols}} \\
 			(Default)\Arg{LM}                   & (Default)\Arg{colorful}               & (Default)\Arg{listing}               & (Default)\Arg{true}                      \\
 			\Arg{XITS}                          & \Arg{allred}                          & \Arg{minted}                         & \Arg{false}                              \\
 			& \Arg{allgrey}                         &                                      &                                          \\ \hline
-			\textcolor{JXred}{\Arg{Background}} &                                       &                                      &                                          \\
+			\textcolor{scured}{\Arg{Background}} &                                       &                                      &                                          \\
 			(Default)\Arg{true}                 &                                       &                                      &                                          \\
 			\Arg{false}                         &                                       &                                      &
 		\end{tabular}
@@ -243,28 +244,28 @@
 \begin{frame}[fragile]{宏包参数键值含义}
 	\scriptsize
 	\begin{multicols}{3}
-		\textcolor{JXred}{\Arg{MathFont}}\hfill \textbf{数学字体}
+		\textcolor{scured}{\Arg{MathFont}}\hfill \textbf{数学字体}
 		\begin{itemize}
 			\item \Arg{LM}: 设置数学字体为Latin Modern Math.
 			\item \Arg{XITS}: 设置数学字体为XITS Math.
 		\end{itemize}
-		\textcolor{JXred}{\Arg{BlockDisplay}}\hfill \textbf{区块颜色显示}
+		\textcolor{scured}{\Arg{BlockDisplay}}\hfill \textbf{区块颜色显示}
 		\begin{itemize}
 			\item \Arg{colorful}: 设置区块颜色为彩色.
 			\item \Arg{allred}: 设置区块颜色均为锦秀红.
 			\item \Arg{allgrey}: 设置区块颜色均为优雅灰.
 		\end{itemize}
-		\textcolor{JXred}{\Arg{CodeDisplay}}\hfill \textbf{代码高亮显示}
+		\textcolor{scured}{\Arg{CodeDisplay}}\hfill \textbf{代码高亮显示}
 		\begin{itemize}
 			\item \Arg{listing}: 设置代码高亮引擎为listing.
 			\item \Arg{minted}: 设置代码高亮引擎为minted. (推荐, 但设置前请阅读手册对应部分)
 		\end{itemize}
-		\textcolor{JXred}{\Arg{ContentMuticols}}\hfill \textbf{目录帧双栏显示}
+		\textcolor{scured}{\Arg{ContentMuticols}}\hfill \textbf{目录帧双栏显示}
 		\begin{itemize}
 			\item \Arg{true}: 是.
 			\item \Arg{false}: 否.
 		\end{itemize}
-		\textcolor{JXred}{\Arg{Background}}\hfill \textbf{背景显示}
+		\textcolor{scured}{\Arg{Background}}\hfill \textbf{背景显示}
 		\begin{itemize}
 			\item \Arg{true}: 是.
 			\item \Arg{false}: 否.
@@ -276,9 +277,9 @@
 \begin{frame}[fragile]{封面信息}
 	\begin{scushow}[comment={%
 			\scriptsize%
-			{\color{JXred}<text.f>}\\
+			{\color{scured}<text.f>}\\
 			\quad 指该部分键入的文字在页脚中显示\\
-			{\color{JXred}<text.t>}\\
+			{\color{scured}<text.t>}\\
 			\quad 指该部分键入的文字在封面页中显示\\\par
 			注意设置页脚显示时, 文字长度尽量不要超出对应位置边框. 实际使用中目标为使显示内容更详细全面, 不必拘泥于模板中信息类型的限制. 如author可置于institute处, institute简写置于author处. \\\par
 			此外, 页脚处的标题可设置为``标题'', ``标题+副标题'', ``副标题''等多种样式.
@@ -419,11 +420,11 @@
 	\end{scushow}
 	\begin{scushow}[listing side text]{颜色}{tex}{}{YanS}
 		模板依VIS手册定义了以下颜色:\\
-		\textcolor{JXred}{锦绣红}
-		\textcolor{YYgrey}{优雅灰}
-		\textcolor{BSblue}{宝石蓝}
-		\textcolor{HYgreen}{荷叶绿}
-		\textcolor{YXyellow}{银杏黄}\\
+		\textcolor{scured}{锦绣红}
+		\textcolor{scugrey}{优雅灰}
+		\textcolor{scublue}{宝石蓝}
+		\textcolor{scugreen}{荷叶绿}
+		\textcolor{scuyellow}{银杏黄}\\
 		定义颜色请使用\verb|\definecolor|
 	\end{scushow}
 \end{frame}
@@ -470,22 +471,22 @@
 \begin{frame}[fragile]{单张图片的插入}
 	\begingroup
 	\scriptsize
-	支持格式: {\color{JXred}pdf, eps, png, jpg}. 建议使用矢量图片(svg建议下载~\href{https://inkscape.org/}{\color{BSblue}Inkscape}~导出pdf)
+	支持格式: {\color{scured}pdf, eps, png, jpg}. 建议使用矢量图片(svg建议下载~\href{https://inkscape.org/}{\color{scublue}Inkscape}~导出pdf)
 	\endgroup
 	\begin{minipage}{0.56\linewidth}
 		\begin{scushow}[comment={%
 				\scriptsize\vskip.5ex%
-				{\color{JXred}<position>}\quad 浮动体摆放的位置\\
-				\quad \textbf{参数}: {\color{BSblue}h}-此处, {\color{BSblue}t}-顶部, {\color{BSblue}b}-底部, {\color{BSblue}p}-独立成页, \\
-				{\color{BSblue}!}-决定位置时忽略限制\\
-				\quad \textbf{注}: 常用{\color{BSblue}h}, {\color{BSblue}htbp}, {\color{BSblue}htbp!}. 参数顺序不作限制\\
-				{\color{JXred}<keys>}\quad 限制图片大小等\\
-				\quad \textbf{参数}: {\color{BSblue}width=?}-宽度, {\color{BSblue}height=?}-高度, \\
-				{\color{BSblue}scale=?}-缩放, {\color{BSblue}angle=?}-逆时针旋转角度\\
+				{\color{scured}<position>}\quad 浮动体摆放的位置\\
+				\quad \textbf{参数}: {\color{scublue}h}-此处, {\color{scublue}t}-顶部, {\color{scublue}b}-底部, {\color{scublue}p}-独立成页, \\
+				{\color{scublue}!}-决定位置时忽略限制\\
+				\quad \textbf{注}: 常用{\color{scublue}h}, {\color{scublue}htbp}, {\color{scublue}htbp!}. 参数顺序不作限制\\
+				{\color{scured}<keys>}\quad 限制图片大小等\\
+				\quad \textbf{参数}: {\color{scublue}width=?}-宽度, {\color{scublue}height=?}-高度, \\
+				{\color{scublue}scale=?}-缩放, {\color{scublue}angle=?}-逆时针旋转角度\\
 				\quad \textbf{注}: 宽高不建议同时使用, 以columnwidth设置宽度\\
-				{\color{JXred}<file>}\quad 文件名称(不要有空格)\\
-				{\color{JXred}<title>}\quad 图片标题\\
-				{\color{JXred}<label>}\quad 交叉引用标签\\
+				{\color{scured}<file>}\quad 文件名称(不要有空格)\\
+				{\color{scured}<title>}\quad 图片标题\\
+				{\color{scured}<label>}\quad 交叉引用标签\\
 			},%
 			listing above comment]{Figure环境}{tex}{}{FigureHj}
 				\begin{figure}[<position>]
@@ -521,8 +522,8 @@
 		\item 使用subcaption环境插入子图;\\
 		\begin{scushow}[comment={%
 				\scriptsize\vskip1ex%
-				{\color{JXred}<width>}\quad 子图宽度\\
-				{\color{JXred}<code>}\quad 同上页figure环境\\
+				{\color{scured}<width>}\quad 子图宽度\\
+				{\color{scured}<code>}\quad 同上页figure环境\\
 			},%
 			listing side comment]{Subfigure环境}{tex}{}{SubfigureHj}
 				\begin{subfigure}{<width>}
@@ -595,17 +596,17 @@
 
 \subsection{代码环境}
 \begin{frame}[fragile]{自定义的代码环境}
-	本模板定义了两种代码环境: {\color{JXred}scucode}与{\color{JXred}scushow}. 前者可用于单独的代码呈现, 后者可用于代码加演示或批注(模板前续部分使用了大量的此环境; code样式其实也可以实现, 不过编者觉得有点怪异).\\
-	宏包选项``minted"是否启用, 显示效果有显著区别(我技术不行适应一下), 条件允许时建议启用该选项({\color{JXred}不加参数时代码前不要Tab缩进}).
+	本模板定义了两种代码环境: {\color{scured}scucode}与{\color{scured}scushow}. 前者可用于单独的代码呈现, 后者可用于代码加演示或批注(模板前续部分使用了大量的此环境; code样式其实也可以实现, 不过编者觉得有点怪异).\\
+	宏包选项``minted"是否启用, 显示效果有显著区别(我技术不行适应一下), 条件允许时建议启用该选项({\color{scured}不加参数时代码前不要Tab缩进}).
 	\begin{scushow}[comment={%
 			\scriptsize%
-			{\color{JXred}<env>}\quad scucode或scushow\\
-			{\color{JXred}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
-			{\color{JXred}<title>}\quad 标题\\
-			{\color{JXred}<lang>}\quad 代码语言\\
-			{\color{JXred}<keys.c>}\quad 添加到minted或listings中的参数\\
-			{\color{JXred}<label.t>}\quad 引用标签尾部, 头部已定义(code:)\\
-			{\color{JXred}<code>}\quad 代码\\
+			{\color{scured}<env>}\quad scucode或scushow\\
+			{\color{scured}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
+			{\color{scured}<title>}\quad 标题\\
+			{\color{scured}<lang>}\quad 代码语言\\
+			{\color{scured}<keys.c>}\quad 添加到minted或listings中的参数\\
+			{\color{scured}<label.t>}\quad 引用标签尾部, 头部已定义(code:)\\
+			{\color{scured}<code>}\quad 代码\\
 		},%
 		listing above comment]{代码环境定义}{tex}{}{DaimaHjdy}
 			\begin{<env>}[<keys.t>]{<title>}{<lang>}{<keys.c>}{<label.t>}
@@ -646,13 +647,13 @@
 			\toprule
 			名称 & 环境(scuxx) & 标签前缀 & 名称 & 环境(scuxx) & 标签前缀 \\
 			\midrule
-			定理 & \color{JXred}scutheorem & theo: & 证明 & \color{JXred}scuproof & / \\
-			例 & \color{JXred}scuexample & exam: & 算法 & \color{JXred}scualgorithm & algo: \\
-			定义 & \color{JXred}scudefinition & def: & 公理 & \color{JXred}scuaxiom & axio: \\
-			性质 & \color{JXred}scuproperty & prope: & 命题 & \color{JXred}scuproposition & propo: \\
-			引理 & \color{JXred}sculemma & lemm: & 推论 & \color{JXred}scucorollary & coro: \\
-			注 & \color{JXred}scuremark & rema: & 条件 & \color{JXred}scucondition & cond: \\
-			结论 & \color{JXred}scuconclusion & conc: & 假设 & \color{JXred}scuassumption & assu: \\
+			定理 & \color{scured}scutheorem & theo: & 证明 & \color{scured}scuproof & / \\
+			例 & \color{scured}scuexample & exam: & 算法 & \color{scured}scualgorithm & algo: \\
+			定义 & \color{scured}scudefinition & def: & 公理 & \color{scured}scuaxiom & axio: \\
+			性质 & \color{scured}scuproperty & prope: & 命题 & \color{scured}scuproposition & propo: \\
+			引理 & \color{scured}sculemma & lemm: & 推论 & \color{scured}scucorollary & coro: \\
+			注 & \color{scured}scuremark & rema: & 条件 & \color{scured}scucondition & cond: \\
+			结论 & \color{scured}scuconclusion & conc: & 假设 & \color{scured}scuassumption & assu: \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -660,11 +661,11 @@
 	\begin{scushow}[comment={%
 			\vskip1ex%
 			\scriptsize%
-			{\color{JXred}<env>}\quad 环境名称(见\vref{tab:ShuxueHjdy})\\
-			{\color{JXred}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
-			{\color{JXred}<title>}\quad 标题\\
-			{\color{JXred}<label.t>}\quad 引用标签尾部, 头部已定义(code:), {\color{JXred}scuproof}环境无该选项\\
-			{\color{JXred}<code>}\quad 代码\\
+			{\color{scured}<env>}\quad 环境名称(见\vref{tab:ShuxueHjdy})\\
+			{\color{scured}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
+			{\color{scured}<title>}\quad 标题\\
+			{\color{scured}<label.t>}\quad 引用标签尾部, 头部已定义(code:), {\color{scured}scuproof}环境无该选项\\
+			{\color{scured}<code>}\quad 代码\\
 		},%
 		listing above comment]{数学环境定义}{tex}{}{ShuxueHjdy}
 			\begin{<env>}[<keys.t>]{<title>}{<label.t>}
@@ -733,21 +734,21 @@
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{数学公式演示}
-	{\color{JXred}1. 行内公式(无编号):} 使用~\verb|$|~\verb|$|~括起公式.\\
+	\textcolor{scured}{1. 行内公式(无编号):} 使用~\verb|$|~\verb|$|~括起公式.\\
 	如: 麦克斯韦分布函数$f(v) = \dfrac{\mathrm{d}N}{N\,\mathrm{d}v} = 4\pi \Big(\dfrac{\mu}{2\pi kT}\Big)^{3/2} v^2 \mathrm{exp}\Big(-\dfrac{\mu v^2}{2kT}\Big)$.\\[1ex]
-	{\color{JXred}2. 行间公式(无编号):} 使用~\verb|\[|~\verb|\]|~括起公式, 与之等效的是displaymath或equation*环境.\\
+	{\color{scured}2. 行间公式(无编号):} 使用~\verb|\[|~\verb|\]|~括起公式, 与之等效的是displaymath或equation*环境.\\
 	如: 最概然速率\[v_p = \sqrt{\dfrac{2kT}{\mu}} = \sqrt{\dfrac{2RT}{M}}\]其中$R$是气体常数, $M = N_A \mu$是物质的摩尔质量.\\[1ex]
 		\begin{equation*}
 			\bar{v} = \int_0^\infty vf(v)\,\mathrm{d}v = \sqrt{\dfrac{8kT}{\pi\mu}} = \sqrt{\dfrac{8RT}{\pi M}}
 		\end{equation*}
-	{\color{JXred}3. 行间公式(有编号):} 使用equation环境(环境内可加label标签).\\[1ex]
+	{\color{scured}3. 行间公式(有编号):} 使用equation环境(环境内可加label标签).\\[1ex]
 	如: 方均根速率
 		\begin{equation}
 		v_{rms} = \Big(\int_0^\infty v^2f(v)\,\mathrm{d}v\Big)^{1/2} = \sqrt{\dfrac{3kT}{\mu}} = \sqrt{\dfrac{3RT}{M}}
 		\end{equation}
 	上述环境均无法使用\verb!\\!换行, 且环境中无法正常实现空格(可在空格前加\verb|\|). 在数学模式中, 若想加入文字请使用\verb|\text|\verb|{}|, 使用正体请使用\verb|\mathrm|\verb|{}|.\\
 	此外, unicode-math宏包中定义了多个数学字体命令, 如\verb|\symbb|$\symbb{R}$, \verb|\symbbit|$\symbbit{R}$, \verb|\symcal|$\symcal{R}$, \verb|\symscr|$\symscr{R}$, \verb|\symfrak|$\symfrak{R}$, \verb|\symsfup|$\symsfup{R}$, \verb|\symsfit|$\symsfit{R}$, \verb|\symbfsf|$\symbfsf{R}$, \verb|\symbfup|$\symbfup{R}$, \verb|\symbfit|$\symbfit{R}$, \verb|\symbfcal|$\symbfcal{R}$, \verb|\symbfscr|$\symbfscr{R}$, \verb|\symbffrak|$\symbffrak{R}$, \verb|\symbfsfup|$\symbfsfup{R}$, \verb|\symbfsfit|$\symbfsfit{R}$.\\[1ex]
-	{\color{JXred}4. 多行公式(长公式折行):} 使用multline环境.
+	{\color{scured}4. 多行公式(长公式折行):} 使用multline环境.
 	如: 
 		\begin{multline}
 			A=\lim_{n\rightarrow\infty}\Delta x\left(a^{2}+\left(a^{2}+2a\Delta x+\left(\Delta x\right)^{2}\right)\right.\label{eq:reset}\\
@@ -758,7 +759,7 @@
 			=\frac{1}{3}\left(b^{3}-a^{3}\right)
 		\end{multline}\\[1ex]
 	\pagebreak
-	{\color{JXred}5. 多行公式(有编号, 若不希望编号, 使用加*号的环境):}
+	{\color{scured}5. 多行公式(有编号, 若不希望编号, 使用加*号的环境):}
 	\begin{itemize}
 		\item 使用align环境(每行都编号, 去掉某行编号请用\verb|\notag|命令).
 	\end{itemize}
@@ -790,7 +791,7 @@
 			\oint_S \symbfit{D} \cdot \mathrm{d}\symbfit{S} = \iiint_V \rho \mathrm{d}V
 			\end{dcases}
 		\end{equation}
-	{\color{JXred}6. 矩阵:} amsmath宏包给出了6种常用的矩阵环境, 无定界符: {\color{JXred}matrix}; 有定界符: {\color{JXred}pmatrix}($\big(\cdots\big)$), {\color{JXred}bmatrix}($\big[\cdots\big]$), {\color{JXred}Bmatrix}($\bigl\{\cdots\bigr\}$), {\color{JXred}vmatrix}($|\cdots|$), {\color{JXred}Vmatrix}($||\cdots||)$).
+	{\color{scured}6. 矩阵:} amsmath宏包给出了6种常用的矩阵环境, 无定界符: {\color{scured}matrix}; 有定界符: {\color{scured}pmatrix}($\big(\cdots\big)$), {\color{scured}bmatrix}($\big[\cdots\big]$), {\color{scured}Bmatrix}($\bigl\{\cdots\bigr\}$), {\color{scured}vmatrix}($|\cdots|$), {\color{scured}Vmatrix}($||\cdots||)$).
 	如: 单位矩阵
 		\[
 		\begin{bmatrix}
@@ -810,11 +811,11 @@
 	以下主要围绕frame环境展开. (编者不一定能介绍全面, 详细请移步官方文档)
 	\begin{scushow}[comment={%
 			\scriptsize%
-			{\color{JXred}<keys>}\quad frame环境选项\\
-			~~常用选项: {\color{BSblue}fragile}: 保护脆弱命令(如代码, 抄录环境需此项)\\
-			~~{\color{BSblue}allowframebreaks(=?)}: 允许内容过多时自动切帧(括号中省略即自动判断). 注: 使用\texttt{pagebreak}或\texttt{framebreak}命令可实现手动位置切帧换页, 但会在一些时候失效(不知道为什么, 得看源码)\\
-			~~{\color{BSblue}t}: 在页面顶部(默认居中)\\
-			{\color{JXred}<title>}\quad 标题\\
+			{\color{scured}<keys>}\quad frame环境选项\\
+			~~常用选项: {\color{scublue}fragile}: 保护脆弱命令(如代码, 抄录环境需此项)\\
+			~~{\color{scublue}allowframebreaks(=?)}: 允许内容过多时自动切帧(括号中省略即自动判断). 注: 使用\texttt{pagebreak}或\texttt{framebreak}命令可实现手动位置切帧换页, 但会在一些时候失效(不知道为什么, 得看源码)\\
+			~~{\color{scublue}t}: 在页面顶部(默认居中)\\
+			{\color{scured}<title>}\quad 标题\\
 		},%
 		listing side comment]{Frame环境}{tex}{}{FrameHj}
 			\begin{frame}[<keys>]{<title>}
@@ -833,9 +834,9 @@
 	\frametitle{过长环境切割}
 	\begin{scushow}[comment={%
 			\scriptsize%
-			{\color{JXred}<code>}\quad 原本插入frame环境的内容\\
-			{\color{JXred}<scale>}\quad 相对于页面高度放缩比例(需手动调整, 0-1小数制)\\
-			{\color{JXred}<title>}\quad 标题\\
+			{\color{scured}<code>}\quad 原本插入frame环境的内容\\
+			{\color{scured}<scale>}\quad 相对于页面高度放缩比例(需手动调整, 0-1小数制)\\
+			{\color{scured}<title>}\quad 标题\\
 		},%
 		listing above comment]{过长环境切割}{tex}{}{GuochangHjqg}
 			\begin{lrbox}{\mysavebox}
@@ -850,12 +851,12 @@
 \begin{lrbox}{\mysavebox}
 	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
 		补充自\vref{lemm:JuanwangSlfz}.\par
-		\textbf{\color{JXred}基本公理:}
+		\textbf{\color{scured}基本公理:}
 		\begin{enumerate}
 			\item 获得研究生资格是当代大学生的第一需要;
 			\item 当代大学生对研究生资格的需求不断增长和扩张, 但研究生资格总量保持不变.
 		\end{enumerate}
-		\textbf{\color{JXred}两大重要概念:}
+		\textbf{\color{scured}两大重要概念:}
 		\begin{enumerate}
 			\item 卷疑链: 双方无法判断对方是否正在内卷;\\
 			~~“当代大学生间的善意和恶意. 善和恶这类字眼放到内卷过程中是不严谨的, 所以需要对它们的含义加以限制: 善意就是指不主动内卷和卷灭其他大学生, 恶意则相反. 这是最低的善意了吧. ”
@@ -879,12 +880,12 @@
 \begin{frame}[fragile,t,allowframebreaks]{环境切割示例}
 	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
 		补充自\vref{lemm:JuanwangSlfz}.\par
-		\textbf{\color{JXred}基本公理:}
+		\textbf{\color{scured}基本公理:}
 		\begin{enumerate}
 			\item 获得研究生资格是当代大学生的第一需要;
 			\item 当代大学生对研究生资格的需求不断增长和扩张, 但研究生资格总量保持不变.
 		\end{enumerate}
-		\textbf{\color{JXred}两大重要概念:}
+		\textbf{\color{scured}两大重要概念:}
 		\begin{enumerate}
 			\item 卷疑链: 双方无法判断对方是否正在内卷;\\
 			~~“当代大学生间的善意和恶意. 善和恶这类字眼放到内卷过程中是不严谨的, 所以需要对它们的含义加以限制: 善意就是指不主动内卷和卷灭其他大学生, 恶意则相反. 这是最低的善意了吧. ”
@@ -973,7 +974,7 @@
 
 \subsection{参考文献}
 \begin{frame}[fragile]{参考文献相关}
-	\textbf{注意:} 参考文献请采用{\color{JXred}Biber}编译模式, 即整体编译思路为XeLaTeX - Biber - XeLaTeX.\\
+	\textbf{注意:} 参考文献请采用{\color{scured}Biber}编译模式, 即整体编译思路为XeLaTeX - Biber - XeLaTeX.\\
 	模板采用符合国标GB/T7714-2015的gb7714-2015参考文献格式.\\
 	模板已设置了``ref.bib''为参考文献数据库, 使用时覆盖即可(当然, 实在需要请在tex文件导言区寻找命令修改).\\[1ex]
 	引用文献的命令常采用\verb|\cite|\verb|{<item>}|, 如虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
@@ -1032,7 +1033,7 @@
 		\end{tcolorbox}
 	\end{minipage}
 	\newline\par
-	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``tcolorbox.pdf''.
+	\color{scugreen}此处仅展示示例, 具体操作请查看宏包手册 - ``tcolorbox.pdf''.
 \end{frame}
 
 \subsection{插图}
@@ -1054,12 +1055,12 @@
 		\end{figure}
 	\end{minipage}
 	\par
-	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``pgfmanual.pdf''.
+	\color{scugreen}此处仅展示示例, 具体操作请查看宏包手册 - ``pgfmanual.pdf''.
 \end{frame}
 
 \subsection{动画}
 \begin{frame}{Animate}
-	编者并不会用此包, 此页面摘自\href{https://zhuanlan.zhihu.com/p/338402487}{\color{BSblue}知乎向禹}.\\
+	编者并不会用此包, 此页面摘自\href{https://zhuanlan.zhihu.com/p/338402487}{\color{scublue}知乎向禹}.\\
 	注意, 动画显示需使用Adobe Acrobat等支持JavaScript的PDF浏览器查看(我们学校的电脑上应该有).\\
 	这里放一个大佬做的例子(弹簧振子):
 	\begin{center}
@@ -1078,7 +1079,7 @@
 		\end{animateinline}
 	\end{center}
 	放过我吧, 关于Animate插入GIF动图, 明确告诉你, 不能, 所以具体方法请百度"LaTeX animate", 蟹蟹理解.\par
-	\color{HYgreen}此处仅展示示例, 具体操作请查看宏包手册 - ``animate.pdf''.
+	\color{scugreen}此处仅展示示例, 具体操作请查看宏包手册 - ``animate.pdf''.
 \end{frame}
 
 % --------节: 参考文献--------
@@ -1098,16 +1099,16 @@
 	\begin{center}
 		本模板参考了Beamer, Tcolorbox等手册, 感谢宏包原作者及维护者\\[1ex]
 		本模板参考了知乎, Stack Overflow等平台回答, 感谢相关问题解答者\\[1ex]
-		本模板使用了开源字体——楷体: 霞鹜文楷(Github \href{https://github.com/lxgw/LxgwWenKai/}{\color{BSblue}LxgwWenKai} 项目), 黑体: Source Han Sans (Github \href{https://github.com/adobe-fonts/source-han-sans/}{\color{BSblue}source-han-sans} 项目), 感谢字体设计师设计的优秀字体\\[1ex]
-		本模板参考了中国科学技术大学Beamer模板(Github \href{https://github.com/ysx2000/USTCBeamerSX/}{\color{BSblue}USTCBeamerSX} 项目), 感谢原作者提供部分设计思路\\[1ex]
-		本模板参考了清华大学Beamer模板(Github \href{https://github.com/tuna/THU-Beamer-Theme/}{\color{BSblue}THU-Beamer-Theme} 项目), 中国科学技术大学Beamer模板(Github \href{https://github.com/ustctug/ustcbeamer/}{\color{BSblue}ustcbeamer} 项目), 感谢原作者设计的优秀模板\\[1ex]
+		本模板使用了开源字体——楷体: 霞鹜文楷(Github \href{https://github.com/lxgw/LxgwWenKai/}{\color{scublue}LxgwWenKai} 项目), 黑体: Source Han Sans (Github \href{https://github.com/adobe-fonts/source-han-sans/}{\color{scublue}source-han-sans} 项目), 感谢字体设计师设计的优秀字体\\[1ex]
+		本模板参考了中国科学技术大学Beamer模板(Github \href{https://github.com/ysx2000/USTCBeamerSX/}{\color{scublue}USTCBeamerSX} 项目), 感谢原作者提供部分设计思路\\[1ex]
+		本模板参考了清华大学Beamer模板(Github \href{https://github.com/tuna/THU-Beamer-Theme/}{\color{scublue}THU-Beamer-Theme} 项目), 中国科学技术大学Beamer模板(Github \href{https://github.com/ustctug/ustcbeamer/}{\color{scublue}ustcbeamer} 项目), 感谢原作者设计的优秀模板\\[1ex]
 		
 		若在使用过程中发现些许Bug, 感谢诸位理解, 在此也希望诸位能先行尝试多次编译\\[1ex]
 		万分感谢诸位批评指正, 感谢诸位对模板及对制作者的支持!
 	\end{center}
 \end{frame}
 
-\begin{frame}{~}
+\begin{frame}{}
 	\vskip6ex
 	\begin{columns}
 		\begin{column}[c]{0.4\columnwidth}
@@ -1122,7 +1123,7 @@
 		\end{column}
 	\end{columns}
 	\centering\vskip4ex
-	SCU Beamer Slide-demo, Rev 1.1a
+	SCU Beamer Slide-demo, Rev 1.2a
 \end{frame}
 
 \end{document}

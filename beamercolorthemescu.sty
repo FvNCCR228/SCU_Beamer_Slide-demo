@@ -1,0 +1,152 @@
+% This is file `beamercolorthemescu.sty'.
+% Copyright (C) 2021-2022 by Linrong Wu.
+% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+%
+% 本文件为 SCU_Beamer_Slide-demo 颜色宏包文件.
+% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamercolorthemescu}[SCU Beamer Theme(Color Theme), 2022/03/10 v1.2a]
+%%%% ----------------------------------------------------------------
+
+
+% ----------------
+% Package Using
+% Confirmed in v1.2a.
+% ----------------
+\RequirePackage{xcolor}% xcolor: 设置颜色.
+% ----------------
+
+
+% ----------------
+% Color Layout
+% Confirmed in v1.2a.
+% 依据四川大学VIS视觉识别系统(2014), 定义了主题色 scured, scugrey, 与辅助色 scublue, scugreen, scuyellow. 
+% 上述定义颜色均采用 CMYK 颜色模式.
+% 注: 常用的颜色模式有 RGB 与 CMYK, 对应 LaTeX 中 rgb(0-1小数制, x/255), RGB(原始数值), cmyk(0-1小数制, x/100).
+% ----------------
+% 锦绣红 - scured    - CMYK(12,92,95,20).
+\definecolor{scured}   {cmyk}{0.12,0.92,0.95,0.20}
+\colorlet{scured10}   {scured!10!white}
+\colorlet{scured20}   {scured!20!white}
+\colorlet{scured30}   {scured!30!white}
+\colorlet{scured40}   {scured!40!white}
+\colorlet{scured50}   {scured!50!white}
+\colorlet{scured60}   {scured!60!white}
+\colorlet{scured70}   {scured!70!white}
+\colorlet{scured80}   {scured!80!white}
+\colorlet{scured90}   {scured!90!white}
+
+% 优雅灰 - scugrey   - CMYK(47,37,37,20).
+\definecolor{scugrey}  {cmyk}{0.47,0.37,0.37,0.00}
+\colorlet{scugrey10}  {scugrey!10!white}
+\colorlet{scugrey20}  {scugrey!20!white}
+\colorlet{scugrey30}  {scugrey!30!white}
+\colorlet{scugrey40}  {scugrey!40!white}
+\colorlet{scugrey50}  {scugrey!50!white}
+\colorlet{scugrey60}  {scugrey!60!white}
+\colorlet{scugrey70}  {scugrey!70!white}
+\colorlet{scugrey80}  {scugrey!80!white}
+\colorlet{scugrey90}  {scugrey!90!white}
+
+% 宝石蓝 - scublue   - CMYK(100,60,0,15).
+\definecolor{scublue}  {cmyk}{1.00,0.60,0.00,0.15}
+\colorlet{scublue10}  {scublue!10!white}
+\colorlet{scublue20}  {scublue!20!white}
+\colorlet{scublue30}  {scublue!30!white}
+\colorlet{scublue40}  {scublue!40!white}
+\colorlet{scublue50}  {scublue!50!white}
+\colorlet{scublue60}  {scublue!60!white}
+\colorlet{scublue70}  {scublue!70!white}
+\colorlet{scublue80}  {scublue!80!white}
+\colorlet{scublue90}  {scublue!90!white}
+
+% 荷叶绿 - scugreen  - CMYK(100,0,90,15).
+\definecolor{scugreen} {cmyk}{1.00,0.00,0.90,0.15}
+\colorlet{scugreen10} {scugreen!10!white}
+\colorlet{scugreen20} {scugreen!20!white}
+\colorlet{scugreen30} {scugreen!30!white}
+\colorlet{scugreen40} {scugreen!40!white}
+\colorlet{scugreen50} {scugreen!50!white}
+\colorlet{scugreen60} {scugreen!60!white}
+\colorlet{scugreen70} {scugreen!70!white}
+\colorlet{scugreen80} {scugreen!80!white}
+\colorlet{scugreen90} {scugreen!90!white}
+
+% 银杏黄 - scuyellow - CMYK(0,40,100,15).
+\definecolor{scuyellow}{cmyk}{0.00,0.40,1.00,0.15}
+\colorlet{scuyellow10}{scuyellow!10!white}
+\colorlet{scuyellow20}{scuyellow!20!white}
+\colorlet{scuyellow30}{scuyellow!30!white}
+\colorlet{scuyellow40}{scuyellow!40!white}
+\colorlet{scuyellow50}{scuyellow!50!white}
+\colorlet{scuyellow60}{scuyellow!60!white}
+\colorlet{scuyellow70}{scuyellow!70!white}
+\colorlet{scuyellow80}{scuyellow!80!white}
+\colorlet{scuyellow90}{scuyellow!90!white}
+% ----------------
+
+
+\mode<presentation>
+
+
+% ----------------
+% Beamer Theme Color Layout
+% Confirmed in v1.2a.
+% ----------------
+% 基本颜色设置.
+\setbeamercolor{structure}{fg=scured, bg=}
+
+% 调色板颜色设置.
+\setbeamercolor{palette primary}   {fg=white, bg=scured}
+\setbeamercolor{palette secondary} {use=structure, fg=scugrey, bg=}
+\setbeamercolor{palette tertiary}  {fg=scured, bg=scugrey}
+\setbeamercolor{palette quaternary}{fg=scugrey50, bg=scured50}
+
+% 页眉页脚颜色设置.
+\setbeamercolor{section in head/foot}    {parent=palette primary}
+\setbeamercolor{subsection in head/foot} {parent=structure}
+\setbeamercolor{frametitle}              {parent=palette tertiary}
+\setbeamercolor{author in head/foot}     {parent=structure}
+\setbeamercolor{title in head/foot}      {parent=structure}
+\setbeamercolor{framenumber in head/foot}{parent=structure}
+
+% 封页颜色设置.
+\setbeamercolor{title}          {bg=scured!10!white, fg=scured}
+\setbeamercolor{subtitle}       {bg=scured!10!white, fg=scured}
+%\setbeamercolor{author}         {fg=white,bg=}
+%\setbeamercolor{date}           {fg=white,bg=}
+\setbeamercolor{titlepageheader}{bg=white, fg=black}
+\setbeamercolor{titlepagefooter}{bg=white, fg=black}
+
+% 区块颜色设置.
+\setbeamercolor{block title}        {parent=palette primary}
+\setbeamercolor{block body}         {fg=, bg=scured40}
+\setbeamercolor{block title example}{fg=white, bg=scublue}
+\setbeamercolor{block body example} {fg=, bg=scublue40}
+\setbeamercolor{block title alerted}{parent=palette primary}
+\setbeamercolor{block body alerted} {fg=, bg=scured40}
+
+% 列表颜色设置.
+\setbeamercolor{item}                {parent=structure}
+\setbeamercolor{item projected}      {parent=structure}
+\setbeamercolor{enumerate item}      {parent=structure}
+\setbeamercolor{enumerate subitem}   {parent=structure}
+\setbeamercolor{enumerate subsubitem}{parent=structure}
+
+% 强调文本颜色设置
+\setbeamercolor{alerted text}{parent=structure}
+% ----------------
+
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamercolorthemescu.sty'.
