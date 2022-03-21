@@ -3,19 +3,22 @@
 % !TeX TS-program = xelatex
 % This is file `manual.tex'.
 % Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2022/03/10 v1.2a (Original Version: 2021/11/30 v1.0a).
+% Version: 2022/03/16 v1.3a (Original Version: 2021/11/30 v1.0a).
 % 本文件为 SCU_Beamer_Slide-demo 用户手册源文件.
 % !使用前请阅读用户手册.
 
 % ================ %
 %      导言区      %
 % ================ %
-\documentclass[hyperref,UTF8,11pt,CJK]{beamer}
+\documentclass[hyperref, UTF8, CJK]{beamer}
 
 % --------SCU Beamer 模板宏包--------
 % 提供参数键 MathFont, BlockDisplay, CodeDisplay, ContentMuticols, Background.
 % ----------------
-\usetheme[chinese,MathFont=LM,BlockDisplay=colorful,CodeDisplay=minted,ContentMuticols=ture,Background=true]{scu}
+\usetheme[chinese, MathFont=LM,%
+	BlockDisplay=colorful, CodeDisplay=minted,%
+	ColorDisplay=JXred, ContentMuticols=ture,%
+	Background=true]{scu}
 
 % --------不要调用的宏包--------
 % ----------------
@@ -24,7 +27,6 @@
 
 % --------宏包调用--------
 % ----------------
-%\usepackage[utf8]{inputenc}
 \usepackage{transparent}
 \usepackage[autoplay]{animate}
 \usepackage{tikz}
@@ -56,8 +58,8 @@
 % --------封面信息输入--------
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
 % ----------------
-\title[四川大学Beamer模板 | User's Manual]{\zihao{3} 四川大学Beamer模板}
-\subtitle{用户手册~~~~Rev~v1.2a} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\title[四川大学Beamer模板 | User's Manual]{\LARGE 四川大学Beamer模板}
+\subtitle{用户手册~~~~Rev~v1.3a} % subtitle 未设置页脚显示项, 请在 title 中设置.
 \author[我不卷, 你才卷]{\noindent 马老卷}
 \institute{%
 	\noindent Management Science\\
@@ -66,13 +68,13 @@
 	\medskip
 	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
 }
-\date{\noindent 2022/03/10}
+\date{\noindent 2022/03/16}
 
 % ---------------- %
 %      正文区      %
 % ---------------- %
 \begin{document}
-
+\scriptsize
 % --------总目录--------
 % 可注释.
 % ----------------
@@ -87,7 +89,7 @@
 \subsection{编写背景}
 \begin{frame}{关于Beamer}
 	\begin{itemize}
-		\item<1-> \TeX:
+		\item<1-> \TeX{}:
 		\begin{itemize}
 			\item<1-> 由著名的计算机科学家Donald E. Knuth发明的排版系统;
 			\item<1-> 学术界中十分流行，特别在数学、物理学、统计学与计算机科学.
@@ -116,7 +118,7 @@
 		\item 项目地址:
 		\begin{itemize}
 			\item 使用前请前往下列地址中查看模板版本!
-			\item Github: {\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+			\item \faGithub\enspace{\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
 			\item Gitee: \color{scublue}\url{https://gitee.com/NCCR/SCU_Beamer_Slide-demo}
 		\end{itemize}
 %			\framebreak
@@ -217,129 +219,211 @@
 % --------节: 基础设置--------
 % ----------------
 \section{基础设置}
-\subsection{宏包参数}
-\begin{frame}[fragile]{宏包参数}
-	\textbf{本小节将介绍模板使用中宏包参数设置. }(\textcolor{scugreen}{v1.1a(2021/12/30)}新增)\\[1ex]
-	注: 自\textcolor{scugreen}{v1.1a(2021/12/30)}起, 本手册将不再列出\textcolor{scured}{\textbf{可注释项}}小节.\\
-	\quad\textcolor{scugreen}{v1.1a(2021/12/30)}中, option \Arg{chinese}尚未修改, 请继续沿用此参数, 但其余所有参数均无法继续兼容.\\[2ex]
-	\textbf{相关命令}: \cmd{usetheme}\oarg*{\Arg{key1}=\Arg{value1},\ldots}\marg{scu}
+\subsection{\cls{beamer} 文档类参数}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍 \cls{beamer} 文档类部分参数.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
+	\end{multicols}
+	\vspace{2ex}本小节摘自\textcolor{scugreen}{Beamer User Guide}, 详细内容请在终端输入\alert{\texttt{texdoc beamer}}查看完整手册.
+\end{frame}
+
+\begin{frame}{文档类部分参数}{draft, t\&c\&b, aspectratio}
+	\textbf{调用命令}: \cmd{documentclass}\oarg*{\Arg{key1}=\Arg{value1},\ldots}\marg*{beamer}\par\vspace{1ex}
+	
+	\alert{\texttt{draft}}\hfill \textbf{草稿模式}\\
+	初次编译时, 使用草稿模式以隐藏部分宏包(如 \pkg{pgf}, \pkg{hyperref})及headline, footline等的显示效果能较大提高编译速度.\\
+	
+	\alert{\texttt{t}}\&\alert{\texttt{c}}\&\alert{\texttt{b}}\hfill \textbf{Slide文本位置}
+	\begin{itemize}
+		\item \texttt{t}: 文本置于Slide顶部, 全局设置为\texttt{t}后允许将单个frame设置为\texttt{c}或\texttt{b}.
+		\item \texttt{c}: (Default)文本置于Slide中心, 全局设置为\texttt{c}后允许将单个frame设置为\texttt{t}或\texttt{b}.
+		\item 注: \texttt{b}意为将文本置于Slide底部, 为\texttt{frame}环境选项.
+	\end{itemize}		
+	
+	\alert{\texttt{aspectratio} = \Arg{value}}\hfill \textbf{Slide比例}
+	\begin{itemize}
+		\item \Arg{value} = \texttt{2013}: 比例为20:13 (W-140mm, H-91mm).
+		\item \Arg{value} = \texttt{1610}: 比例为16:10 (W-160mm, H-100mm).
+		\item \Arg{value} = \texttt{169}: 比例为16:9 (W-160mm, H-90mm).
+		\item \Arg{value} = \texttt{149}: 比例为14:9 (W-140mm, H-90mm).
+		\item \Arg{value} = \texttt{141}: 比例为1.41:1 (W-148.5mm, H-105mm).
+		\item \Arg{value} = \texttt{54}: 比例为5:4 (W-125mm, H-100mm).
+		\item \Arg{value} = \texttt{43}: 比例为4:3 (Default, 不可选).
+		\item \Arg{value} = \texttt{32}: 比例为3:2 (W-135mm, H-90mm).
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{文档类部分参数}{handout}
+	\textbf{调用命令}: \cmd{documentclass}\oarg*{\Arg{key1}=\Arg{value1},\ldots}\marg*{beamer}\par\vspace{1ex}
+	\alert{\texttt{handout}}\hfill \textbf{讲义版本模式}\\
+	生成无Overlay效果的讲义版本, 可缩减页数同时降低编译时间.\\
+	若需实现多合一效果, 使用 \pkg{pgfpages} 宏包(注意使用此项会破坏beamer的hyperref):
+	\begin{center}
+		\begin{minipage}{.8\textwidth}
+			\raggedright
+			\cmd{usepackage}\marg*{pgfpages}\\
+			\cmd{pgfpagesuselayout}\marg*{2 on 1}\oarg*{a4paper,border shrink=5mm}
+		\end{minipage}
+	\end{center}
+	
+\end{frame}
+
+\subsection{\pkg{beamethemescu} 宏包参数}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍 \pkg{beamethemescu} 宏包参数.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.1a (2021/12/30)}
+			\item Update: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
+	\end{multicols}
+	注: 自 \textcolor{scugreen}{v1.1a (2021/12/30)} 起, 本小节已替代手册中\alert{\textbf{可注释项}}小节.\par
+	\mycopyright
+\end{frame}
+
+\begin{frame}{宏包参数键值对照}
+	\textbf{调用命令}: \cmd{usetheme}\oarg*{\Arg{key1}=\Arg{value1},\ldots}\marg*{scu}\par\vspace{1ex}
 	\begin{table}[h]
 		\centering
 		\caption{可选参数键值对照}
-		\scriptsize
-		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.18\paperwidth}>{\raggedleft\arraybackslash}p{0.18\paperwidth}			>{\raggedleft\arraybackslash}p{0.18\paperwidth}>{\raggedleft\arraybackslash}p{0.18\paperwidth}}
-			\textcolor{scured}{\Arg{key}}        &                                       &                                      &                                          \\
-			\Arg{value}                         & \multicolumn{3}{l}{`Default' means the value here is the default one.}                                                  \\ \hline
-			\textcolor{scured}{\Arg{MathFont}}   & \textcolor{scured}{\Arg{BlockDisplay}} & \textcolor{scured}{\Arg{CodeDisplay}} & \textcolor{scured}{\Arg{ContentMuticols}} \\
-			(Default)\Arg{LM}                   & (Default)\Arg{colorful}               & (Default)\Arg{listing}               & (Default)\Arg{true}                      \\
-			\Arg{XITS}                          & \Arg{allred}                          & \Arg{minted}                         & \Arg{false}                              \\
-			& \Arg{allgrey}                         &                                      &                                          \\ \hline
-			\textcolor{scured}{\Arg{Background}} &                                       &                                      &                                          \\
-			(Default)\Arg{true}                 &                                       &                                      &                                          \\
-			\Arg{false}                         &                                       &                                      &
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.275\textwidth}
+			>{\raggedleft\arraybackslash}p{0.275\textwidth}>{\raggedleft\arraybackslash}p{0.275\textwidth}}
+			version \alert{\Arg{key}}              & \multicolumn{2}{l}{`C' means the key here supports a custom value.}          \\
+			\Arg{value}                            & \multicolumn{2}{l}{`D' means the value here is the default one.}             \\ \hline
+			v1.1a \alert{\texttt{MathFont}}        & v1.3a \alert{\texttt{BlockDisplay}} & v1.1a \alert{\texttt{CodeDisplay}}     \\
+			(D) \texttt{LM}                        & (D) \texttt{colorful}               & (D) \texttt{listing}                   \\
+			\texttt{XITS}                          & \texttt{followtheme}                & \texttt{minted}                        \\
+			                                       & \texttt{allgrey}                    &                                        \\ \hline
+			v1.3a (C) \alert{\texttt{MintedStyle}} & v1.3 \alert{\texttt{ColorDisplay}}  & v1.1a \alert{\texttt{ContentMuticols}} \\
+			(D) \texttt{lightmode}                 & (D) \texttt{JXred}                  & (D) \texttt{true}                      \\
+			\texttt{darkmode}                      & \texttt{BSblue}                     & \texttt{false}                         \\ \hline
+			v1.1a \alert{\texttt{Background}}      &                                     &                                        \\
+			(D) \texttt{true}                      &                                     &                                        \\
+			\texttt{false}                         &                                     &
 		\end{tabular}
 	\end{table}
 \end{frame}
 
-\begin{frame}[fragile]{宏包参数键值含义}
-	\scriptsize
+\begin{frame}{宏包参数键值含义}
 	\begin{multicols}{3}
-		\textcolor{scured}{\Arg{MathFont}}\hfill \textbf{数学字体}
+		\alert{\texttt{MathFont}}\hfill \textbf{数学字体设置}
 		\begin{itemize}
-			\item \Arg{LM}: 设置数学字体为Latin Modern Math.
-			\item \Arg{XITS}: 设置数学字体为XITS Math.
+			\item \texttt{LM}: Latin Modern Math字体.
+			\item \texttt{XITS}: XITS Math字体.
 		\end{itemize}
-		\textcolor{scured}{\Arg{BlockDisplay}}\hfill \textbf{区块颜色显示}
+		
+		\alert{\texttt{BlockDisplay}}\hfill \textbf{区块颜色显示}
 		\begin{itemize}
-			\item \Arg{colorful}: 设置区块颜色为彩色.
-			\item \Arg{allred}: 设置区块颜色均为锦秀红.
-			\item \Arg{allgrey}: 设置区块颜色均为优雅灰.
+			\item \texttt{colorful}: 彩色模式.
+			\item \texttt{followtheme}: 跟随主题.
+			\item \texttt{allgrey}: 灰色模式.
 		\end{itemize}
-		\textcolor{scured}{\Arg{CodeDisplay}}\hfill \textbf{代码高亮显示}
+		
+		\alert{\texttt{CodeDisplay}}\hfill \textbf{代码高亮显示}
 		\begin{itemize}
-			\item \Arg{listing}: 设置代码高亮引擎为listing.
-			\item \Arg{minted}: 设置代码高亮引擎为minted. (推荐, 但设置前请阅读手册对应部分)
+			\item \texttt{listing}: listing引擎.
+			\item \texttt{minted}: minted引擎. (推荐, 设置前请阅读手册对应部分)
 		\end{itemize}
-		\textcolor{scured}{\Arg{ContentMuticols}}\hfill \textbf{目录帧双栏显示}
+		
+		\alert{\texttt{MintedStyle}}\hfill \textbf{minted样式}\\
+		\textbf{需加载minted引擎}
 		\begin{itemize}
-			\item \Arg{true}: 是.
-			\item \Arg{false}: 否.
+			\item \texttt{lightmode}: 亮色模式, Pygments default样式.
+			\item \texttt{darkmode}: 暗色模式, Pygments rrt样式.
+			\item \Arg{custom}: 自定义. (设置前请阅读手册对应部分)
 		\end{itemize}
-		\textcolor{scured}{\Arg{Background}}\hfill \textbf{背景显示}
+		
+		\alert{\texttt{ColorDisplay}}\hfill \textbf{主题色显示}
 		\begin{itemize}
-			\item \Arg{true}: 是.
-			\item \Arg{false}: 否.
+			\item \texttt{JXred}: 锦锈红色调.
+			\item \texttt{BSblue}: 宝石蓝色调.
+		\end{itemize}
+		
+		\alert{\texttt{ContentMuticols}}\hfill \textbf{目录帧双栏显示}
+		\begin{itemize}
+			\item \texttt{true}: 是.
+			\item \texttt{false}: 否.
+		\end{itemize}
+		
+		\alert{\texttt{Background}}\hfill \textbf{背景显示}
+		\begin{itemize}
+			\item \texttt{true}: 是.
+			\item \texttt{false}: 否.
 		\end{itemize}
 	\end{multicols}
 \end{frame}
 
 \subsection{预填信息设置}
 \begin{frame}[fragile]{封面信息}
-	\begin{scushow}[comment={%
+	\begin{scucode}[comment={%
 			\scriptsize%
 			{\color{scured}<text.f>}\\
 			\quad 指该部分键入的文字在页脚中显示\\
 			{\color{scured}<text.t>}\\
-			\quad 指该部分键入的文字在封面页中显示\\\par
-			注意设置页脚显示时, 文字长度尽量不要超出对应位置边框. 实际使用中目标为使显示内容更详细全面, 不必拘泥于模板中信息类型的限制. 如author可置于institute处, institute简写置于author处. \\\par
+			\quad 指该部分键入的文字在封面页中显示\\
+			注意设置页脚显示时, 文字长度尽量不要超出对应位置边框. 实际使用中目标为使显示内容更详细全面, 不必拘泥于模板中信息类型的限制. 如author可置于institute处, institute简写置于author处. \\
 			此外, 页脚处的标题可设置为``标题'', ``标题+副标题'', ``副标题''等多种样式.
 		},%
-		listing side comment]{封面信息设置}{tex}{}{FengmianXx}
-		\title[<text.f>] {\zihao{3} <text.t>}
+		listing side comment]{封面信息设置}[FengmianXx]{tex}
+		\title[<text.f>] {\LARGE <text.t>}
 		\subtitle{<text.t>}
 		\author[<text.f>]{\noindent <text.t>}
-		\institute[<text.f>]
-		{%
+		\institute{%
 			\noindent <text.t>\\
 			\medskip
 			\noindent <text.t>\\
 			\medskip
 			\noindent \textit{<text.t>}
 		}
-		\date[<text.f>] {\noindent <text.t>}
-	\end{scushow}
+		\date{\noindent <text.t>}
+	\end{scucode}
 \end{frame}
 
 % --------节: 初阶使用--------
 % ----------------
 \section{初阶使用}
 \subsection{字体}
-\begin{frame}[fragile]{字号}
-	\begin{multicols}{3}
-		\verb|\zihao{0} |~初号\\
-		\verb|\zihao{-0}|~小初\\
-		\verb|\zihao{1} |~一号\\
-		\verb|\zihao{-1}|~小一\\
-		\verb|\zihao{2} |~二号\\
-		\verb|\zihao{-2}|~小二\\
-		\verb|\zihao{3} |~三号\\
-		\verb|\zihao{-3}|~小三\\
-		\verb|\zihao{4} |~四号\\
-		\verb|\zihao{-4}|~小四\\
-		\verb|\zihao{5} |~五号\\
-		\verb|\zihao{-5}|~小五\\
-		\verb|\zihao{6} |~六号\\
-		\newpage
-		\verb|\Huge|\\
-		\verb|\huge|\\
-		\verb|\LARGE|\\
-		\verb|\Large|\\
-		\verb|\large|\\
-		\verb|\normalsize|\\
-		\verb|\small|\\
-		\verb|\footnotesize|\\
-		\verb|\scriptsize|\\
-		\verb|\tiny|\\
-		\newpage
-		\zihao{0}{初号}\\
-		\zihao{-1}{小一}\\
-		\zihao{-3}{小三}\\
-		\zihao{6}{六号}\\
-		\Huge{Huge}\\
-		\Large{Large}\\
-		\small{small}\\
-		\footnotesize 初号, 小初, Huge, huge是形翼太极门首席弟子, 实力过于强悍, 掌门都无法请出; tiny是刚收的徒弟, 掌门都教不大. 所以不要用他们.
+\begin{frame}{Info.}
+	\textbf{本小节将介绍字体的设置, 包括字号(未完待续).}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.0a (2021/11/30)}
+			\item Update: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
 	\end{multicols}
+	\mycopyright
+\end{frame}
+
+\begin{frame}{字号}
+	\textbf{设置命令}: \\
+	全局: \cmd{begin}\marg{env} \cmd{cmd} \ldots \cmd{end}\marg{env}\\
+	部分: \marg*{\cmd{cmd} \Arg{text}}\par\vspace{1ex}
+	\begin{columns}
+		\begin{column}{.72\textwidth}
+			\begin{table}[h]
+				\begin{tabular}{r|l}
+					    \alert{命~~令} & \alert{演~~示}                               \\
+					        \cmd{Huge} & \Huge{Neighbor 老王}                         \\
+					        \cmd{huge} & \huge{Neighbor 老王}                         \\
+					       \cmd{LARGE} & \LARGE{Neighbor 老王}                        \\
+					       \cmd{Large} & \Large{Neighbor 老王}                        \\
+					       \cmd{large} & \large{Neighbor 老王}                        \\
+					  \cmd{normalsize} & \normalsize{\alert{Neighbor 老王}} (Default) \\
+					       \cmd{small} & \small{Neighbor 老王}                        \\
+					\cmd{footnotesize} & \footnotesize{Neighbor 老王}                 \\
+					  \cmd{scriptsize} & \scriptsize{Neighbor 老王}                   \\
+					        \cmd{tiny} & \tiny{Neighbor 老王}
+				\end{tabular}
+			\end{table}
+		\end{column}
+		\begin{column}{.22\textwidth}
+			老王, 形翼门自称超级英雄第二, 道上人称Neighbor, 其特异能力是形态的缩放, 为响应他第二的自称, 特将其置于第三节\\[.5ex]
+			在Beamer中normalsize是默认字号. 非特殊情况时, 为保证演示效果请不要改变全局默认字号. 当部分文字有修改字号的需求时, 一般将范围设置为footnotesize - Large.
+		\end{column}
+	\end{columns}
 \end{frame}
 	
 \begin{frame}[fragile]{字体族, 字体形状及字体系列}
@@ -413,20 +497,20 @@
 \begin{frame}[fragile]{标点符号与颜色}
 	\scriptsize
 	% 标点符号部分源自武汉大学学位论文模板.
-	\begin{scushow}[listing side text]{标点符号}{tex}{}{BiaodianFh}
+	\begin{scucode}[listing side text]{标点符号}*[BiaodianFh]{tex}
 		建议使用半角标点符号, 后键入一个空格. (尤其是英文书写!)\\[1ex]
 		双引号由两对左单引号、右单引号构成: ``  ''. 左单引号在键盘上ESC键下方.\\[1ex]
 		建议使用实心的句号, 只要书写的是自然科学类文章.
-	\end{scushow}
-	\begin{scushow}[listing side text]{颜色}{tex}{}{YanS}
+	\end{scucode}
+	\begin{scucode}[listing side text]{颜色}*[YanS]{tex}
 		模板依VIS手册定义了以下颜色:\\
 		\textcolor{scured}{锦绣红}
 		\textcolor{scugrey}{优雅灰}
 		\textcolor{scublue}{宝石蓝}
 		\textcolor{scugreen}{荷叶绿}
 		\textcolor{scuyellow}{银杏黄}\\
-		定义颜色请使用\verb|\definecolor|
-	\end{scushow}
+		定义颜色请使用\verb!\definecolor!
+	\end{scucode}
 \end{frame}
 	
 \cprotEnv\begin{frame}
@@ -474,7 +558,7 @@
 	支持格式: {\color{scured}pdf, eps, png, jpg}. 建议使用矢量图片(svg建议下载~\href{https://inkscape.org/}{\color{scublue}Inkscape}~导出pdf)
 	\endgroup
 	\begin{minipage}{0.56\linewidth}
-		\begin{scushow}[comment={%
+		\begin{scucode}[comment={%
 				\scriptsize\vskip.5ex%
 				{\color{scured}<position>}\quad 浮动体摆放的位置\\
 				\quad \textbf{参数}: {\color{scublue}h}-此处, {\color{scublue}t}-顶部, {\color{scublue}b}-底部, {\color{scublue}p}-独立成页, \\
@@ -488,18 +572,18 @@
 				{\color{scured}<title>}\quad 图片标题\\
 				{\color{scured}<label>}\quad 交叉引用标签\\
 			},%
-			listing above comment]{Figure环境}{tex}{}{FigureHj}
+			listing above comment]{Figure环境}[FigureHj]{tex}
 				\begin{figure}[<position>]
 					\centering %居中用
 					\includegraphics[<keys>]{<file>}
 					\caption{<title>}
 					\label{<label>}
 				\end{figure}
-						\end{scushow}
-					\end{minipage}\quad
-					\begin{minipage}{0.4\linewidth}
-						\begin{scushow}[righthand width=0.2\textwidth,%
-							listing above text]{单图插入演示}{tex}{}{DantuCrys}
+		\end{scucode}
+		\end{minipage}\quad
+		\begin{minipage}{0.4\linewidth}
+		\begin{scucode}[righthand width=0.2\textwidth,%
+			listing above text]{单图插入演示}[DantuCrys]{tex}
 				\begin{figure}[h]
 					\centering
 					\includegraphics%
@@ -509,7 +593,7 @@
 					{黑色的暂停}
 					\label{fig:stopbk}
 				\end{figure}
-		\end{scushow}
+		\end{scucode}
 	\end{minipage}
 \end{frame}
 
@@ -520,37 +604,37 @@
 	\begin{enumerate}
 		\item 在figure环境中插入多个\verb|\includegraphics|, 非子图;
 		\item 使用subcaption环境插入子图;\\
-		\begin{scushow}[comment={%
+		\begin{scucode}[comment={%
 				\scriptsize\vskip1ex%
 				{\color{scured}<width>}\quad 子图宽度\\
 				{\color{scured}<code>}\quad 同上页figure环境\\
 			},%
-			listing side comment]{Subfigure环境}{tex}{}{SubfigureHj}
+			listing side comment]{Subfigure环境}[SubfigureHj]{tex}
 				\begin{subfigure}{<width>}
 					<code>
 				\end{subfigure}
-						\end{scushow}
-						\item 使用minipage环境插入并排小图, 当然minipage也可插入子图.
-					\end{enumerate}
-					\begin{scushow}[listing side text,righthand width=.36\columnwidth]{子图示例}{tex}{}{ZituSl}
-				\begin{figure}[h]
-					\begin{subfigure}{.4\columnwidth}
-						\centering
-						\includegraphics%
-						[width=\columnwidth]{stop-rd.pdf}
-						\caption{白天的暂停}
-					\end{subfigure}
-					\quad
-					\begin{subfigure}{.4\columnwidth}
-						\centering
-						\includegraphics%
-						[width=\columnwidth]{stop-gn.pdf}
-						\caption{晚上的暂停}
-					\end{subfigure}
-					\caption{掌门常用的暂停}
-				\end{figure}
-	\end{scushow}
-	\begin{scushow}[listing side text,righthand width=.36\columnwidth]{并列小图示例}{tex}{}{BinlieXtsl}
+		\end{scucode}
+		\item 使用minipage环境插入并排小图, 当然minipage也可插入子图.
+	\end{enumerate}
+	\begin{scucode}[listing side text,righthand width=.36\columnwidth]{子图示例}[ZituSl]{tex}
+		\begin{figure}[h]
+			\begin{subfigure}{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-rd.pdf}
+				\caption{白天的暂停}
+			\end{subfigure}
+			\quad
+			\begin{subfigure}{.4\columnwidth}
+				\centering
+				\includegraphics%
+				[width=\columnwidth]{stop-gn.pdf}
+				\caption{晚上的暂停}
+			\end{subfigure}
+			\caption{掌门常用的暂停}
+		\end{figure}
+	\end{scucode}
+	\begin{scucode}[listing side text,righthand width=.36\columnwidth]{并列小图示例}[BinlieXtsl]{tex}
 		\begin{figure}[h]
 			\begin{minipage}[t]{.4\columnwidth}
 				\centering
@@ -568,7 +652,7 @@
 				\label{fig:ZhangmenWsdzt}
 			\end{minipage}
 		\end{figure}
-	\end{scushow}
+	\end{scucode}
 \end{frame}
 
 \cprotEnv\begin{frame}
@@ -594,30 +678,67 @@
 	差点忘了, 还有合并行与列, 套表等.
 \end{frame}
 
-\subsection{代码环境}
-\begin{frame}[fragile]{自定义的代码环境}
-	本模板定义了两种代码环境: {\color{scured}scucode}与{\color{scured}scushow}. 前者可用于单独的代码呈现, 后者可用于代码加演示或批注(模板前续部分使用了大量的此环境; code样式其实也可以实现, 不过编者觉得有点怪异).\\
-	宏包选项``minted"是否启用, 显示效果有显著区别(我技术不行适应一下), 条件允许时建议启用该选项({\color{scured}不加参数时代码前不要Tab缩进}).
-	\begin{scushow}[comment={%
-			\scriptsize%
-			{\color{scured}<env>}\quad scucode或scushow\\
-			{\color{scured}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
-			{\color{scured}<title>}\quad 标题\\
-			{\color{scured}<lang>}\quad 代码语言\\
-			{\color{scured}<keys.c>}\quad 添加到minted或listings中的参数\\
-			{\color{scured}<label.t>}\quad 引用标签尾部, 头部已定义(code:)\\
-			{\color{scured}<code>}\quad 代码\\
-		},%
-		listing above comment]{代码环境定义}{tex}{}{DaimaHjdy}
-			\begin{<env>}[<keys.t>]{<title>}{<lang>}{<keys.c>}{<label.t>}
-				<code>
-			\end{<env>}
-	\end{scushow}
+\subsection{代码区块}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍代码区块(含从文件读入)的设置.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.0a (2021/11/30)}
+			\item Update: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
+	\end{multicols}
+	注: 自 \textcolor{scugreen}{v1.3a (2021/03/16)} 起, 本小节将替代手册中\alert{\textbf{代码环境}}小节.\par
+	\mycopyright
+\end{frame}
+
+\begin{frame}{代码区块(含从文件读入)环境及命令定义}
+	本模板定义了代码区块环境 \env{scucode} 与命令 \cmd{scucodeinput} 和 \cmd{scucodeinputnocounter}.\par\vspace{1ex}
+	
+	\textbf{调用环境(无星号环境)}:\\
+	\cmd{begin}\marg*{scucode}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\marg{code language}\oarg{code options}\textcolor{scugrey}{<\Arg{escapeinside}>}\\
+	\hspace*{1em}\Arg{source code}\\
+	\cmd{end}\marg*{scucode}\\[1ex]
+	\textbf{调用环境(带星号环境)}:\\
+	\cmd{begin}\marg*{scucode*}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\marg{code language}\oarg{code options}\textcolor{scugrey}{<\Arg{escapeinside}>}\\
+	\hspace*{1em}\Arg{source code}\\
+	\cmd{end}\marg*{scucode*}\\[1ex]
+	\textbf{以上带星号环境代表区块不显示序号.}\\
+	
+	\textbf{调用命令(区块显示序号)}:\\
+	\cmd{scucodeinput}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\marg{code language}\oarg{code options}\marg{filename}\textcolor{scugrey}{<\Arg{escapeinside}>}\\[1ex]
+	\textbf{调用命令(区块不显示序号)}:\\
+	\cmd{scucodeinputnocounter}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\marg{code language}\oarg{code options}\marg{filename}\textcolor{scugrey}{<\Arg{escapeinside}>}
+\end{frame}
+	
+\begin{frame}{代码区块(含从文件读入)环境及命令参数}
+	\alert{\Arg{tcb options}}\hfill \textbf{(可选参数) Tcolorbox参数}\\
+	添加到Tcolorbox中的参数, 常用有comment, sidebyside, listing side(above) comment等.\\
+	
+	\alert{\Arg{title}}\hfill \textbf{(必选参数) 标题}\\
+	
+	\alert{\Arg{switch star}}\hfill \textbf{(可选参数) 标题前缀显示}\\
+	此处默认留空无需填入; 如填入 * 号, 则区块不显示标题前缀(源码x).\\	
+		
+	\alert{\Arg{label suffix}}\hfill \textbf{(可选参数) 标签后缀}\\
+	模板中定义的标签均为code:xx形式, 若无填入, 则对应区块无标签.\\
+	
+	\alert{\Arg{code language}}\hfill \textbf{(必选参数) 代码语言}\\
+	使用 \pkg{minted} 作为代码高亮引擎时, 可在终端输入\texttt{pygmentize -L lexers}查看支持语言.\\
+	
+	\alert{\Arg{code options}}\hfill \textbf{(可选参数) 代码引擎参数}\\
+	添加到minted或listing引擎中的参数, 常用有highlightlines (listing不支持)等.\\
+	
+	\alert{\Arg{filename}}\hfill \textbf{(必选参数) 从文件读入源码时的文件名}\\
+	
+	\alert{\Arg{escapeinside}}\hfill \textbf{(可选参数) 忽略定界符内输入}\\
+	将定界符间内容按\LaTeX{}命令执行, 支持Beamer \cmd{only}命令, 定界符默认为`||', 此处填入后即更改定界符.\\
+	
+	\alert{\Arg{source code}}\hfill \textbf{详细源码}
 \end{frame}
 
 \begin{frame}[fragile]{代码环境演示}
 	\onslide<2>
-	\begin{scucode}[]{A welcome program.}{c}{}{cpphelloworld}
+	\begin{scucode}{A welcome program.}[cpphelloworld]{c}
 		#include <iostream>
 		int main()
 		{
@@ -626,68 +747,100 @@
 		}
 	\end{scucode}
 	\onslide<1>
-	\begin{scushow}[]{A welcome program.}{c}{}{chelloworld}
+	\begin{scucode}{A welcome program.}[chelloworld]{c}
 		#include <stidio.h>
 		int main()
 		{
 			printf("Hello World！");
 			return 0;
 		}
-	\end{scushow}
+	\end{scucode}
 \end{frame}
 
-\subsection{数学环境}
-\begin{frame}[fragile,allowframebreaks]{自定义的代码环境}
-	本模板定义了如下数学环境及对应的标签前缀: 
+\subsection{定理区块}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍定理区块的设置.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.0a (2021/11/30)}
+			\item Update: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
+	\end{multicols}
+	注: 自 \textcolor{scugreen}{v1.3a (2021/03/16)} 起, 本小节将替代手册中\alert{\textbf{数学环境}}小节.\par
+	\mycopyright
+\end{frame}
+
+\begin{frame}{定理区块环境信息}
+	本模板定义了如下表所示定理区块环境及对应的标签前缀
 	\begin{table}[htbp!]
-		\centering\scriptsize
-		\caption{数学环境定义}
+		\centering
+		\caption{定理区块环境信息}
 		\label{tab:ShuxueHjdy}
 		\begin{tabular}{ccc|ccc}
 			\toprule
-			名称 & 环境(scuxx) & 标签前缀 & 名称 & 环境(scuxx) & 标签前缀 \\
-			\midrule
-			定理 & \color{scured}scutheorem & theo: & 证明 & \color{scured}scuproof & / \\
-			例 & \color{scured}scuexample & exam: & 算法 & \color{scured}scualgorithm & algo: \\
-			定义 & \color{scured}scudefinition & def: & 公理 & \color{scured}scuaxiom & axio: \\
-			性质 & \color{scured}scuproperty & prope: & 命题 & \color{scured}scuproposition & propo: \\
-			引理 & \color{scured}sculemma & lemm: & 推论 & \color{scured}scucorollary & coro: \\
-			注 & \color{scured}scuremark & rema: & 条件 & \color{scured}scucondition & cond: \\
-			结论 & \color{scured}scuconclusion & conc: & 假设 & \color{scured}scuassumption & assu: \\
-			\bottomrule
+			名称 &          环境(scuxx)        &  标签前缀  & 名称 &          环境(scuxx)         &  标签前缀  \\ \midrule
+			定理 &  \color{scured}scutheorem   &  theo:     & 证明 &    \color{scured}scuproof    &   /     \\
+			例   &  \color{scured}scuexample   &  exam:     & 算法 &  \color{scured}scualgorithm  &  algo:  \\
+			定义 & \color{scured}scudefinition &  def:      & 公理 &    \color{scured}scuaxiom    &  axio:  \\
+			性质 &  \color{scured}scuproperty  &  prope:    & 命题 & \color{scured}scuproposition &  propo: \\
+			引理 &   \color{scured}sculemma    &  lemm:     & 推论 &  \color{scured}scucorollary  &  coro:  \\
+			注   &   \color{scured}scuremark   &  rema:     & 条件 &  \color{scured}scucondition  &  cond:  \\
+			结论 & \color{scured}scuconclusion &  conc:     & 假设 & \color{scured}scuassumption  &  assu:  \\ \bottomrule
 		\end{tabular}
 	\end{table}
-	其中证明环境(scuproof)结尾带有证毕符号(\verb|\qed|).$\textrightarrow$\qed
-	\begin{scushow}[comment={%
-			\vskip1ex%
-			\scriptsize%
-			{\color{scured}<env>}\quad 环境名称(见\vref{tab:ShuxueHjdy})\\
-			{\color{scured}<keys.t>}\quad 添加到tcolorbox中的参数, 如comment, sidebyside等\\
-			{\color{scured}<title>}\quad 标题\\
-			{\color{scured}<label.t>}\quad 引用标签尾部, 头部已定义(code:), {\color{scured}scuproof}环境无该选项\\
-			{\color{scured}<code>}\quad 代码\\
-		},%
-		listing above comment]{数学环境定义}{tex}{}{ShuxueHjdy}
-			\begin{<env>}[<keys.t>]{<title>}{<label.t>}
-				<code>
-			\end{<env>}
-	\end{scushow}
+	其中证明环境(scuproof)结尾带有证毕符号(\cmd{qed}).$\textrightarrow$\qed
+\end{frame}
+	
+\begin{frame}{定理区块环境定义}
+	\textbf{调用环境(无星号环境)}(除scuproof与scuremark):\\
+	\cmd{begin}\marg{env}\textcolor{scugrey}{<\Arg{overlay}>}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\\
+	\hspace*{1em}\Arg{environment contents}\\
+	\cmd{end}\marg{env}\\[1ex]
+	\textbf{调用环境(带星号环境)}(除scuproof与scuremark):\\
+	\cmd{begin}\marg{env}*\textcolor{scugrey}{<\Arg{overlay}>}\oarg{tcb options}\marg{title}\textcolor{scugrey}{\Arg{switch star}}\oarg{label suffix}\\
+	\hspace*{1em}\Arg{environment contents}\\
+	\cmd{end}\marg{env}\\[1ex]
+	\textbf{调用环境}(scuproof与scuremark):\\
+	\cmd{begin}\marg{env}\textcolor{scugrey}{<\Arg{overlay}>}\oarg{tcb options}\marg{title}\oarg{label suffix}\\
+	\hspace*{1em}\Arg{environment contents}\\
+	\cmd{end}\marg{env}\\[1ex]
+	\textbf{以上带星号环境代表不显示序号.}
+\end{frame}
+
+\begin{frame}{定理区块环境参数}
+	\alert{\Arg{env}}\hfill \textbf{环境名称}\\
+	见\vref{tab:ShuxueHjdy}.\\
+	
+	\alert{\Arg{overlay}}\hfill \textbf{(可选参数) Beamer Overlay设置}\\
+	
+	\alert{\Arg{tcb options}}\hfill \textbf{(可选参数) Tcolorbox参数}\\
+	添加到Tcolorbox中的参数, 常用有comment, sidebyside, listing side(above) comment等.\\
+	
+	\alert{\Arg{title}}\hfill \textbf{(必选参数) 标题}\\
+	
+	\alert{\Arg{switch star}}\hfill \textbf{(可选参数) 标题前缀显示}\\
+	此处默认留空无需填入; 如填入 * 号, 则区块不显示标题前缀(定理x、结论x等).\\	
+	
+	\alert{\Arg{label suffix}}\hfill \textbf{(可选参数) 标签后缀}\\
+	模板中定义的标签均为xx:xx形式, 若无填入, 则对应区块无标签.\\
+		
+	\alert{\Arg{environment contents}}\hfill \textbf{环境内容}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{数学环境演示}
-	\begin{scutheorem}{切比雪夫大数率}{QiebiXfdsl}
+	\begin{scutheorem}{切比雪夫大数率}[QiebiXfdsl]
 		对独立随机变量序列$\{X_k\}$, 若$E(X_k)$, $D(X_k)$都存在, $k=1,2,\cdots$, 且有常数$C$, 使得$D(X_k)\leq C$, $k=1,2,\cdots$, 则有
 		\begin{equation}
 		\dfrac{1}{n} \sum_{k=1}^{n} X_k - \dfrac{1}{n} \sum_{k=1}^{n} E(X_k) \stackrel{\;P\;}{\longrightarrow} 0
 		\end{equation}
 	\end{scutheorem}
-	\begin{scuproof}{}{}
+	\begin{scuproof}{}
 		请读者自证.
 	\end{scuproof}
-	\begin{scuexample}{混元形翼太极门的规模}{HunyuanXytjmdgm}
+	\begin{scuexample}{形翼门的规模}[HunyuanXytjmdgm]
 		本门昨天去了80个人打水, 今天去了79个人打水, 本门的规模有多大?
 	\end{scuexample}
-	\begin{scualgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
+	\begin{scualgorithm}{怎么写Beamer模板}[ZengmoXBeamerzs]
 		\begin{algorithmic}[1]
 		\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
 		\ENSURE 不知道怎么搞
@@ -697,44 +850,57 @@
 		\RETURN 算了, 不问了, 都是不知道
 		\end{algorithmic}
 	\end{scualgorithm}
-	\begin{scudefinition}{马老卷}{MalaoJ}
-		是混元形翼太极门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
+	\begin{scudefinition}{马老卷}[MalaoJ]
+		是形翼门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
 	\end{scudefinition}
-	\begin{scuaxiom}{皮亚诺公理}{PiyaNgl}
+	\begin{scuaxiom}{皮亚诺公理}[PiyaNgl]
 		略.
 	\end{scuaxiom}
-	\begin{scuproperty}{刚体的性质}{GangtiDxz}
+	\begin{scuproperty}{刚体的性质}[GangtiDxz]
 		刚体是个理想模型. 虽然理想但是还是那么难整, 进动和章动就不会了.
 	\end{scuproperty}
-	\begin{scuproposition}{不确定性原理}{BuqueDxyl}
+	\begin{scuproposition}{不确定性原理}[BuqueDxyl]
 		粒子的位置与动量不可同时被确定, 位置的不确定性与动量的不确定性遵守不等式
 		\begin{equation}
 			\Delta x \Delta p \geq \dfrac{h}{4\pi}
 		\end{equation}
 		其中$h$为普朗克常数.
 	\end{scuproposition}
-	\begin{sculemma}{卷王森林法则}{JuanwangSlfz}
+	\begin{sculemma}{卷王森林法则}[JuanwangSlfz]
 		源自未知高校学生, 此处略.
 	\end{sculemma}
-	\begin{scucorollary}{狼人杀的重要性}{LangrenSdzyx}
+	\begin{scucorollary}{狼人杀的重要性}[LangrenSdzyx]
 		编者实习时听公司导师说面试有可能是趣味性游戏, 狼人杀感觉很符合, 所以玩狼人杀吧.
 	\end{scucorollary}
-	\begin{scuremark}{}{Zhu}
+	\begin{scuremark}{}[Zhu]
 		\vref{coro:LangrenSdzyx}, 只是推论, 编者瞎说的.
 	\end{scuremark}
-	\begin{scucondition}{面试狼人杀的条件}{MianshiLrsdtj}
+	\begin{scucondition}{面试狼人杀的条件}[MianshiLrsdtj]
 		\vref{coro:LangrenSdzyx}, 此推论有条件, 即真有公司面试用狼人杀.
 	\end{scucondition}
-	\begin{scuconclusion}{爱废话的编者}{AifeiHdbz}
+	\begin{scuconclusion}{爱废话的编者}[AifeiHdbz]
 		由上述可知: 编者爱废话.
 	\end{scuconclusion}
-	\begin{scuassumption}{编者不会废话}{BianzheBhfh}
+	\begin{scuassumption}{编者不会废话}[BianzheBhfh]
 		我们可以假设编者不会废话, 假设成立, 编者当然不会废话.
 	\end{scuassumption}
 \end{frame}
 
+\subsection{数学公式排版}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍数学公式的排版.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Establish: \textcolor{scugreen}{v1.0a (2021/11/30)}
+			\item Update: \textcolor{scugreen}{v1.3a (2022/03/16)}
+		\end{itemize}
+	\end{multicols}
+	注: 自 \textcolor{scugreen}{v1.3a (2021/03/16)} 起, 本小节已自手册中\alert{\textbf{数学环境}}小节拆出.\par
+	\mycopyright
+\end{frame}
+
 \begin{frame}[fragile,allowframebreaks]{数学公式演示}
-	\textcolor{scured}{1. 行内公式(无编号):} 使用~\verb|$|~\verb|$|~括起公式.\\
+	\alert{1. 行内公式(无编号):} 使用~\verb|$|~\verb|$|~括起公式.\\
 	如: 麦克斯韦分布函数$f(v) = \dfrac{\mathrm{d}N}{N\,\mathrm{d}v} = 4\pi \Big(\dfrac{\mu}{2\pi kT}\Big)^{3/2} v^2 \mathrm{exp}\Big(-\dfrac{\mu v^2}{2kT}\Big)$.\\[1ex]
 	{\color{scured}2. 行间公式(无编号):} 使用~\verb|\[|~\verb|\]|~括起公式, 与之等效的是displaymath或equation*环境.\\
 	如: 最概然速率\[v_p = \sqrt{\dfrac{2kT}{\mu}} = \sqrt{\dfrac{2RT}{M}}\]其中$R$是气体常数, $M = N_A \mu$是物质的摩尔质量.\\[1ex]
@@ -809,7 +975,7 @@
 \cprotEnv\begin{frame}
 	\frametitle{Frame环境}
 	以下主要围绕frame环境展开. (编者不一定能介绍全面, 详细请移步官方文档)
-	\begin{scushow}[comment={%
+	\begin{scucode}[comment={%
 			\scriptsize%
 			{\color{scured}<keys>}\quad frame环境选项\\
 			~~常用选项: {\color{scublue}fragile}: 保护脆弱命令(如代码, 抄录环境需此项)\\
@@ -817,7 +983,7 @@
 			~~{\color{scublue}t}: 在页面顶部(默认居中)\\
 			{\color{scured}<title>}\quad 标题\\
 		},%
-		listing side comment]{Frame环境}{tex}{}{FrameHj}
+		listing side comment]{Frame环境}[FrameHj]{tex}
 			\begin{frame}[<keys>]{<title>}
 				<code>
 			\end{frame}
@@ -826,30 +992,30 @@
 				\frametitle{<title>}
 				<code>
 			\end{frame}
-	\end{scushow}
+	\end{scucode}
 	对于定理等板块过长导致的无法换页问题, 此处定义了命令来处理. (尽量避免单个过长的环境)
 \end{frame}
 
 \cprotEnv\begin{frame}
 	\frametitle{过长环境切割}
-	\begin{scushow}[comment={%
+	\begin{scucode}[comment={%
 			\scriptsize%
 			{\color{scured}<code>}\quad 原本插入frame环境的内容\\
 			{\color{scured}<scale>}\quad 相对于页面高度放缩比例(需手动调整, 0-1小数制)\\
 			{\color{scured}<title>}\quad 标题\\
 		},%
-		listing above comment]{过长环境切割}{tex}{}{GuochangHjqg}
+		listing above comment]{过长环境切割}[GuochangHjqg]{tex}
 			\begin{lrbox}{\mysavebox}
 				<code>
 			\end{lrbox}
 			\begin{frame}[fragile,t,allowframebreaks]{<title>}
 				\framenew{<scale>}
 			\end{frame}
-	\end{scushow}
+	\end{scucode}
 \end{frame}
 
 \begin{lrbox}{\mysavebox}
-	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
+	\begin{scuremark}{卷王森林法则}[JuanwangSlfz]
 		补充自\vref{lemm:JuanwangSlfz}.\par
 		\textbf{\color{scured}基本公理:}
 		\begin{enumerate}
@@ -878,7 +1044,7 @@
 \end{frame}
 
 \begin{frame}[fragile,t,allowframebreaks]{环境切割示例}
-	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
+	\begin{scuremark}{卷王森林法则}[JuanwangSlfz]
 		补充自\vref{lemm:JuanwangSlfz}.\par
 		\textbf{\color{scured}基本公理:}
 		\begin{enumerate}
@@ -905,7 +1071,7 @@
 
 \subsection{分栏}
 \begin{frame}[fragile,label={fra:Fenlan}]{分栏}
-	此处列出两种分栏方式: \\minipage环境及columns环境嵌套column环境, 其中column环境用法同minipage(见并列小图展示\vpageref{show:BinlieXtsl}), colums环境不需要加参数. 如下列出column环境和两个列表环境的显示效果.
+	此处列出两种分栏方式: \\minipage环境及columns环境嵌套column环境, 其中column环境用法同minipage(见并列小图展示\vpageref{code:BinlieXtsl}), colums环境不需要加参数. 如下列出column环境和两个列表环境的显示效果.
 	\vspace{1ex}
 	\pause
 	\begin{columns}
@@ -977,7 +1143,7 @@
 	\textbf{注意:} 参考文献请采用{\color{scured}Biber}编译模式, 即整体编译思路为XeLaTeX - Biber - XeLaTeX.\\
 	模板采用符合国标GB/T7714-2015的gb7714-2015参考文献格式.\\
 	模板已设置了``ref.bib''为参考文献数据库, 使用时覆盖即可(当然, 实在需要请在tex文件导言区寻找命令修改).\\[1ex]
-	引用文献的命令常采用\verb|\cite|\verb|{<item>}|, 如虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
+	引用文献的命令常采用\cmd{cite}\verb|{<item>}|, 如虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
 	此处也可视情况使用脚注形式的详细文献信息引用:
 	\begin{itemize}
 		\item 使用\verb|\footnotemark|计数，配合\verb|\footfullcitetext|\verb|[<num>]|\verb|{<item>}|显示, 如虚拟偶像\footnotemark.\footfullcitetext[3]{_ugc_2018}
@@ -1108,7 +1274,7 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}
 	\vskip6ex
 	\begin{columns}
 		\begin{column}[c]{0.4\columnwidth}
@@ -1123,7 +1289,7 @@
 		\end{column}
 	\end{columns}
 	\centering\vskip4ex
-	SCU Beamer Slide-demo, Rev 1.2a
+	SCU Beamer Slide-demo, Rev 1.3a
 \end{frame}
 
 \end{document}

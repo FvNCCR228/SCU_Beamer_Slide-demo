@@ -3,19 +3,22 @@
 % !TeX TS-program = xelatex
 % This is file `main.tex'.
 % Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2022/03/10 v1.2a (Original Version: 2021/11/30 v1.0a).
+% Version: 2022/03/16 v1.3a (Original Version: 2021/11/30 v1.0a).
 % 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
 % !使用前请阅读用户手册.
 
 % ================ %
 %      导言区      %
 % ================ %
-\documentclass[hyperref,UTF8,11pt,CJK]{beamer}
+\documentclass[hyperref, UTF8, CJK]{beamer}
 
 % --------SCU Beamer 模板宏包--------
 % 提供参数键 MathFont, BlockDisplay, CodeDisplay, ContentMuticols, Background.
 % ----------------
-\usetheme[chinese,MathFont=LM,BlockDisplay=colorful,CodeDisplay=listing,ContentMuticols=ture,Background=true]{scu}
+\usetheme[chinese, MathFont=LM,
+	BlockDisplay=colorful, CodeDisplay=listing,
+	ColorDisplay=BSblue, ContentMuticols=ture,
+	Background=true]{scu}
 
 % --------不要调用的宏包--------
 % ----------------
@@ -24,7 +27,6 @@
 
 % --------宏包调用--------
 % ----------------
-%\usepackage[utf8]{inputenc}
 \usepackage{transparent}
 \usepackage[autoplay]{animate}
 \usepackage{tikz}
@@ -56,7 +58,7 @@
 % --------封面信息输入--------
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
 % ----------------
-\title[四川大学虚拟偶像研究 | Beamer模板使用答辩]{\zihao{3} 四川大学虚拟偶像研究}
+\title[四川大学虚拟偶像研究 | Beamer模板使用答辩]{\LARGE 四川大学虚拟偶像研究}
 \subtitle{Beamer模板使用答辩} % subtitle 未设置页脚显示项, 请在 title 中设置.
 \author[我不卷, 你才卷]{\noindent 马老卷}
 \institute{%
@@ -66,7 +68,7 @@
 	\medskip
 	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
 }
-\date{\noindent 2022/03/10}
+\date{\noindent 2022/03/16}
 
 % ---------------- %
 %      正文区      %
@@ -95,7 +97,7 @@
 		\item 项目地址:
 		\begin{itemize}
 			\item 使用前请前往下列地址中查看模板版本!
-			\item Github: {\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+			\item \faGithub\enspace{\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
 			\item Gitee: \color{scublue}\url{https://gitee.com/NCCR/SCU_Beamer_Slide-demo}
 		\end{itemize}
 		%			\framebreak
@@ -125,7 +127,7 @@
 		\end{itemize}
 		\item<3-> \color{scured}!! 编译相关:
 		\begin{itemize}
-			\item<3-> \color{scured}!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译;
+			\item<3-> \alert{!! 请使用UTF-8格式, 设置XeLaTeX和Biber进行编译};
 			\item<3-> 在线编辑请上传整个工作文件夹, 否则会出现严重错误(Bug遍地飞);
 			\item<3-> \color{scured}!! 对\LaTeX 不熟悉的情况下, 请勿轻易改动".sty"文件(宏包文件)中代码, 也可按照文件中注释进行实验性修改(注意保留备份).
 		\end{itemize}
@@ -208,56 +210,82 @@
 
 \subsection{代码环境}
 \begin{frame}[fragile]{代码环境演示}
-	\begin{scucode}[]{A welcome program.}{c}{}{codecode}
-#include <stdio.h>
-int main() {
-    printf("Hello world!\n");
-    return 0;
+	\onslide<2>
+	\begin{scucode}{A welcome program.}[cpphelloworld]{c}
+#include <iostream>
+int main()
+{
+	std::cout << "Hello World！" << std::endl;
+	std::cin.get();
 }
-\end{scucode}
-	\begin{scushow}[]{A welcome program.}{c}{}{codeshow}
-#include <stdio.h>
-int main() {
-    printf("Hello world!\n");
-    return 0;
+	\end{scucode}
+	\onslide<1>
+	\begin{scucode}{A welcome program.}[chelloworld]{c}
+#include <stidio.h>
+int main()
+{
+	printf("Hello World！");
+	return 0;
 }
-\end{scushow}
+	\end{scucode}
 \end{frame}
 
 \subsection{数学}
 \begin{frame}[fragile,allowframebreaks]{数学环境}
+	\begin{scutheorem}{切比雪夫大数率}[QiebiXfdsl]
+		对独立随机变量序列$\{X_k\}$, 若$E(X_k)$, $D(X_k)$都存在, $k=1,2,\cdots$, 且有常数$C$, 使得$D(X_k)\leq C$, $k=1,2,\cdots$, 则有
+		\begin{equation}
+		\dfrac{1}{n} \sum_{k=1}^{n} X_k - \dfrac{1}{n} \sum_{k=1}^{n} E(X_k) \stackrel{\;P\;}{\longrightarrow} 0
+		\end{equation}
+	\end{scutheorem}
 	\begin{scuproof}{}
 		请读者自证.
 	\end{scuproof}
-	\begin{scualgorithm}{怎么写Beamer模板}{ZengmoXBeamerzs}
+	\begin{scuexample}{形翼门的规模}[HunyuanXytjmdgm]
+		本门昨天去了80个人打水, 今天去了79个人打水, 本门的规模有多大?
+	\end{scuexample}
+	\begin{scualgorithm}{怎么写Beamer模板}[ZengmoXBeamerzs]
 		\begin{algorithmic}[1]
-		\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
-		\ENSURE 不知道怎么搞
-		\STATE 问门主, 肯定不知道
-		\STATE 问初号, 当然不知道
-		\STATE 问小初, 还是不知道
-		\RETURN 算了, 不问了, 都是不知道
+			\REQUIRE 一点点\LaTeX 知识, 不要太信任百度
+			\ENSURE 不知道怎么搞
+			\STATE 问门主, 肯定不知道
+			\STATE 问初号, 当然不知道
+			\STATE 问小初, 还是不知道
+			\RETURN 算了, 不问了, 都是不知道
 		\end{algorithmic}
 	\end{scualgorithm}
-	\begin{scudefinition}{马老卷}{MalaoJ}
-		是混元形翼太极门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
+	\begin{scudefinition}{马老卷}[MalaoJ]
+		是形翼门的打砸工, 直系上峰是马凡王, 入门改姓马, 自称老卷, 实则不卷.
 	\end{scudefinition}
-	\begin{sculemma}{卷王森林法则}{JuanwangSlfz}
+	\begin{scuaxiom}{皮亚诺公理}[PiyaNgl]
+		略.
+	\end{scuaxiom}
+	\begin{scuproperty}{刚体的性质}[GangtiDxz]
+		刚体是个理想模型. 虽然理想但是还是那么难整, 进动和章动就不会了.
+	\end{scuproperty}
+	\begin{scuproposition}{不确定性原理}[BuqueDxyl]
+		粒子的位置与动量不可同时被确定, 位置的不确定性与动量的不确定性遵守不等式
+		\begin{equation}
+		\Delta x \Delta p \geq \dfrac{h}{4\pi}
+		\end{equation}
+		其中$h$为普朗克常数.
+	\end{scuproposition}
+	\begin{sculemma}{卷王森林法则}[JuanwangSlfz]
 		源自未知高校学生, 此处略.
 	\end{sculemma}
-	\begin{scucorollary}{狼人杀的重要性}{LangrenSdzyx}
+	\begin{scucorollary}{狼人杀的重要性}[LangrenSdzyx]
 		编者实习时听公司导师说面试有可能是趣味性游戏, 狼人杀感觉很符合, 所以玩狼人杀吧.
 	\end{scucorollary}
-	\begin{scuremark}{}{Zhu}
+	\begin{scuremark}{}[Zhu]
 		\vref{coro:LangrenSdzyx}, 只是推论, 编者瞎说的.
 	\end{scuremark}
-	\begin{scucondition}{面试狼人杀的条件}{MianshiLrsdtj}
+	\begin{scucondition}{面试狼人杀的条件}[MianshiLrsdtj]
 		\vref{coro:LangrenSdzyx}, 此推论有条件, 即真有公司面试用狼人杀.
 	\end{scucondition}
-	\begin{scuconclusion}{爱废话的编者}{AifeiHdbz}
+	\begin{scuconclusion}{爱废话的编者}[AifeiHdbz]
 		由上述可知: 编者爱废话.
 	\end{scuconclusion}
-	\begin{scuassumption}{编者不会废话}{BianzheBhfh}
+	\begin{scuassumption}{编者不会废话}[BianzheBhfh]
 		我们可以假设编者不会废话, 假设成立, 编者当然不会废话.
 	\end{scuassumption}
 \end{frame}
@@ -321,7 +349,7 @@ int main() {
 
 \subsection{页面相关}
 \begin{lrbox}{\mysavebox}
-	\begin{scuremark}{卷王森林法则}{JuanwangSlfz}
+	\begin{scuremark}{卷王森林法则}[JuanwangSlfz]
 		补充自\vref{lemm:JuanwangSlfz}.\par
 		\textbf{\color{scured}基本公理:}
 		\begin{enumerate}

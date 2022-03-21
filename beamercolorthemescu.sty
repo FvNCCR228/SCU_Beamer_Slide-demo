@@ -13,22 +13,35 @@
 % !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{beamercolorthemescu}[SCU Beamer Theme(Color Theme), 2022/03/10 v1.2a]
+\ProvidesPackage{beamercolorthemescu}[2022/03/10 v1.2a, SCU Beamer Theme(Color Theme)]
 %%%% ----------------------------------------------------------------
 
 
 % ----------------
-% Package Using
-% Confirmed in v1.2a.
+% Declare of Options & Packages
+% Confirmed in v1.2b.
 % ----------------
+% 声明参数.
+\DeclareOptionBeamer{ColorDisplay}{\def\beamer@scu@ColorDisplay{#1}}
+
+% 预执行参数.
+\ExecuteOptionsBeamer{ColorDisplay=JXred}
+
 \RequirePackage{xcolor}% xcolor: 设置颜色.
+
+\ProcessOptionsBeamer
+
+% 参数选项名称定义.
+% ColorDisplay.
+\def\beamer@scu@ColorDisplaytypeJXred {JXred}
+\def\beamer@scu@ColorDisplaytypeBSblue{BSblue}
 % ----------------
 
 
 % ----------------
-% Color Layout
-% Confirmed in v1.2a.
-% 依据四川大学VIS视觉识别系统(2014), 定义了主题色 scured, scugrey, 与辅助色 scublue, scugreen, scuyellow. 
+% Declare of Colors
+% Confirmed in v1.2b.
+% 依据四川大学VIS视觉识别系统(2014), 定义了主题色 scured, scugrey, 与辅助色 scublue, scugreen, scuyellow.
 % 上述定义颜色均采用 CMYK 颜色模式.
 % 注: 常用的颜色模式有 RGB 与 CMYK, 对应 LaTeX 中 rgb(0-1小数制, x/255), RGB(原始数值), cmyk(0-1小数制, x/100).
 % ----------------
@@ -98,41 +111,79 @@
 
 
 % ----------------
+% Beamer Theme Color Mode Layout
+% Confirmed in v1.2b.
+% PrimaryC:: 主题色; AuxiliaryC:: 辅助色;
+% SecondaryAuxiliaryC:: 第二辅助色; IntersperseC:: 点缀色;
+% NomalTextC:: 普通文本色; AlertedTextC:: 强调文本色;
+% BlockExampleC:: Example区块样式色; BlockDefinitionC:: Definition区块样式色;
+% BlockLemmaC:: Lemma区块样式色; BlockConditionC:: Condition区块样式色.
+% ----------------
+\if\EqualOptionsBeamer{ColorDisplay}{JXred}%
+	\colorlet{PrimaryC}           {scured}
+	\colorlet{AuxiliaryC}         {scugrey50}
+	\colorlet{SecondaryAuxiliaryC}{scugrey}
+	\colorlet{IntersperseC}       {scured60}
+	\colorlet{NomalTextC}         {black}
+	\colorlet{AlertedTextC}       {scured90}
+	\colorlet{BlockExampleC}      {scugrey!80!black}
+	\colorlet{BlockDefinitionC}   {scublue}
+	\colorlet{BlockLemmaC}        {scugreen}
+	\colorlet{BlockConditionC}    {scuyellow}
+	\colorlet{HighlightCodeLineC} {scured10}
+\else\if\EqualOptionsBeamer{ColorDisplay}{BSblue}%
+	\colorlet{PrimaryC}           {scublue}
+	\colorlet{AuxiliaryC}         {scugrey50}
+	\colorlet{SecondaryAuxiliaryC}{scugrey}
+	\colorlet{IntersperseC}       {scublue60}
+	\colorlet{NomalTextC}         {black}
+	\colorlet{AlertedTextC}       {scublue90}
+	\colorlet{BlockExampleC}      {scugrey!80!black}
+	\colorlet{BlockDefinitionC}   {scured}
+	\colorlet{BlockLemmaC}        {scugreen}
+	\colorlet{BlockConditionC}    {scuyellow}
+	\colorlet{HighlightCodeLineC} {scublue10}
+\fi\fi
+% ----------------
+
+
+% ----------------
 % Beamer Theme Color Layout
-% Confirmed in v1.2a.
+% Confirmed in v1.2b.
 % ----------------
 % 基本颜色设置.
-\setbeamercolor{structure}{fg=scured, bg=}
+\setbeamercolor{structure}{fg=PrimaryC}
 
 % 调色板颜色设置.
-\setbeamercolor{palette primary}   {fg=white, bg=scured}
-\setbeamercolor{palette secondary} {use=structure, fg=scugrey, bg=}
-\setbeamercolor{palette tertiary}  {fg=scured, bg=scugrey}
-\setbeamercolor{palette quaternary}{fg=scugrey50, bg=scured50}
+\setbeamercolor{palette primary}   {fg=white, bg=PrimaryC}
+\setbeamercolor{palette secondary} {fg=black}
+\setbeamercolor{palette tertiary}  {fg=AlertedTextC}
+\setbeamercolor{palette quaternary}{fg=AuxiliaryC, bg=IntersperseC}
 
 % 页眉页脚颜色设置.
 \setbeamercolor{section in head/foot}    {parent=palette primary}
 \setbeamercolor{subsection in head/foot} {parent=structure}
-\setbeamercolor{frametitle}              {parent=palette tertiary}
+\setbeamercolor{frametitle}              {parent=structure}
+\setbeamercolor{framesubtitle}           {parent=structure}
 \setbeamercolor{author in head/foot}     {parent=structure}
 \setbeamercolor{title in head/foot}      {parent=structure}
 \setbeamercolor{framenumber in head/foot}{parent=structure}
 
 % 封页颜色设置.
-\setbeamercolor{title}          {bg=scured!10!white, fg=scured}
-\setbeamercolor{subtitle}       {bg=scured!10!white, fg=scured}
+\setbeamercolor{title}          {bg=PrimaryC!10!white, fg=PrimaryC}
+\setbeamercolor{subtitle}       {bg=PrimaryC!10!white, fg=PrimaryC}
 %\setbeamercolor{author}         {fg=white,bg=}
 %\setbeamercolor{date}           {fg=white,bg=}
 \setbeamercolor{titlepageheader}{bg=white, fg=black}
 \setbeamercolor{titlepagefooter}{bg=white, fg=black}
 
 % 区块颜色设置.
-\setbeamercolor{block title}        {parent=palette primary}
-\setbeamercolor{block body}         {fg=, bg=scured40}
-\setbeamercolor{block title example}{fg=white, bg=scublue}
-\setbeamercolor{block body example} {fg=, bg=scublue40}
-\setbeamercolor{block title alerted}{parent=palette primary}
-\setbeamercolor{block body alerted} {fg=, bg=scured40}
+\setbeamercolor*{block title}        {parent=palette primary}
+\setbeamercolor*{block body}         {fg=, bg=scured40}
+\setbeamercolor*{block title example}{fg=white, bg=scublue}
+\setbeamercolor*{block body example} {fg=, bg=scublue40}
+\setbeamercolor*{block title alerted}{parent=palette primary}
+\setbeamercolor*{block body alerted} {fg=, bg=scured40}
 
 % 列表颜色设置.
 \setbeamercolor{item}                {parent=structure}
@@ -141,8 +192,9 @@
 \setbeamercolor{enumerate subitem}   {parent=structure}
 \setbeamercolor{enumerate subsubitem}{parent=structure}
 
-% 强调文本颜色设置
-\setbeamercolor{alerted text}{parent=structure}
+% 文本颜色设置
+\setbeamercolor*{normal text} {parent=palette secondary}
+\setbeamercolor*{alerted text}{parent=palette tertiary}
 % ----------------
 
 
