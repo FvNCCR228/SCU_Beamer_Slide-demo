@@ -1,0 +1,289 @@
+% !TeX encoding = UTF-8
+% !BIB TS-program = biber
+% !TeX TS-program = xelatex
+% This is file `main-en.tex'.
+% Copyright (C) 2021-2022 by Linrong Wu.
+% Version: 2022/04/13 v1.3b (Original Version: 2022/04/13 v1.3b).
+% 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
+% !使用前请阅读用户手册.
+
+% ================ %
+%      导言区      %
+% ================ %
+\documentclass[hyperref, UTF8, CJK]{beamer}
+%\special{dvipdfmx:config z 0}
+
+% --------SCU Beamer 模板宏包--------
+% ----------------
+\usetheme[CodeDisplay=minted, LanguageMode=en,
+	ColorDisplay=BSblue, Background=false]{scu}%, BIBMode=none
+
+% --------不要调用的宏包--------
+% ----------------
+%\usepackage{geometry} % geometry: 页面设置. (请勿在 Beamer 中调用)
+
+% --------宏包调用--------
+% ----------------
+\usepackage{transparent}
+\usepackage{array}
+\usepackage{algorithm,algorithmic}
+\usepackage{amsmath,amsfonts,amssymb} % math equations, symbols
+\usepackage{mathtools}
+\usepackage[english]{babel}
+\usepackage{color}      % color content
+\usepackage{url}        % hyperlinks
+\usepackage{multicol,multirow}
+\usepackage{ulem} % ulem: 添加线.
+\usepackage{booktabs}
+\usepackage{epstopdf,epsfig}
+\usepackage{cprotect}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{varioref,cleveref}
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{scucode}
+
+% --------newcommand 区--------
+% 建议在此定义常用命令.
+% ----------------
+\newcommand{\fverb}[1]{\texttt{#1}}
+
+% --------封面信息输入--------
+% [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
+% ----------------
+\title[A brief example in English for SCU Beamer Theme]{\LARGE A brief example in English}
+\subtitle{For SCU Beamer Theme} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\author[Linrong Wu]{\noindent Linrong Wu}
+\institute{%
+	\noindent Management Science\\
+	\medskip
+	\noindent Business School, Sichuan University\\
+	\medskip
+	\noindent \textit{linrong.wu.work@outlook.com}
+}
+\date{\noindent \today}
+
+% ---------------- %
+%      正文区      %
+% ---------------- %
+\begin{document}
+
+% --------总目录--------
+% 可注释.
+% ----------------
+%	\begin{frame}{目录}
+%		%\transfade%淡入淡出 
+%		\tableofcontents % 显示目录.
+%	\end{frame}
+
+% --------节: 介绍--------
+% ----------------
+\section{Introduction}
+\subsection{The Project}
+\begin{frame}{Info.}
+	\faMailForward\enspace{\color{scublue}linrong.wu.work@outlook.com}
+	\faGithub\enspace{\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+\end{frame}
+
+% --------节: 区块示例--------
+% ----------------
+\section{Blocks}
+\subsection{Math Blocks}
+\begin{frame}[fragile,allowframebreaks]{Math Blocks}
+	\begin{scutheorem}{A Theorem}[theorem1]
+		\begin{equation}
+		\dfrac{1}{n} \sum_{k=1}^{n} X_k - \dfrac{1}{n} \sum_{k=1}^{n} E(X_k) \stackrel{\;P\;}{\longrightarrow} 0
+		\end{equation}
+	\end{scutheorem}
+	\begin{scuproof}{}
+		A proof block.
+	\end{scuproof}
+	\begin{scuexample}{An Example}[example1]
+		An example block.
+	\end{scuexample}
+	\begin{scualgorithm}{An Algorithm}[algorithm1]
+		\begin{algorithmic}[1]
+			\REQUIRE \LaTeX{}
+			\ENSURE Computer
+			\STATE ST
+			\STATE A
+			\STATE TE
+			\RETURN Beamer
+		\end{algorithmic}
+	\end{scualgorithm}
+	\begin{scudefinition}{A Defintion}[defintion1]
+		A definition block.
+	\end{scudefinition}
+	\begin{scuaxiom}{An Axiom}[axiom1]
+		An axiom block. Reference to~\Vref{def:defintion1}
+	\end{scuaxiom}
+	\begin{scuproperty}{A Property}[property1]
+		A property block. Reference to~\Cref{axio:axiom1}
+	\end{scuproperty}
+	\begin{scuproposition}{A Proposition}[proposition1]
+		A proposition block. Reference to~\vref{prope:property1}
+		\begin{equation}
+		\Delta x \Delta p \geq \dfrac{h}{4\pi}
+		\end{equation}
+		其中$h$为普朗克常数.
+	\end{scuproposition}
+	\begin{sculemma}{A lemma}[lemma1]
+		A lemma block. Reference to~\cref{propo:proposition1}
+	\end{sculemma}
+	\begin{scucorollary}{A Corollary}[corollary1]
+		A corollary block.
+	\end{scucorollary}
+	\begin{scuremark}{}[remark1]
+		A remark block.
+	\end{scuremark}
+	\begin{scucondition}{A Condition}[condition1]
+		A condition block.
+	\end{scucondition}
+	\begin{scuconclusion}{A Conclusion}[conclusion1]
+		A conclusion block.
+	\end{scuconclusion}
+	\begin{scuassumption}{An Assumption}[assumption]
+		An assumption block.
+	\end{scuassumption}
+\end{frame}
+
+\begin{frame}{A Stared Block}
+\begin{scutheorem}*<1-4>[after title=(after title: Theorem)]{A Stared Theorem Block}[staredblock1]
+	\begin{itemize}[<+->]
+		\item One
+		\item Two~\only<2>{Two}
+		\item \alert<3>{Three}
+		\item Four
+	\end{itemize}
+\end{scutheorem}
+\begin{scutheorem}<2-5>[after title=(after title: Theorem)]{Another Stared Theorem Block}*[staredblock2]
+	\begin{itemize}
+		\item Five
+		\item Six~\only<3>{Six}
+		\item \alert<3>{Seven}
+		\item Eight
+	\end{itemize}
+\end{scutheorem}
+\end{frame}
+
+\subsection{Source Code Block}
+\begin{frame}[fragile]{Source Code Block}{With frame option ``fragile''}
+	\onslide<2>
+	\begin{scucode}{A Cpp Program.}[cppcode]{c}
+		#include <iostream>
+		int main()
+		{
+			std::cout << "Hello World！" << std::endl;
+			std::cin.get();
+		}
+	\end{scucode}
+	\onslide<1>
+	\begin{scucode}{A Python Program.}[pythoncode]{python}
+		for i in range(1,5):
+			for j in range(1,5):
+				for k in range(1,5):
+					if( i != k ) and (i != j) and (j != k):
+						print (i,j,k)
+	\end{scucode}
+\end{frame}
+
+\begin{frame}[fragile]{A Stared Source Code Block}
+	\begin{scucode*}{A Stared Block.}[staredblock3]{c}
+		#include <iostream>
+		int main()
+		{
+			std::cout << "Hello World！" << std::endl;
+			std::cin.get();
+		}
+	\end{scucode*}
+	\begin{scucode}{Another Stared Theorem Block.}*[pythoncode]{python}
+		for i in range(1,5):
+			for j in range(1,5):
+				for k in range(1,5):
+					if( i != k ) and (i != j) and (j != k):
+						print (i,j,k)
+	\end{scucode}
+\end{frame}
+
+\begin{frame}[fragile]{Highlight Line}
+	\begin{scucode}{Highlight Line.}[Highlight1]{c}[highlightlines={2,5}]
+		#include <iostream>
+		int main()
+		{
+			std::cout << "Hello World！" << std::endl;
+			std::cin.get();
+		}
+	\end{scucode}
+	\begin{scucode}{Highlight Line.}[pythoncode]{python}[highlightlines={2-3,5}]
+		for i in range(1,5):
+			for j in range(1,5):
+				for k in range(1,5):
+					if( i != k ) and (i != j) and (j != k):
+						print (i,j,k)
+	\end{scucode}
+\end{frame}
+
+\begin{frame}[fragile]{\LaTeX{} Comment}{Escapeinline}
+	If you wanna add comments to the back of the line, it is recommended to use the corresponding language comment directly.
+	\begin{scucode}{Comment.}[Comment1]{c}
+		#include <iostream>
+		int main()
+		{// $\pi$
+			std::cout << "Hello World！" << std::endl; |# \textsf{\LaTeX{} out hEllo wOrld}|
+			|\colorbox{scugreen!60}{$\sum_\pi^\phi \alpha + \Gamma$}| std::cin.get(); 
+		}
+	\end{scucode}
+	\begin{scucode}{Comment}[Comment2]{python}'@@'
+		for i in range(1,5):
+			for j in range(1,5): @$\sum_\pi^\phi \alpha + \Gamma$@
+				for k in range(1,5): # $\sum_\pi^\phi \alpha + \Gamma$
+					if( i != k ) and (i != j) and (j != k):
+						print (i,j,k)
+	\end{scucode}
+\end{frame}
+
+\begin{frame}[fragile]{Overlay \& Label}{Escapeinline}
+	\begin{scucode}{Comment.}[Escapeinline1]{c}
+		#include <iostream>
+		int main()
+		{
+			std::cout << "Hello World！" << std::endl; // \only<1>{Value 1}\only<2>{Value 2}
+			std::cin.get();
+		}
+	\end{scucode}
+	\begin{scucode}{Comment}[Escapeinline2]{python}[highlightlines={4}]'@@'
+		for i in range(1,5):
+			for j in range(1,5): 
+				for k in range(1,5):
+					if( i != k ) and (i != j) and (j != k): @\label{line:qg}@
+						print (i,j,k)
+	\end{scucode}
+  Reference to Line~\ref{line:qg}, the if statement.
+\end{frame}
+
+\begin{frame}[fragile]{Source Code From File}
+	\scucodeinput{Source Code From File}{c}{A cpp.cpp}
+\end{frame}
+
+% --------节: 参考文献--------
+% ----------------
+\section{Reference}
+\subsection{Reference}
+\begin{frame}[allowframebreaks]{Reference}
+	\nocite{*}
+	\printbibliography[heading=none]
+\end{frame}
+
+% --------节: 致谢--------
+% ----------------
+\section{Acknowledgement}
+\subsection{Acknowledgement}
+\begin{frame}
+	\centering
+	\Huge Thanks!
+\end{frame}
+
+\end{document}
+
+%% End of file `main-en.tex'.

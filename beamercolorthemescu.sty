@@ -1,6 +1,6 @@
 % This is file `beamercolorthemescu.sty'.
 % Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
+% Version: 2022/04/13 v1.3b (Original Version: 2022/03/10 v1.2a).
 %
 % This file may be distributed and/or modified
 %
@@ -13,39 +13,51 @@
 % !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{beamercolorthemescu}[2022/03/10 v1.2a, SCU Beamer Theme(Color Theme)]
+\ProvidesPackage{beamercolorthemescu}[2022/04/13 v1.3b, SCU Beamer Theme(Color Theme)]
 %%%% ----------------------------------------------------------------
 
 
 % ----------------
-% Declare of Options & Packages
-% Confirmed in v1.2b.
+% Declare of Options
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16), v1.3b(2022/04/13).
 % ----------------
-% 声明参数.
+% CMD:: \DeclareOptionBeamer  - 声明参数.
+% CMD:: \ExecuteOptionsBeamer - 预执行参数.
+% CMD:: \ProcessOptionsBeamer - 处理参数.
+% ----------------
+% KEY:: ColorDisplay.
+% VALUE:: JXred | BSblue.
 \DeclareOptionBeamer{ColorDisplay}{\def\beamer@scu@ColorDisplay{#1}}
 
-% 预执行参数.
 \ExecuteOptionsBeamer{ColorDisplay=JXred}
-
-\RequirePackage{xcolor}% xcolor: 设置颜色.
-
 \ProcessOptionsBeamer
+% ----------------
 
-% 参数选项名称定义.
-% ColorDisplay.
-\def\beamer@scu@ColorDisplaytypeJXred {JXred}
-\def\beamer@scu@ColorDisplaytypeBSblue{BSblue}
+
+% ----------------
+% Declare of Packages
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+% CMD:: \RequirePackage - 调用宏包.
+% ----------------
+\RequirePackage{xcolor}% xcolor: 设置颜色.
 % ----------------
 
 
 % ----------------
 % Declare of Colors
-% Confirmed in v1.2b.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16).
+% ----------------
 % 依据四川大学VIS视觉识别系统(2014), 定义了主题色 scured, scugrey, 与辅助色 scublue, scugreen, scuyellow.
 % 上述定义颜色均采用 CMYK 颜色模式.
 % 注: 常用的颜色模式有 RGB 与 CMYK, 对应 LaTeX 中 rgb(0-1小数制, x/255), RGB(原始数值), cmyk(0-1小数制, x/100).
 % ----------------
-% 锦绣红 - scured    - CMYK(12,92,95,20).
+% COLOR:: 锦绣红 - scured    - CMYK(12,92,95,20).
 \definecolor{scured}   {cmyk}{0.12,0.92,0.95,0.20}
 \colorlet{scured10}   {scured!10!white}
 \colorlet{scured20}   {scured!20!white}
@@ -57,7 +69,7 @@
 \colorlet{scured80}   {scured!80!white}
 \colorlet{scured90}   {scured!90!white}
 
-% 优雅灰 - scugrey   - CMYK(47,37,37,20).
+% COLOR:: 优雅灰 - scugrey   - CMYK(47,37,37,20).
 \definecolor{scugrey}  {cmyk}{0.47,0.37,0.37,0.00}
 \colorlet{scugrey10}  {scugrey!10!white}
 \colorlet{scugrey20}  {scugrey!20!white}
@@ -69,7 +81,7 @@
 \colorlet{scugrey80}  {scugrey!80!white}
 \colorlet{scugrey90}  {scugrey!90!white}
 
-% 宝石蓝 - scublue   - CMYK(100,60,0,15).
+% COLOR:: 宝石蓝 - scublue   - CMYK(100,60,0,15).
 \definecolor{scublue}  {cmyk}{1.00,0.60,0.00,0.15}
 \colorlet{scublue10}  {scublue!10!white}
 \colorlet{scublue20}  {scublue!20!white}
@@ -81,7 +93,7 @@
 \colorlet{scublue80}  {scublue!80!white}
 \colorlet{scublue90}  {scublue!90!white}
 
-% 荷叶绿 - scugreen  - CMYK(100,0,90,15).
+% COLOR:: 荷叶绿 - scugreen  - CMYK(100,0,90,15).
 \definecolor{scugreen} {cmyk}{1.00,0.00,0.90,0.15}
 \colorlet{scugreen10} {scugreen!10!white}
 \colorlet{scugreen20} {scugreen!20!white}
@@ -93,7 +105,7 @@
 \colorlet{scugreen80} {scugreen!80!white}
 \colorlet{scugreen90} {scugreen!90!white}
 
-% 银杏黄 - scuyellow - CMYK(0,40,100,15).
+% COLOR:: 银杏黄 - scuyellow - CMYK(0,40,100,15).
 \definecolor{scuyellow}{cmyk}{0.00,0.40,1.00,0.15}
 \colorlet{scuyellow10}{scuyellow!10!white}
 \colorlet{scuyellow20}{scuyellow!20!white}
@@ -112,12 +124,14 @@
 
 % ----------------
 % Beamer Theme Color Mode Layout
-% Confirmed in v1.2b.
-% PrimaryC:: 主题色; AuxiliaryC:: 辅助色;
-% SecondaryAuxiliaryC:: 第二辅助色; IntersperseC:: 点缀色;
-% NomalTextC:: 普通文本色; AlertedTextC:: 强调文本色;
-% BlockExampleC:: Example区块样式色; BlockDefinitionC:: Definition区块样式色;
-% BlockLemmaC:: Lemma区块样式色; BlockConditionC:: Condition区块样式色.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3a(2022/03/16).
+% ----------------
+% PrimaryC - 主题色;                  AuxiliaryC - 辅助色;
+% SecondaryAuxiliaryC - 第二辅助色;   IntersperseC - 点缀色;
+% NomalTextC - 普通文本色;            AlertedTextC - 强调文本色;
+% BlockExampleC - Example 区块样式色; BlockDefinitionC - Definition 区块样式色;
+% BlockLemmaC - Lemma 区块样式色;     BlockConditionC - Condition 区块样式色.
 % ----------------
 \if\EqualOptionsBeamer{ColorDisplay}{JXred}%
 	\colorlet{PrimaryC}           {scured}
@@ -149,7 +163,9 @@
 
 % ----------------
 % Beamer Theme Color Layout
-% Confirmed in v1.2b.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16).
 % ----------------
 % 基本颜色设置.
 \setbeamercolor{structure}{fg=PrimaryC}

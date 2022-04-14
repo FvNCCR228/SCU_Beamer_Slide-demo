@@ -1,6 +1,6 @@
 % This is file `beamerthemescu.sty'.
 % Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2021/12/30 v1.1a (Original Version: 2021/11/30 v1.0a).
+% Version: 2022/04/13 v1.3b (Original Version: 2021/11/30 v1.0a).
 %
 % This file may be distributed and/or modified
 %
@@ -9,10 +9,15 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 %
-% Provide options::
+% Provide options:
 %   MathFont = LM | XITS
 %   BlockDisplay = colorful | followtheme | allgrey
 %   CodeDisplay = listing | minted
+%   MintedStyle = lightmode | darkmode | <custom>
+%   ColorDisplay = JXred | BSblue
+%   LanguageMode = cn | en
+%   BIBMode = biber | none
+%   BIBStyle = biber-gb7714
 %   ContentMuticols = true | false
 %   Background = true | false
 %
@@ -23,66 +28,22 @@
 \ProvidesPackage{beamerthemescu}[2022/03/10 v1.2a, SCU Beamer Theme(Main Theme)]
 %%%% ----------------------------------------------------------------
 
-\def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2022 by Linrong Wu.}
-
 
 % ----------------
-% Declare of Options
+% Declare of Commands
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
 % ----------------
-% 定义新的 if.
-\newif\ifbeamer@chinese
-\newif\ifbeamer@scu@contentmuticols
-\newif\ifbeamer@scu@background
-
-% 声明参数.
-\DeclareOptionBeamer{MathFont}{\def\beamer@scu@MathFont{#1}}
-\DeclareOptionBeamer{BlockDisplay}{\def\beamer@scu@BlockDisplay{#1}}
-\DeclareOptionBeamer{CodeDisplay}{\def\beamer@scu@CodeDisplay{#1}}
-\DeclareOptionBeamer{MintedStyle}{\def\beamer@scu@MintedStyle{#1}}
-\DeclareOptionBeamer{ColorDisplay}{\PassOptionsToPackage{ColorDisplay=#1}{beamercolorthemescu}}
-\DeclareOptionBeamer{LanguageMode}{\def\beamer@scu@LanguageMode{#1}}
-\DeclareOptionBeamer{chinese}[true]{\csname beamer@chinese#1\endcsname}
-\DeclareOptionBeamer{ContentMuticols}{\csname beamer@scu@contentmuticols#1\endcsname}
-\DeclareOptionBeamer{Background}{\csname beamer@scu@background#1\endcsname}
-
-\PassOptionsToClass{aspectratio=169}{beamer}
-
-% 预执行参数.
-\ExecuteOptionsBeamer{%
-  MathFont=LM,%
-  BlockDisplay=colorful,%
-  CodeDisplay=listing,%
-  ColorDisplay=JXred,%
-  LanguageMode=cn,%
-  ContentMuticols=true,%
-  Background=ture%
-}
-
-\ProcessOptionsBeamer
-
-% 参数选项名称定义.
-% MathFont.
-\def\beamer@scu@MathFonttypeXITS{XITS}
-\def\beamer@scu@MathFonttypeLM  {LM}
-% BlockDisplay.
-\def\beamer@scu@BlockDisplaytypecolorful   {colorful}
-\def\beamer@scu@BlockDisplaytypefollowtheme{followtheme}
-\def\beamer@scu@BlockDisplaytypeallgrey    {allgrey}
-% CodeDisplay.
-\def\beamer@scu@CodeDisplaytypeminted {minted}
-\def\beamer@scu@CodeDisplaytypelisting{listing}
-
-\def\beamer@scu@MintedStyletypelightmode{lightmode}
-\def\beamer@scu@MintedStyletypedarkmode {darkmode}
-
+\def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2022 by Linrong Wu.}% 版权声明.
+\def\kvtcb@label@sep{:}% tcolorbox 中 label 分隔符.
 
 % 定义执行命令. 修改自 sjtubeamer.
 \def\EqualOptionsBeamer{%
   \relax\fi\ifEqualOptionsBeamer%
 }
+\def\ifEqualOptionsBeamer#1#2{%
 % #1: Option - Key.
 % #2: Option - Value.
-\def\ifEqualOptionsBeamer#1#2{%
   \newif\ifoption@tmp%
   \edef\optionkey@tmp{%
     \csname beamer@scu@#1\endcsname%
@@ -109,16 +70,81 @@
 % ----------------
 
 
-\mode<presentation>
+% ----------------
+% Declare of Options
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+% CMD:: \DeclareOptionBeamer  - 声明参数.
+% CMD:: \ExecuteOptionsBeamer - 预执行参数.
+% CMD:: \ProcessOptionsBeamer - 处理参数.
+% ----------------
+% 定义新的 if.
+\newif\ifbeamer@scu@contentmuticols
+\newif\ifbeamer@scu@background
+
+% KEY:: MathFont.
+% VALUE:: XITS | LM.
+\DeclareOptionBeamer{MathFont}{\def\beamer@scu@MathFont{#1}}
+% KEY:: BlockDisplay.
+% VALUE:: colorful | followtheme | allgrey.
+\DeclareOptionBeamer{BlockDisplay}{\def\beamer@scu@BlockDisplay{#1}}
+% KEY:: CodeDisplay.
+% VALUE:: minted | listing.
+\DeclareOptionBeamer{CodeDisplay}{\def\beamer@scu@CodeDisplay{#1}}
+% KEY:: MintedStyle [BASED:: CodeDisplay].
+% VALUE:: lightmode | darkmode | <custom>.
+\DeclareOptionBeamer{MintedStyle}{\def\beamer@scu@MintedStyle{#1}}
+% KEY:: ColorDisplay [PASSTO:: beamercolorthemescu.sty].
+% VALUE:: JXred | BSblue.
+\DeclareOptionBeamer{ColorDisplay}{\PassOptionsToPackage{ColorDisplay=#1}{beamercolorthemescu}}
+% KEY:: LanguageMode.
+% VALUE:: cn | en.
+\DeclareOptionBeamer{LanguageMode}{\def\beamer@scu@LanguageMode{#1}}
+% KEY:: BIBMode.
+% VALUE:: biber | none.
+\DeclareOptionBeamer{BIBMode}{\def\beamer@scu@BIBMode{#1}}
+% KEY:: BIBStyle [BASED:: CodeDisplay].
+% VALUE:: biber-gb7714.
+\DeclareOptionBeamer{BIBStyle}{\def\beamer@scu@BIBStyle{#1}}
+\DeclareOptionBeamer{ContentMuticols}{\csname beamer@scu@contentmuticols#1\endcsname}
+\DeclareOptionBeamer{Background}{\csname beamer@scu@background#1\endcsname}
+
+%\PassOptionsToClass{aspectratio=169}{beamer}
+
+\ExecuteOptionsBeamer{%
+  MathFont=LM,%
+  BlockDisplay=colorful,%
+  CodeDisplay=listing,%
+  ColorDisplay=JXred,%
+  LanguageMode=cn,%
+  BIBMode=biber,%
+  ContentMuticols=true,%
+  Background=ture%
+}
+\ProcessOptionsBeamer
+\if\EqualOptionsBeamer{CodeDisplay}{minted}%
+  \ExecuteOptionsBeamer{MintedStyle=lightmode}%
+\fi
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  \ExecuteOptionsBeamer{BIBStyle=biber-gb7714}
+\fi
+\ProcessOptionsBeamer
+% ----------------
 
 
 % ----------------
-% Package Using
+% Declare of Packages
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+% CMD:: \RequirePackage - 调用宏包.
 % ----------------
 \if\EqualOptionsBeamer{LanguageMode}{cn}
-  \RequirePackage[fontset=none]{ctex}% 提供统一的 LaTeX 中文文档框架.
-\if\EqualOptionsBeamer{LanguageMode}{en}
-  \RequirePackage[fontset=none, scheme=plain]{ctex}
+  \RequirePackage[fontset=none]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
+\else\if\EqualOptionsBeamer{LanguageMode}{en}
+  \RequirePackage[fontset=none, scheme=plain]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
 \fi\fi
 \RequirePackage{xeCJK}% xeCJK: 排版 CJK 文字.
 \RequirePackage{fontspec}% fontspec: 字体设置.
@@ -128,43 +154,50 @@
 \RequirePackage{comment}% comment: 提供注释环境.
 \RequirePackage{xparse}% xparse: 指定命令参数.
 \RequirePackage{varioref}% varioref: 交叉引用.
+\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \PassOptionsToPackage{english}{cleveref}
+\fi
 \RequirePackage{cleveref}% cleveref: 交叉引用.
 \RequirePackage{tcolorbox}% tcolorbox: 绘制彩色文本框.
-\RequirePackage{fbox}
 \if\EqualOptionsBeamer{CodeDisplay}{minted}%
-  \RequirePackage[outputdir=mintedbuild]{minted}% 调用 minted 宏包, 临时文件存储在 mintedbuild 文件夹.
-  \tcbuselibrary{most, xparse, listings, minted}
+  % minted 临时文件存储在 mintedbuild 文件夹
+  \PassOptionsToPackage{outputdir=mintedbuild}{minted}
+  \RequirePackage{minted}% minted: 代码高亮.
+  \tcbuselibrary{skins, breakable, xparse, listings, minted}
   \PackageWarningNoLine{beamerthemescu}{%
-    beamerthemscu package loaded with `CodeDisplay=minted' option. %
+    Option [CodeDisplay=minted] is loaded. %
     Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
 \else\if\EqualOptionsBeamer{CodeDisplay}{listing}%
-  \tcbuselibrary{most, xparse, listings}
+  \tcbuselibrary{skins, breakable, xparse, listings}
   \PackageWarningNoLine{beamerthemescu}{%
-    beamerthemscu package loaded with `CodeDisplay=listing' option. %
+    Option [CodeDisplay=listing] is loaded. %
     If you have configured Python environment, %
-    you are recommended to set `CodeDisplay=minted' option and %
+    you are recommended to set [CodeDisplay=minted] option and %
     install Pygments through pip. %
-    Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+    Additionally, add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
 \fi\fi
-\RequirePackage{adjustbox}% adjustbox: 处理盒子.
-\RequirePackage{xhfill}% xhfill: 定制化线填充.
 \RequirePackage{ifthen}% ifthen: 控制结构语句.
 \RequirePackage{fontawesome}% fontawesome: 提供可缩放矢量图标.
 \RequirePackage{tabularx}% tabularx: 智能表格环境.
-\RequirePackage[%
-  backend=biber,%
-  autolang=hyphen,%
-  style=gb7714-2015,%
-  gbalign=gb7714-2015,%style=gb7714-2015ms
-  gbstyle=false, url=false, doi=false, isbn=false,%
-  sorting=none]{biblatex}% biblatex: 参考文献.
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  \PassOptionsToPackage{backend=biber}{biblatex}% 后端 biber 引擎.
+  \if\EqualOptionsBeamer{BIBStyle}{biber-gb7714}%
+    \PassOptionsToPackage{autolang=hyphen,%
+      style=gb7714-2015,%
+      gbalign=gb7714-2015,%style=gb7714-2015ms
+      gbstyle=false, url=false, doi=false, isbn=false,%
+      sorting=none}{biblatex}%
+  \fi
+  \RequirePackage{biblatex}% biblatex: 参考文献.
+\else\if\EqualOptionsBeamer{BIBMode}{none}%
+  \relax
+\fi\fi
 % ----------------
 
-\@ifpackageloaded{minted}{%
-	\ExecuteOptionsBeamer{MintedStyle=lightmode}%
-}
 
-\ProcessOptionsBeamer
+\mode<presentation>
+
+
 % ----------------
 % Some Settings
 % ----------------
@@ -175,20 +208,19 @@
 \setcounter{tocdepth}{2}
 % 设置图片路径为项目文件夹下 `image' `images' `figure' `figures'.
 \graphicspath{{image/}{images/}{figure/}{figures/}{resources/}}
-% 导入参考文献 bib 文件.
-\addbibresource[location=local]{ref.bib}
 % 半透明化尚未出现的内容.
 \setbeamercovered{transparent}
 % 导航栏为空.
 \beamertemplatenavigationsymbolsempty
-% 参考文献设置.
-\beamertemplatetextbibitems
 % ----------------
 
 
 % ----------------
 % Theme Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
 % 包含外部主题, 内部主题, 颜色主题.
 % ----------------
 % 颜色主题 - scu.
@@ -205,10 +237,8 @@
 \setbeamertemplate{caption}[numbered]
 % 定理标题编号.
 \setbeamertemplate{theorems}[numbered]
-% 设置 blocks 区块为 rounded (圆形边框), 阴影开启.
-\setbeamertemplate{blocks}[rounded][shadow=true]
-% 设置 bibliography 列表为 text 显示模式.
-\setbeamertemplate{bibliography item}[text]
+% 设置 blocks 区块为 rounded (圆形边框).
+\setbeamertemplate{blocks}[rounded]
 % 压缩模式.
 \beamer@compresstrue
 % ----------------
@@ -258,14 +288,15 @@
 
 \setlength{\titlepagespaceundername}{16pt}
 \setlength{\titlepagespaceunderdate}{4pt}
-
-\setlength{\bibitemsep}{0.75ex}
 % ----------------
 
 
 % ----------------
 % Background Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
 % 设置了主题背景选项 "background=ture" & "background=false".
 % 设置了页眉 logo.
 % ----------------
@@ -295,6 +326,10 @@
 
 % ----------------
 % Font Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10).
+% ----------------
 % 设置了主题数学字体选项 "mathdisplay=XITS" & "mathdisplay=LM".
 % ----------------
 %\newfontfamily\cmcsc{cmcsc10.mf}
@@ -314,8 +349,8 @@
 
 % 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
 %\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
-\setCJKsansfont[Scale=0.956]{Microsoft YaHei}
-%\setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
+%\setCJKsansfont[Scale=0.956]{Microsoft YaHei}
+\setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
 %\usefonttheme{professionalfonts}
 % ----------------
 
@@ -347,14 +382,38 @@
 \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
 \setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
 \setbeamertemplate{itemize subsubitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
-% 参考文献目录字号设置为6号.
-\renewcommand*{\bibfont}{\footnotesize}
+% ----------------
+
+
+% ----------------
+% Bibliography Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  % 参考文献 bib 库.
+  \addbibresource[location=local]{ref.bib}
+  % 参考文献设置.
+  \beamertemplatetextbibitems
+  % 设置 bibliography 列表为 text 显示模式.
+  \setbeamertemplate{bibliography item}[text]
+  % 设置 bibitem 间距.
+  \setlength{\bibitemsep}{0.75ex}
+  % 参考文献目录字号设置为6号.
+  \renewcommand*{\bibfont}{\footnotesize}
+\fi
+% 设置参考文献脚注引用.
+\newcommand{\footfullcitetext}[2][]{%
+  \footnotetext{\fullcite[#1]{#2}}}
 % ----------------
 
 
 % ----------------
 % Mini-frames Layout
-% Confirmed in v1.1a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.1a(2021/12/31).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
 % 参考了: https://tex.stackexchange.com/questions/314847/beamer-theme-antibes-plus-navigation-bar-with-circles-for-subsections/314961#314961.
 % ----------------
 % 计数器 - 小节起始页.
@@ -442,7 +501,9 @@
 
 % ----------------
 % Tikz Def Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16), v1.3b(2022/04/13).
 % ----------------
 \newdimen\beamer@scu@sectionbar
 \if\EqualOptionsBeamer{LanguageMode}{cn}%
@@ -506,10 +567,10 @@
 \beamer@progressbar@wd=\dimexpr\paperwidth-10.5em\relax
 
 % 进度条样式定义.
+\def\beamer@scu@tikz@progressbar#1#2#3{%
 % #1: 未放映部分颜色.
 % #2: 已放映部分颜色.
 % #3: 辅助显示颜色.
-\def\beamer@scu@tikz@progressbar#1#2#3{%
   \beamer@progressbar@currentframe=\insertframenumber%
   \beamer@progressbar@totalframe=\inserttotalframenumber%
   \beamer@progressbar@tmpdim=\beamer@progressbar@wd%
@@ -550,9 +611,9 @@
 }
 
 % 页脚样式定义.
+\def\beamer@scu@tikz@footline#1#2{%
 % #1: 页码部分颜色.
 % #2: Logo 部分颜色.
-\def\beamer@scu@tikz@footline#1#2{%
   \begin{tikzpicture}[overlay, remember picture]
     \draw [fill=#1, draw=none, rounded corners=2pt] (current page.south east) ++ (-7.8em, -.15ex)%
       [turtle={%
@@ -583,8 +644,11 @@
 
 % ----------------
 % Headline Layout
-% Confirmed in v1.3a.
-% 格式: SECTION (ALL) | NAME OF SCU.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: section [cn - ALL; en - CURRENT] | subsection (with mini-frames).
 % ----------------
 \defbeamertemplate*{headline}{SCU headline theme}{%
   \begin{beamercolorbox}[wd=\paperwidth,ht=4ex]{}
@@ -598,8 +662,11 @@
 
 % ----------------
 % Frametitle Layout
-% Confirmed in v1.3a.
-% 格式 - SUBSECTION & MINI-FRAMES OF SUBSECTION | FRAMETITLE.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: frametitle & framesubtitle.
 % ----------------
 %\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]%
 %{beamer@frametitleshade}{\paperheight}%
@@ -632,8 +699,11 @@
 
 % ----------------
 % Footline Layout
-% Confirmed in v1.3a.
-% 格式: AUTHOR | INSTITUTE | DATE FRAMENUMBER.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: author | short title | pagenumber | NAME of SCU.
 % ----------------
 \defbeamertemplate*{footline}{SCU footline theme}{%
   \begin{beamercolorbox}[wd=\paperwidth,ht=3ex]{}
@@ -703,15 +773,18 @@
 
 % ----------------
 % Tcolorbox Style Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
 % 定义了多种 Tcolorbox 盒子的基础样式. 修改自 Tcolorbox 手册.
 % ----------------
 % 盒子基础样式定义.
 % 普通盒子基础样式定义.
+\def\beamer@scu@tcbstyle#1#2#3{%
 % #1: 关键字 - 样式类型.
 % #2: 上部颜色.
 % #3: 下部颜色.
-\def\beamer@scu@tcbstyle#1#2#3{%
   \tcbset{tcb#1style/.style={%
     enhanced jigsaw,%
     arc=1.5mm,%
@@ -792,9 +865,9 @@
 }
 
 % 代码盒子基础样式定义.
+\def\beamer@scu@tcbstylecode#1{%
 % #1: 关键字 - 样式类型.
 % #2: 颜色.
-\def\beamer@scu@tcbstylecode#1{%
   \tcbset{codestyle/.style={empty,%
     attach boxed title to top left,%
     boxed title style={empty,%
@@ -882,6 +955,7 @@
 % ----------------
 % Tcolorbox Layout
 % Confirmed in v1.3a.
+% ----------------
 % 定义了两个渐变样式( rb 为红蓝渐变, yg 为黄绿渐变)的 Tcolorbox.
 % #1: <可选>附加参数.
 % #2: 标题.
@@ -897,7 +971,10 @@
 
 % ----------------
 % Theorem Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
 % 使用 tcolorbox 重定义定理环境, 原始的不带 scu 前缀的定理环境仍可使用.
 % ----------------
 % 定理区块名称设置.
@@ -1157,7 +1234,10 @@
 
 % ----------------
 % Listing Layout
-% Confirmed in v1.3a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
 % 定义了一个用作代码演示的 Listing, 和一个不带计数的 Listing.
 % ----------------
 % 代码区块名称设置.
@@ -1465,7 +1545,10 @@
 
 % ----------------
 % Automatic Frame Layout
-% Confirmed in v1.1a.
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30).
+% ----------------
 % 以下设置自动帧输出, 含封页, 小节前目录页.
 % ----------------
 % 添加封页.
@@ -1518,42 +1601,11 @@
 
 
 % ----------------
-% Environment Break Layout
-% 实现 tcolorbox 等环境的分页显示, 目前仍有 bug 如 tcolorbox 的阴影, 以及需要手动控制距离实现分页.
-% 若内容长度未超过当页, 仍能正常显示.
-% 代码来源于 https://tex.stackexchange.com/questions/509208/breakable-tcolorbox-inside-a-beamer-slide/.
-% ----------------
-\newsavebox{\mysavebox}
-\newlength{\myrest}
-
-\newlength{\Textheight}
-
-\newif\iffirstframe
-\firstframetrue
-
-\newcommand\framenew[1]{%
-\setlength{\Textheight}{#1\textheight}%
-\ifdim\ht\mysavebox>\Textheight%
-\setlength{\myrest}{\ht\mysavebox}%
-\loop\ifdim\myrest>\Textheight%
-\iffirstframe%
-\firstframefalse%
-\else%
-\newpage\par\noindent%
-\fi%
-\clipbox{0 {\myrest-\Textheight} 0 {\ht\mysavebox-\myrest}}{\usebox{\mysavebox}}%
-\addtolength{\myrest}{-\Textheight}%
-\repeat%
-\newpage\par\noindent%
-\clipbox{0 0 0 {\ht\mysavebox-\myrest}}{\usebox{\mysavebox}}%
-\else%
-\usebox{\mysavebox}%
-\fi}
-% ----------------
-
-
-% ----------------
 % Ref Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
 % 重定义了 \vref & \cref 命令, 实现跳转.
 % 重定义了页码计数器 page, 实现环境 frame 输出后值与计数器 framenumber 相同, 从而实现引用时页码不为 pdf 页码.
 % 定义了中文下的 varioref 和 cleveref 包的显示项. (部分具体定义未知, 故未翻译)
@@ -1630,20 +1682,9 @@
   \Crefname{listing}{代码}{代码}%
   \Crefname{line}{Line}{Lines}%
   %}
-\else\if\EqualOptionsBeamer{LanguageMode}{en}%
-  \PassOptionsToPackage{english}{cleveref}
+\else\EqualOptionsBeamer{LanguageMode}{en}%
   \Crefname{framenumber}{Slide}{Slides}
-\fi\fi
-% ----------------
-
-
-% ----------------
-% Bib Layout
-% Confirmed in v1.1a.
-% ----------------
-% 设置参考文献脚注引用.
-\newcommand{\footfullcitetext}[2][]{%
-  \footnotetext{\fullcite[#1]{#2}}}
+\fi
 % ----------------
 
 

@@ -3,7 +3,7 @@
 % !TeX TS-program = xelatex
 % This is file `main.tex'.
 % Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2022/03/16 v1.3a (Original Version: 2021/11/30 v1.0a).
+% Version: 2022/04/13 v1.3b (Original Version: 2021/11/30 v1.0a).
 % 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
 % !使用前请阅读用户手册.
 
@@ -11,13 +11,11 @@
 %      导言区      %
 % ================ %
 \documentclass[hyperref, UTF8, CJK]{beamer}
+%\special{dvipdfmx:config z 0}
 
 % --------SCU Beamer 模板宏包--------
-% 提供参数键 MathFont, BlockDisplay, CodeDisplay, ContentMuticols, Background.
 % ----------------
-\usetheme[chinese, MathFont=LM,
-	BlockDisplay=colorful, CodeDisplay=listing,
-	ColorDisplay=BSblue, ContentMuticols=ture,
+\usetheme[ColorDisplay=BSblue, ContentMuticols=ture,
 	Background=true]{scu}
 
 % --------不要调用的宏包--------
@@ -46,7 +44,7 @@
 \usepackage{makecell}
 \usepackage{listings}
 \usepackage{subcaption}
-\usepackage{varioref,cleveref,tcolorbox,biblatex}
+\usepackage{varioref,cleveref}
 %\usepackage[active,tightpage]{preview}
 %\PreviewEnvironment{pspicture}
 
@@ -68,7 +66,7 @@
 	\medskip
 	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
 }
-\date{\noindent 2022/03/16}
+\date{\noindent April 13th, 2022}
 
 % ---------------- %
 %      正文区      %
@@ -117,7 +115,7 @@
 		\item<1-> \LaTeX 编辑器:
 		\begin{itemize}
 			\item<1-> 本地: TeX Live (推荐\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}{\color{scublue}清华大学开源软件镜像站}安装最新版)配合TeXstudio或VS Code使用. TeX Live安装时间极长, 请各位做好心理准备. 此外Apple设备IDE平台建议知乎;
-			\item<1-> 在线: Overleaf平台, Slager平台 (听说过但未曾使用).
+			\item<1-> 在线: Overleaf平台, TeXPage平台.
 		\end{itemize}
 		\item<2-> \LaTeX 相关插件:
 		\begin{itemize}
@@ -348,35 +346,6 @@ int main()
 \end{frame}
 
 \subsection{页面相关}
-\begin{lrbox}{\mysavebox}
-	\begin{scuremark}{卷王森林法则}[JuanwangSlfz]
-		补充自\vref{lemm:JuanwangSlfz}.\par
-		\textbf{\color{scured}基本公理:}
-		\begin{enumerate}
-			\item 获得研究生资格是当代大学生的第一需要;
-			\item 当代大学生对研究生资格的需求不断增长和扩张, 但研究生资格总量保持不变.
-		\end{enumerate}
-		\textbf{\color{scured}两大重要概念:}
-		\begin{enumerate}
-			\item 卷疑链: 双方无法判断对方是否正在内卷;\\
-			~~“当代大学生间的善意和恶意. 善和恶这类字眼放到内卷过程中是不严谨的, 所以需要对它们的含义加以限制: 善意就是指不主动内卷和卷灭其他大学生, 恶意则相反. 这是最低的善意了吧. ”
-			\begin{itemize}
-				\item 一个大学生不能判断另一个大学生是善还是恶
-				\item 一个大学生不能判断另一个大学生认为本大学生文明是善还是恶
-				\item 一个大学生不能判断另一个大学生是否会对本大学生发起内卷
-				\item 一个大学生无法判断另一个大学生对自己是善意或恶意的
-				\item 一个大学生无法判断另一个大学生认为自己是善意或恶意的
-				\item 一个大学生无法判断另一个大学生判断自己对他是善意或恶意的
-				\item \dots\dots
-			\end{itemize}	
-			\item 绩点爆炸: 不同大学生绩点进步的速度和加速度几乎不可能是一致的, 弱小的大学生很可能在短时间内超越强大的大学生. 可能由内因或者外因(例如内卷的交流, 内卷的程度突然加深)引发, 继而弱小的大学生能够对强大的大学生构成内卷优势乃至内卷威胁.
-		\end{enumerate}
-	\end{scuremark}
-\end{lrbox}
-\begin{frame}[fragile,t,allowframebreaks]{环境切割}
-	\framenew{.82}
-\end{frame}
-
 \begin{frame}[fragile,label={fra:Fenlan}]{分栏}
 	\vspace{1ex}
 	\begin{columns}
