@@ -15,7 +15,7 @@
 
 % --------SCU Beamer 模板宏包--------
 % ----------------
-\usetheme[CodeDisplay=minted, LanguageMode=en,
+\usetheme[CodeDisplay=minted, LanguageMode=en, MintedStyle=dracula,
 	ColorDisplay=BSblue, Background=false]{scu}%, BIBMode=none
 
 % --------不要调用的宏包--------
@@ -35,7 +35,6 @@
 \usepackage{multicol,multirow}
 \usepackage{ulem} % ulem: 添加线.
 \usepackage{booktabs}
-\usepackage{epstopdf,epsfig}
 \usepackage{cprotect}
 \usepackage{makecell}
 \usepackage{listings}
@@ -52,17 +51,15 @@
 % --------封面信息输入--------
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
 % ----------------
-\title[A brief example in English for SCU Beamer Theme]{\LARGE A brief example in English}
+\title[A brief example in English for SCU Beamer Theme]{A brief example in English}
 \subtitle{For SCU Beamer Theme} % subtitle 未设置页脚显示项, 请在 title 中设置.
-\author[Linrong Wu]{\noindent Linrong Wu}
+\author[Linrong Wu]{Linrong Wu}
 \institute{%
-	\noindent Management Science\\
-	\medskip
-	\noindent Business School, Sichuan University\\
-	\medskip
-	\noindent \textit{linrong.wu.work@outlook.com}
+	Management Science\\
+	Business School, Sichuan University\\
+	\textit{lr.wu.interact@outlook.com}
 }
-\date{\noindent \today}
+\date{\today}
 
 % ---------------- %
 %      正文区      %
@@ -84,6 +81,8 @@
 \begin{frame}{Info.}
 	\faMailForward\enspace{\color{scublue}linrong.wu.work@outlook.com}
 	\faGithub\enspace{\color{scublue}\url{https://github.com/FvNCCR228/SCU_Beamer_Slide-demo}}
+
+	
 \end{frame}
 
 % --------节: 区块示例--------
@@ -174,7 +173,7 @@
 		#include <iostream>
 		int main()
 		{
-			std::cout << "Hello World！" << std::endl;
+			std::cout << "Hello World!" << std::endl;
 			std::cin.get();
 		}
 	\end{scucode}
@@ -222,6 +221,7 @@
 					if( i != k ) and (i != j) and (j != k):
 						print (i,j,k)
 	\end{scucode}
+  refer \vref{code:Highlight1,code:pythoncode}
 \end{frame}
 
 \begin{frame}[fragile]{\LaTeX{} Comment}{Escapeinline}
@@ -268,17 +268,17 @@
 
 % --------节: 参考文献--------
 % ----------------
-\section{Reference}
-\subsection{Reference}
-\begin{frame}[allowframebreaks]{Reference}
-	\nocite{*}
-	\printbibliography[heading=none]
-\end{frame}
+% \section{Reference}
+% \subsection{Reference}
+% \begin{frame}[allowframebreaks]{Reference}
+% 	\nocite{*}
+% 	\printbibliography[heading=none]
+% \end{frame}
 
 % --------节: 致谢--------
 % ----------------
-\section{Acknowledgement}
-\subsection{Acknowledgement}
+% \section{Acknowledgement}
+% \subsection{Acknowledgement}
 \begin{frame}
 	\centering
 	\Huge Thanks!

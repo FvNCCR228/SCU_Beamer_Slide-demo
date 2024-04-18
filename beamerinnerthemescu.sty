@@ -1,0 +1,105 @@
+% This is file `beamerinnerthemescu.sty'.
+% Copyright (C) 2021-2024 by Linrong Wu.
+% Version: 2024/04/16 v1.3c (Original Version: 2024/04/16 v1.3c).
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+%
+% 本文件为 SCU_Beamer_Slide-demo 内部主题宏包文件.
+% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamerinnerthemescu}[2024/04/16 v1.3c, SCU Beamer Theme(Inner Theme)]
+%%%% ----------------------------------------------------------------
+
+
+\mode<presentation>
+
+
+% ----------------
+% Beamer Theme Title Page Layout
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.3c(2024/04/16).
+% ----------------
+% CMD:: \newdimen   - 创建长度寄存器.
+% CMD:: \newsavebox - 创建盒子.
+% ----------------
+% DIMEN:: title 框底部高度 - titlelow.
+\newdimen\beamer@scu@len@titlelow
+\beamer@scu@len@titlelow=0.4\paperheight
+% DIMEN:: title 框顶部高度 - titlehigh.
+\newdimen\beamer@scu@len@titlehigh
+\beamer@scu@len@titlehigh=0.65\paperheight
+% DIMEN:: title 框文字顶部高度 - titletexthigh.
+\newdimen\beamer@scu@len@titletexthigh
+\beamer@scu@len@titletexthigh=\dimexpr\beamer@scu@len@titlehigh-0.025\paperheight\relax
+% DIMEN:: author 框顶部高度 - authorhigh.
+\newdimen\beamer@scu@len@authorhigh
+\beamer@scu@len@authorhigh=0.475\paperheight
+% DIMEN:: author 框文字顶部高度 - authortexthigh.
+\newdimen\beamer@scu@len@authortexthigh
+\beamer@scu@len@authortexthigh=\dimexpr\beamer@scu@len@authorhigh-0.025\paperheight\relax
+% DIMEN:: author 框最小宽度 - authorwidthmin.
+\newdimen\beamer@scu@len@authorwidthmin
+\beamer@scu@len@authorwidthmin=0.75\paperwidth
+% DIMEN:: author 框顶部到 title 框底部距离 - titletoauthor.
+\newdimen\beamer@scu@len@titletoauthor
+\beamer@scu@len@titletoauthor=\dimexpr\beamer@scu@len@authorhigh-\beamer@scu@len@titlelow+0.2pt\relax
+% DIMEN:: author 框高度 - titletoauthor.
+\newdimen\beamer@scu@len@authorheight
+
+% 封面样式定义.
+\defbeamertemplate*{title page}{SCU title page theme}{%  
+  \newsavebox{\beamer@scu@authorbox}
+  \sbox{\beamer@scu@authorbox}{\parbox{.72\paperwidth}{%
+    \setlength{\baselineskip}{10pt}%
+    {\usebeamerfont{author}\insertauthor\par}%
+    {\vskip6pt}%
+    {\usebeamerfont{institute}\insertinstitute}%
+  }}% savebox 存储
+  \settototalheight{\beamer@scu@len@authorheight}{\usebox{\beamer@scu@authorbox}}% 计算高度
+  \beamer@scu@len@authorheight=\dimexpr\beamer@scu@len@authorheight+0.036\paperwidth\relax% 补齐上下空白部分
+  \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight]{}%
+    \begin{tikzpicture}[overlay, yshift=-13.3pt]%
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt]%
+        at (16pt, \dimexpr\paperheight-14pt\relax) {\pgfuseimage{lg-name}};% 绘制 logo-name
+      \node[anchor=south east, inner sep=0pt, outer sep=0pt]%
+        at (\paperwidth, \beamer@scu@len@titlehigh) {\pgfuseimage{building}};% 绘制望江楼房
+      \fill[PrimaryC] (0, \beamer@scu@len@titlelow) rectangle (\paperwidth, \beamer@scu@len@titlehigh); % 绘制 title 框
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt,%
+        text width=.9\paperwidth] at (16pt, \beamer@scu@len@titletexthigh) {%
+        {\usebeamerfont{title}\usebeamercolor[bg]{title}\inserttitle\par}%
+        {\vskip6pt}%
+        {\usebeamerfont{subtitle}\usebeamercolor[bg]{subtitle}\insertsubtitle\par}%
+      };% 绘制 title | subtitle 文字
+      \fill[PrimaryC!10!BackgroundC] (0, \beamer@scu@len@authorhigh)%
+        -- (\beamer@scu@len@authorwidthmin, \beamer@scu@len@authorhigh)%
+        -- ++ (0.5\beamer@scu@len@authorheight, -\beamer@scu@len@authorheight)%
+        -- (0, \dimexpr\beamer@scu@len@authorhigh-\beamer@scu@len@authorheight\relax)%
+        -- cycle;% 绘制 author 框
+      \fill[BackgroundC] (0, \beamer@scu@len@authorhigh)%
+        -- (\dimexpr\beamer@scu@len@authorwidthmin+1.56pt\relax, \beamer@scu@len@authorhigh)%
+        -- ++ (\dimexpr0.5\beamer@scu@len@titletoauthor\relax, -\beamer@scu@len@titletoauthor)%
+        -- ++ (-1.6pt, 0)%
+        -- ++ (-\dimexpr0.5\beamer@scu@len@titletoauthor-0.8pt\relax, \dimexpr\beamer@scu@len@titletoauthor-1.6pt\relax)%
+        -- (0, \dimexpr\beamer@scu@len@authorhigh-1.6pt\relax) -- cycle;% 绘制装饰线
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt]%
+        at (16pt, \beamer@scu@len@authortexthigh) (AuthorText) {\usebox{\beamer@scu@authorbox}};% 绘制 author | institute 文字
+      \node[anchor=south west, inner sep=0pt, outer sep=0pt] at (16pt, 14pt) {\usebeamerfont{date}\insertdate};% 绘制 date 文字
+      \node[anchor=south east, inner sep=0pt, outer sep=0pt] at (\dimexpr\paperwidth-16pt\relax, 14pt) {\pgfuseimage{verify}};% 绘制 verify 校训
+      % \node[anchor=south west,draw] at (0, 0) {00};
+    \end{tikzpicture}%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{title page}[SCU title page theme]
+% ----------------
+
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamerinnerthemescu.sty'.

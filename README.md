@@ -9,7 +9,7 @@
 
 -GitHub: https://github.com/FvNCCR228/SCU_Beamer_Slide-demo
 
--Gitee: https://gitee.com/NCCR/SCU_Beamer_Slide-demo
+-Gitee: https://gitee.com/NCCR/scu_-beamer_-slide-demo
 
 
 ## 使用说明
@@ -65,6 +65,4 @@
 
 ## 更新记录
 
-v1.0a - 2021/11/30 - 初始版本
-
-v1.0b - 2021/12/08 - 删除字体文件
+v1.0a - 初始版本

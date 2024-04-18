@@ -1,0 +1,362 @@
+% This is file `beamerouterthemescu.sty'.
+% Copyright (C) 2021-2024 by Linrong Wu.
+% Version: 2024/04/16 v1.3c (Original Version: 2024/04/16 v1.3c).
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+%
+% 本文件为 SCU_Beamer_Slide-demo 外部主题宏包文件.
+% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamerouterthemescu}[2024/04/16 v1.3c, SCU Beamer Theme(Outer Theme)]
+%%%% ----------------------------------------------------------------
+
+
+% ----------------
+% Declare of Options
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.3c(2024/04/16).
+% ----------------
+% CMD:: \DeclareOptionBeamer  - 声明参数.
+% CMD:: \ExecuteOptionsBeamer - 预执行参数.
+% CMD:: \ProcessOptionsBeamer - 处理参数.
+% ----------------
+% KEY:: Miniframes.
+% VALUE:: follow | separate | negate.
+\DeclareOptionBeamer{Miniframes}{\def\beamer@scu@Miniframes{#1}}
+
+\ExecuteOptionsBeamer{Miniframes=follow}
+\ProcessOptionsBeamer
+% ----------------
+
+
+% ----------------
+% Declare of Packages
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.3c(2024/04/16).
+% ----------------
+% CMD:: \usetikzlibrary - 调用 TikZ 库.
+% ----------------
+\usetikzlibrary{positioning}
+% ----------------
+
+
+\mode<presentation>
+
+
+% ----------------
+% Beamer Theme Headline Layout
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
+% ----------------
+% 于 v1.3c(2024/04/16) 与 Headline TikZ 绘图部分合并, 强化代码关联度.
+% ----------------
+% CMD:: \newdimen   - 创建长度寄存器.
+% CMD:: \newsavebox - 创建盒子.
+% ----------------
+% FORMAT:: section [cn - ALL; en - CURRENT] | subsection (with mini-frames).
+% ----------------
+% DIMEN:: 节导航栏宽度 - secbar.
+\newdimen\beamer@scu@len@secbar
+\if\EqualOptionsBeamer{LanguageMode}{cn}%
+  \beamer@scu@len@secbar=0.64\paperwidth%
+\else\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \beamer@scu@len@secbar=0.52\paperwidth%
+\fi\fi
+% DIMEN:: 小节与标题间分隔线 - sectotitleline.
+\newdimen\beamer@scu@len@sectotitleline
+\beamer@scu@len@sectotitleline=\dimexpr\the\paperwidth-\beamer@scu@len@secbar-20pt\relax
+
+% savebox 存储 TikZ Headline 背景底图绘图.
+\newsavebox{\beamer@scu@headlinebox}
+\sbox{\beamer@scu@headlinebox}{%
+  \begin{tikzpicture}%
+    % 绘图辅助节点定义.
+    \coordinate (LineNorthWest) at (0, -11pt);% 小节-标题分隔线 西北节点
+    \coordinate (LineSouthWest) at (0, -13pt);% 小节-标题分隔线 西南节点
+    \coordinate (LineSouthEast) at (\beamer@scu@len@sectotitleline, -13pt);% 小节-标题分隔线 东北节点
+    \coordinate (SecbarNorthEast) at (\the\paperwidth, 0);% 章节栏 东北节点
+    \coordinate (SecbarSouthEast) at (\the\paperwidth, -13pt);% 章节栏 东南节点
+    \coordinate (SecbarSouthWest) at ([xshift=-\beamer@scu@len@secbar]SecbarSouthEast);% 章节栏 西南节点
+    \coordinate (SecbarNorthWest) at ([xshift=-6.5pt, yshift=13pt]SecbarSouthWest);% 章节栏 西南节点
+    \coordinate (AdornDarkNorthWest) at ([xshift=-4pt]SecbarNorthWest);% 深色装饰 西北节点
+    \coordinate (AdornDarkSouthEast) at ([xshift=3.5pt, yshift=-7pt]SecbarNorthWest);% 深色装饰 东南节点
+    \coordinate (AdornLightNorthWest) at ([xshift=-4pt]AdornDarkSouthEast);%  浅色装饰 西北节点
+    \coordinate (AdornLightSouthEast) at ([xshift=2pt, yshift=-4pt]AdornDarkSouthEast);% 浅色装饰 东南节点
+    % 颜色图形绘制.
+    \fill[PrimaryC] (SecbarNorthEast) -- (SecbarSouthEast)%
+      -- (SecbarSouthWest) -- (SecbarNorthWest) -- cycle;% 章节栏背景
+    \fill[IntersperseC] (AdornDarkNorthWest) -- (SecbarNorthWest)%
+      -- (AdornDarkSouthEast) -- ++ (-4pt, 0) -- cycle;% 深色装饰
+    \fill[AuxiliaryC] (AdornLightNorthWest) -- (AdornDarkSouthEast)%
+      -- (AdornLightSouthEast) -- ++ (-4pt, 0) -- cycle;% 浅色装饰
+    \fill[PrimaryC] (LineNorthWest) -- (LineSouthWest)%
+      -- (LineSouthEast) -- ++ (-1pt, 2pt) -- cycle;% 小节与标题间分隔线
+  \end{tikzpicture}%
+}%
+
+% 插入章节栏水平导航.
+\def\insert@secbar#1{%
+  \usebeamerfont{section in head/foot}%
+  \usebeamercolor[fg]{section in head/foot}%
+  \if\EqualOptionsBeamer{LanguageMode}{cn}%
+    \insertsectionnavigationhorizontal{\beamer@scu@len@secbar}{}{}%
+  \else\if\EqualOptionsBeamer{LanguageMode}{en}%
+    \insertsectionhead\hspace*{#1}%
+  \fi\fi%
+}
+% 插入小节标题.
+\def\insert@subsec{%
+  \usebeamerfont{subsection in head/foot}%
+  \usebeamercolor[fg]{subsection in head/foot}%
+  \insertsubsectionhead%
+}
+% 插入小节帧进度.
+\def\insert@miniframes{%
+  \usebeamerfont{subsection in head/foot}%
+  \usebeamercolor[fg]{subsection in head/foot}%
+  \insertsubsectionminiframes{1.8pt}{1.5pt}{1.2pt}%
+}
+
+% 页眉样式定义.
+\def\beamer@scu@headline{%
+  \if\EqualOptionsBeamer{Miniframes}{follow}%
+    \begin{tikzpicture}[overlay, remember picture]%
+      % 绘图辅助节点定义.
+      \coordinate (NorthEast) at (current page.north east);% 东北节点
+      \coordinate (NorthWest) at (current page.north west);% 西北节点
+      % 图形文字绘制.
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (NorthWest) {\usebox{\beamer@scu@headlinebox}};% 绘制 headline 背景底图
+      \node[left, inner sep=0pt, outer sep=0pt,%
+        yshift=-7pt] at (NorthEast) {\insert@secbar{9pt}};% 绘制章节栏水平导航
+      \node[right, inner sep=0pt, outer sep=0pt,%
+        xshift=9pt, yshift=-5.75pt] at (NorthWest) (Subsec) {\insert@subsec};% 绘制小节标题
+      \node[right=6pt of Subsec, inner sep=0pt, outer sep=0pt] {\insert@miniframes};% 绘制小节帧进度
+    \end{tikzpicture}%
+  \else\if\EqualOptionsBeamer{Miniframes}{separate}%
+    \begin{tikzpicture}[overlay, remember picture]%
+      % 绘图辅助节点定义.
+      \coordinate (NorthEast) at (current page.north east);% 东北节点
+      \coordinate (NorthWest) at (current page.north west);% 西北节点
+      % 图形文字绘制.
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (NorthWest) {\usebox{\beamer@scu@headlinebox}};% 绘制 headline 背景底图
+      \node[left, inner sep=0pt, outer sep=0pt,%
+        yshift=-7pt] at (NorthEast) {\insert@secbar{9pt}};% 绘制章节栏水平导航
+      \node[right, inner sep=0pt, outer sep=0pt,%
+        xshift=9pt, yshift=-5.75pt] at (NorthWest) {\insert@subsec};% 绘制小节标题
+      \node[anchor=north east, inner sep=0pt, outer sep=0pt,%
+        xshift=-9pt, yshift=-15pt] at (NorthEast) {\insert@miniframes};% 绘制小节帧进度
+    \end{tikzpicture}%
+  \else\if\EqualOptionsBeamer{Miniframes}{negate}%
+    \begin{tikzpicture}[overlay, remember picture]%
+      % 绘图辅助节点定义.
+      \coordinate (NorthEast) at (current page.north east);% 东北节点
+      \coordinate (NorthWest) at (current page.north west);% 西北节点
+      % 图形文字绘制.
+      \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (NorthWest) {\usebox{\beamer@scu@headlinebox}};% 绘制 headline 背景底图
+      \node[left, inner sep=0pt, outer sep=0pt,%
+        yshift=-7pt] at (NorthEast) {\insert@secbar{9pt}};% 绘制章节栏水平导航
+      \node[right, inner sep=0pt, outer sep=0pt,%
+        xshift=9pt, yshift=-5.75pt] at (NorthWest) {\insert@subsec};% 绘制小节标题
+    \end{tikzpicture}%
+  \fi\fi\fi
+}
+
+% 设置 Headline 主题模板.
+\defbeamertemplate*{headline}{SCU headline theme}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=11.5pt]{}%
+    \beamer@scu@headline%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{headline}[SCU headline theme]
+% ----------------
+
+
+% ----------------
+% Beamer Theme Frametitle Layout
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13), v1.3c(2024/04/16).
+% ----------------
+% FORMAT:: frametitle | framesubtitle.
+% ----------------
+% 设置 Frametitle 主题模板.
+\defbeamertemplate*{frametitle}{SCU frametitle theme}{%
+  \ifx\insertframesubtitle\@empty%
+    \begin{beamercolorbox}[wd=\paperwidth,%
+      ht=2.5ex, dp=.5ex, leftskip=8.6pt]{}%{frametitle}
+      \usebeamerfont{frametitle}%
+      \usebeamercolor[fg]{frametitle}%
+      \insertframetitle%
+    \end{beamercolorbox}%
+  \else%
+    \begin{beamercolorbox}[wd=\paperwidth,%
+      ht=2.5ex, dp=.5ex, leftskip=8.6pt]{}%{frametitle}
+      \usebeamerfont{frametitle}%
+      \usebeamercolor[fg]{frametitle}%
+      \insertframetitle~%
+      \textcolor{SecondaryAuxiliaryC}{\rule[-.2ex]{.08em}{1.8ex}}~%
+      \usebeamerfont{framesubtitle}%
+      \usebeamercolor[fg]{framesubtitle}%
+      \insertframesubtitle%
+    \end{beamercolorbox}%
+  \fi%
+}
+\setbeamertemplate{frametitle}[SCU frametitle theme]
+% ----------------
+
+
+% ----------------
+% Beamer Theme Footline Layout
+% Confirmed in v1.3c(2024/04/16).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
+% ----------------
+% 于 v1.3c(2024/04/16) 与 Footline TikZ 绘图部分合并, 强化代码关联度
+% ----------------
+% CMD:: \newdimen   - 创建长度寄存器.
+% CMD:: \newcount   - 创建计数器.
+% CMD:: \newsavebox - 创建盒子.
+% ----------------
+% FORMAT:: NAME of SCU | author | short title | pagenumber.
+% ----------------
+% DIMEN:: Acrobat 页面跳转按钮宽度 - GoToPage.
+\newdimen\beamer@scu@len@GoToPage
+% DIMEN:: ProgressBar Width - probarwd.
+\newdimen\beamer@scu@len@probarwd
+\beamer@scu@len@probarwd=\dimexpr\the\paperwidth-48pt\relax
+% DIMEN:: ProgressBar auxiliary dimension - probartmpdim.
+\newdimen\beamer@scu@len@probartmpdim
+
+% COUNT:: 当前帧页码 - currentframe.
+\newcount\beamer@scu@count@currentframe
+% COUNT:: 当前帧页码 - totalframe.
+\newcount\beamer@scu@count@totalframe
+
+% savebox 存储 TikZ Footline 背景底图绘图.
+\newsavebox{\beamer@scu@footlinebox}
+\sbox{\beamer@scu@footlinebox}{%
+  \begin{tikzpicture}%
+    % 绘图辅助节点定义.
+    \coordinate (LogoNorthWest) at (0, 12pt);% Logo 西北节点
+    \coordinate (LogoNorthEast) at (48pt, 12pt);% Logo 东北节点
+    \coordinate (LogoSouthEast) at (54pt, 0);% Logo 东南节点
+    \coordinate (AdornLightSouthEast) at (58pt, 0);% 浅色装饰 东南节点
+    \coordinate (AdornLightNorthEast) at (55.5pt, 5pt);% 浅色装饰 东北节点
+    \coordinate (AdornLightNorthWest) at (51.5pt, 5pt);% 浅色装饰 西北节点
+    \coordinate (AdornDarkNorthEast) at (53.5pt, 9pt);% 深色装饰 东北节点
+    \coordinate (AdornDarkNorthWest) at (49.5pt, 9pt);% 深色装饰 西北节点
+    % 颜色图形绘制.
+    \fill[PrimaryC] (0, 0) -- (LogoNorthWest)%
+      -- (LogoNorthEast) -- (LogoSouthEast) -- cycle;% Logo 背景
+    \node[inner sep=0pt, outer sep=0pt] at (25pt, 6pt) {\pgfuseimage{lg}};
+    \fill[AuxiliaryC] (LogoSouthEast) -- (AdornLightNorthWest)%
+      -- (AdornLightNorthEast) -- (AdornLightSouthEast) -- cycle;% 浅色装饰
+    \fill[IntersperseC] (AdornLightNorthWest) -- (AdornDarkNorthWest)%
+      -- (AdornDarkNorthEast) -- (AdornLightNorthEast) -- cycle;% 深色装饰
+  \end{tikzpicture}%
+}%
+
+% 插入帧页码.
+\def\insert@framenumber{% 页码显示为"x / total"
+  \usebeamerfont{framenumber in head/foot}%
+  \usebeamercolor[fg]{framenumber in head/foot}%
+  \insertframenumber~/~\inserttotalframenumber%
+}
+% 插入 Acrobat 页面跳转按钮.
+\def\insert@AcrobatToPage{%
+  \settowidth{\beamer@scu@len@GoToPage}{\insertframenumber}% 宽度为页码宽度
+  \usebeamerfont{framenumber in head/foot}%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{\beamer@scu@len@GoToPage}}%
+}
+
+% 页脚样式定义.
+\def\beamer@scu@footline{%
+  \begin{tikzpicture}[overlay]%
+    % 绘图辅助节点定义.
+    \coordinate (SouthWest) at (current page.south west);% 西南节点
+    \coordinate (SouthEast) at (current page.south east);% 东南节点
+    % \coordinate (SouthWest) at (0, 0);% 西南节点
+    % \coordinate (SouthEast) at (0, \paperwidth);% 东南节点
+    % 图形文字绘制.
+    \node[anchor=south west, inner sep=0pt, outer sep=0pt] at (SouthWest) {\usebox{\beamer@scu@footlinebox}};% 绘制 footline 背景底图
+    \node[right, inner sep=0pt, outer sep=0pt,%
+      xshift=64pt, yshift=4.25pt] at (SouthWest) {%
+      \usebeamerfont{author in head/foot}%
+      \usebeamercolor[fg]{author in head/foot}%
+      \insertshortauthor\enspace\rule[-.2ex]{.16em}{2ex}\enspace%
+      \usebeamerfont{title in head/foot}%
+      \usebeamercolor[fg]{title in head/foot}%
+      \insertshorttitle%
+    };% 绘制 Beamer 标题
+    \node[left, inner sep=0pt, outer sep=0pt,%
+      xshift=-9pt, yshift=4pt] at (SouthEast) (FootlinePage) {\insert@framenumber};% 绘制页码
+    \node[right, inner sep=0pt, outer sep=0pt] at (FootlinePage.west) {%
+      \insert@AcrobatToPage%
+    };% 绘制 Acrobat 页面跳转按钮
+  \end{tikzpicture}%
+}
+
+% 进度条样式定义.
+\def\beamer@scu@progressbar#1#2#3{%
+  % #1: 未放映部分颜色.
+  % #2: 已放映部分颜色.
+  % #3: 辅助色.
+  \beamer@scu@count@currentframe=\insertframenumber%
+  \beamer@scu@count@totalframe=\inserttotalframenumber
+  \beamer@scu@len@probartmpdim=\beamer@scu@len@probarwd%
+  \divide\beamer@scu@len@probartmpdim by 1000%
+  \multiply\beamer@scu@len@probartmpdim by \beamer@scu@count@currentframe%
+  \divide\beamer@scu@len@probartmpdim by \beamer@scu@count@totalframe%
+  \multiply\beamer@scu@len@probartmpdim by 1000%
+  \begin{tikzpicture}[very thin, overlay, remember picture]%
+    % 绘图辅助节点定义.
+    \coordinate (SouthWest) at (current page.south west);% 西南节点
+    \coordinate (ProBar) at ([xshift=48pt, yshift=9pt]SouthWest);% 初始节点
+    % 图形绘制.
+    \fill[#1] (ProBar) rectangle ++ (\beamer@scu@len@probarwd, 3pt);% 未放映部分
+    \fill[#2] ([yshift=9pt]SouthWest) rectangle ++ (48pt, 3pt);
+    \fill[#2] (ProBar) rectangle ++ (\beamer@scu@len@probartmpdim, 3pt);% 已放映部分
+    \fill[#3, draw=#2, line width=.48pt] ([xshift=\beamer@scu@len@probartmpdim, yshift=1.5pt]ProBar) circle (1.26pt);
+  \end{tikzpicture}%
+}
+
+% 设置 Footline 主题模板.
+\defbeamertemplate*{footline}{SCU footline theme}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=12pt]{}%
+    \beamer@scu@progressbar{AuxiliaryC}{PrimaryC}{BackgroundC}%
+    \beamer@scu@footline%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{footline}[SCU footline theme]
+% ----------------
+
+
+% ----------------
+% Beamer Theme Navigation Symbols Layout
+% ----------------
+%\addtobeamertemplate{footline}{%
+%  \leavevmode%
+%  \hbox{%
+%    \begin{beamercolorbox}[wd=0.4\paperwidth,ht=3ex,dp=.75ex,right,rightskip=1.2em]{frametitle}%
+%      \usebeamercolor[fg]{navigation symbols}\insertslidenavigationsymbol%
+%      \insertframenavigationsymbol%
+%      \insertsubsectionnavigationsymbol%
+%      \insertsectionnavigationsymbol%
+%      \insertdocnavigationsymbol%
+%      \insertbackfindforwardnavigationsymbol%
+%    \end{beamercolorbox}%
+%  }}
+% ----------------
+
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamerouterthemescu.sty'.

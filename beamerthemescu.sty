@@ -1,6 +1,6 @@
 % This is file `beamerthemescu.sty'.
-% Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2022/04/13 v1.3b (Original Version: 2021/11/30 v1.0a).
+% Copyright (C) 2021-2024 by Linrong Wu.
+% Version: 2024/04/16 v1.3c (Original Version: 2021/11/30 v1.0a).
 %
 % This file may be distributed and/or modified
 %
@@ -14,7 +14,8 @@
 %   BlockDisplay = colorful | followtheme | allgrey
 %   CodeDisplay = listing | minted
 %   MintedStyle = lightmode | darkmode | <custom>
-%   ColorDisplay = JXred | BSblue
+%   ColorDisplay = JXred | BSblue | Custom
+%   Miniframes = follow | separate | negate
 %   LanguageMode = cn | en
 %   BIBMode = biber | none
 %   BIBStyle = biber-gb7714
@@ -25,7 +26,7 @@
 % !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{beamerthemescu}[2022/03/10 v1.2a, SCU Beamer Theme(Main Theme)]
+\ProvidesPackage{beamerthemescu}[2024/04/16 v1.3c, SCU Beamer Theme(Main Theme)]
 %%%% ----------------------------------------------------------------
 
 
@@ -34,7 +35,7 @@
 % Confirmed in v1.3b(2022/04/13).
 % Established in v1.3b(2022/04/13).
 % ----------------
-\def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2022 by Linrong Wu.}% 版权声明.
+\def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2024 by LR Wu.}% 版权声明.
 \def\kvtcb@label@sep{:}% tcolorbox 中 label 分隔符.
 
 % 定义执行命令. 修改自 sjtubeamer.
@@ -72,9 +73,9 @@
 
 % ----------------
 % Declare of Options
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3c(2024/04/16).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
 % ----------------
 % CMD:: \DeclareOptionBeamer  - 声明参数.
 % CMD:: \ExecuteOptionsBeamer - 预执行参数.
@@ -99,13 +100,16 @@
 % KEY:: ColorDisplay [PASSTO:: beamercolorthemescu.sty].
 % VALUE:: JXred | BSblue.
 \DeclareOptionBeamer{ColorDisplay}{\PassOptionsToPackage{ColorDisplay=#1}{beamercolorthemescu}}
+% KEY:: Miniframes [PASSTO:: beamerouterthemescu.sty].
+% VALUE:: follow | separate | negate.
+\DeclareOptionBeamer{Miniframes}{\PassOptionsToPackage{Miniframes=#1}{beamerouterthemescu}}
 % KEY:: LanguageMode.
 % VALUE:: cn | en.
 \DeclareOptionBeamer{LanguageMode}{\def\beamer@scu@LanguageMode{#1}}
 % KEY:: BIBMode.
 % VALUE:: biber | none.
 \DeclareOptionBeamer{BIBMode}{\def\beamer@scu@BIBMode{#1}}
-% KEY:: BIBStyle [BASED:: CodeDisplay].
+% KEY:: BIBStyle [BASED:: BIBMode].
 % VALUE:: biber-gb7714.
 \DeclareOptionBeamer{BIBStyle}{\def\beamer@scu@BIBStyle{#1}}
 \DeclareOptionBeamer{ContentMuticols}{\csname beamer@scu@contentmuticols#1\endcsname}
@@ -118,6 +122,7 @@
   BlockDisplay=colorful,%
   CodeDisplay=listing,%
   ColorDisplay=JXred,%
+  Miniframes=follow,%
   LanguageMode=cn,%
   BIBMode=biber,%
   ContentMuticols=true,%
@@ -136,8 +141,9 @@
 
 % ----------------
 % Declare of Packages
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3c(2024/04/16).
 % Established in v1.3b(2022/04/13).
+% Updated in v1.3c(2024/04/16).
 % ----------------
 % CMD:: \RequirePackage - 调用宏包.
 % ----------------
@@ -146,11 +152,9 @@
 \else\if\EqualOptionsBeamer{LanguageMode}{en}
   \RequirePackage[fontset=none, scheme=plain]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
 \fi\fi
-\RequirePackage{xeCJK}% xeCJK: 排版 CJK 文字.
 \RequirePackage{fontspec}% fontspec: 字体设置.
 \RequirePackage{unicode-math}% unicode-math: OpenType 数学字体.
 \RequirePackage{tikz}% tikz: 绘制图像.
-\usetikzlibrary{turtle}
 \RequirePackage{comment}% comment: 提供注释环境.
 \RequirePackage{xparse}% xparse: 指定命令参数.
 \RequirePackage{varioref}% varioref: 交叉引用.
@@ -161,7 +165,7 @@
 \RequirePackage{tcolorbox}% tcolorbox: 绘制彩色文本框.
 \if\EqualOptionsBeamer{CodeDisplay}{minted}%
   % minted 临时文件存储在 mintedbuild 文件夹
-  \PassOptionsToPackage{outputdir=mintedbuild}{minted}
+  \PassOptionsToPackage{outputdir=./mintedbuild}{minted}
   \RequirePackage{minted}% minted: 代码高亮.
   \tcbuselibrary{skins, breakable, xparse, listings, minted}
   \PackageWarningNoLine{beamerthemescu}{%
@@ -192,6 +196,8 @@
 \else\if\EqualOptionsBeamer{BIBMode}{none}%
   \relax
 \fi\fi
+
+\RequirePackage{calc}% biblatex: 参考文献.
 % ----------------
 
 
@@ -203,7 +209,7 @@
 % ----------------
 %\hyperref{urlcolor=scugreen}
 % 调整左右边距.
-\setbeamersize{text margin left=0.036\paperwidth, text margin right=0.036\paperwidth}
+\setbeamersize{text margin left=0.03\paperwidth, text margin right=0.03\paperwidth}% 0.036, 0.036
 % 设置目录深度为 2 (显示至 subsection).
 \setcounter{tocdepth}{2}
 % 设置图片路径为项目文件夹下 `image' `images' `figure' `figures'.
@@ -217,22 +223,34 @@
 
 % ----------------
 % Theme Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3c(2024/04/16).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
 % ----------------
 % 包含外部主题, 内部主题, 颜色主题.
 % ----------------
+% 设置 "SCUname.pdf" 为图片 "logo".
+\pgfdeclareimage[width=40pt]%
+  {lg}{./resources/SCUname.pdf}
+% 设置 "SCUname.pdf" 为图片 "logo".
+\pgfdeclareimage[height=36pt]%
+  {lg-name}{./resources/SCUlogo_name.pdf}
+\pgfdeclareimage[height=80pt]%
+  {building}{./resources/SCUbuilding.png}
+\pgfdeclareimage[height=30pt]%
+  {verify}{./resources/SCUverify.png}
 % 颜色主题 - scu.
 \usecolortheme{scu}
-% 内部主题 - rounded (圆形边框).
-\useinnertheme{rounded}
+% 外部主题 - scu.
+\useoutertheme{scu}
+% 内部主题 - scu.
+\useinnertheme{scu}
 % 取消 itemize 环境编号.
-\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize items}[square]
 % 设置 enumerate 环境编号为圆形.
-\setbeamertemplate{enumerate items}[circle]
+\setbeamertemplate{enumerate items}[square]
 % 设置目录中章节编号为圆形.
-\setbeamertemplate{sections/subsections in toc}[circle]
+\setbeamertemplate{sections/subsections in toc}[square]
 % 图标题编号.
 \setbeamertemplate{caption}[numbered]
 % 定理标题编号.
@@ -245,57 +263,10 @@
 
 
 % ----------------
-% Length Define
-% ----------------
-% A paper width for the footline.
-\newlength{\halfpaperwidth}
-% The left margin.
-\newlength{\headingleftmargin}
-% Paper width minus margins.
-\newlength{\headingwidthminusmargins}
-% Height of the heading block.
-\newlength{\headingheight}
-% Height of the footer block.
-\newlength{\footerheight}
-% The height for the titlepageheader in the title page.
-\newlength{\titlepageheaderheight}
-% The height for the footer in the title page.
-\newlength{\titlepagefooterheight}
-% The height for the main title block.
-\newlength{\titlepagemaintitleblockheight}
-% The height for the subtitle block.
-\newlength{\titlepagesubtitleblockheight}
-% The height for the name and date block.
-\newlength{\titlepagenamedateblockheight}
-% The height for the institution block.
-%\newlength{\titlepageinstitutionheight}
-% The lengths for spacing between name and date.
-\newlength{\titlepagespaceundername}
-\newlength{\titlepagespaceunderdate}
-
-% The length for the light thin bar.
-\setlength{\headingleftmargin}{0.05573\paperwidth}
-\setlength{\headingwidthminusmargins}{\paperwidth}
-\addtolength{\headingwidthminusmargins}{-\headingleftmargin}
-\setlength{\headingheight}{0.1\paperheight}
-\setlength{\footerheight}{0.09017\paperheight}
-
-\setlength{\titlepageheaderheight}{0.2\paperheight}
-\setlength{\titlepagefooterheight}{0.0\paperheight}
-\setlength{\titlepagemaintitleblockheight}{0.16\paperheight}
-\setlength{\titlepagesubtitleblockheight}{0.1\paperheight}
-\setlength{\titlepagenamedateblockheight}{0.36\paperheight}
-
-\setlength{\titlepagespaceundername}{16pt}
-\setlength{\titlepagespaceunderdate}{4pt}
-% ----------------
-
-
-% ----------------
 % Background Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3c(2024/04/16).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3c(2024/04/16).
 % ----------------
 % 设置了主题背景选项 "background=ture" & "background=false".
 % 设置了页眉 logo.
@@ -310,17 +281,17 @@
   \pgfdeclareimage[width=\paperwidth]%
     {bgofsubsectoc}{./resources/backgroundofsubsectiontocpage.png}
   % 设置 "backgroundoftitlepage.png" 为图片 "bgoftitle".
+  % \pgfdeclareimage[width=\paperwidth]%
+  %   {bgoftitle}{./resources/backgroundoftitlepage.png}
   \pgfdeclareimage[width=\paperwidth]%
-    {bgoftitle}{./resources/backgroundoftitlepage.png}
+    {bgoftitle}{./resources/backgroundoftitlepage(Empty).png}
 \else%
   % 设置 "backgroundoftitlepage(Light).png" 为图片 "bgoftitle".
+  % \pgfdeclareimage[width=\paperwidth]%
+  %   {bgoftitle}{./resources/backgroundoftitlepage(Light).png}
   \pgfdeclareimage[width=\paperwidth]%
-    {bgoftitle}{./resources/backgroundoftitlepage(Light).png}
+    {bgoftitle}{./resources/backgroundoftitlepage(Empty).png}
 \fi
-
-% 设置 "SCUname.pdf" 为图片 "logo".
-\pgfdeclareimage[width=6.25em]%
-  {lg}{./resources/SCUname.pdf}
 % ----------------
 
 
@@ -336,7 +307,8 @@
 %\def\scshape{\cmcsc}
 %\setmainfont[SmallCapsFont]{cmcsc10.mf}
 % 设置无衬线字体为 Computer Modern Unicode Bright 字体族(Opentype 格式).
-\setsansfont{CMU Sans Serif}
+%\setsansfont{CMU Sans Serif}
+\setsansfont{Kurier}
 
 % 数学字体设置.
 \if\EqualOptionsBeamer{MathFont}{XITS}%
@@ -350,7 +322,7 @@
 % 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
 %\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
 \setCJKsansfont[Scale=0.956]{Microsoft YaHei}
-%\setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
+% \setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
 %\usefonttheme{professionalfonts}
 % ----------------
 
@@ -362,10 +334,10 @@
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{framesubtitle}{size=\scriptsize,series=\bfseries}
 % 封页字体设置.
-\setbeamerfont{title}{size=\Large,series=\bfseries}
-\setbeamerfont{subtitle}{size=\footnotesize,series=\bfseries}
-\setbeamerfont{author}{size=\normalsize}
-\setbeamerfont{date}{size=\scriptsize}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\small,series=\bfseries}
+\setbeamerfont{author}{size=\small,series=\bfseries}
+\setbeamerfont{date}{size=\footnotesize,series=\bfseries}
 
 \setbeamerfont{block title}{size=\normalsize}
 \setbeamerfont{structure}{size=\normalsize,series=\bfseries}
@@ -379,9 +351,9 @@
 \setbeamerfont{title in head/foot}{size=\tiny,series=\mdseries}
 \setbeamerfont{framenumber in head/foot}{size=\scriptsize,series=\bfseries}
 % itemize 环境序号设置.
-\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
-\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
-\setbeamertemplate{itemize subsubitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+% \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+% \setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+% \setbeamertemplate{itemize subsubitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
 % ----------------
 
 
@@ -495,278 +467,6 @@
       }%
     \fi%
   }%
-}
-% ----------------
-
-
-% ----------------
-% Tikz Def Layout
-% Confirmed in v1.3b(2022/04/13).
-% Established in v1.2a(2022/03/10).
-% Updated in v1.3a(2022/03/16), v1.3b(2022/04/13).
-% ----------------
-\newdimen\beamer@scu@sectionbar
-\if\EqualOptionsBeamer{LanguageMode}{cn}%
-  \beamer@scu@sectionbar=0.71\paperwidth%
-\else\if\EqualOptionsBeamer{LanguageMode}{en}%
-  \beamer@scu@sectionbar=0.52\paperwidth%
-\fi\fi
-
-% 页眉样式定义.
-\def\beamer@scu@tikz@headline#1#2#3{%
-% #1: 辅助显示颜色.
-% #2: 辅助显示颜色.
-% #3: 辅助显示颜色.
-  \begin{tikzpicture}[overlay, remember picture]
-    \draw [fill=#1, draw=none] (current page.north east)%
-      rectangle ++ (-.5em, -.8ex);
-    \draw [fill=#3, draw=none] (current page.north east) ++ (0, -2ex)%
-      rectangle ++ (-.5em, -3.5ex);
-    \draw [fill=white, draw=none] (current page.north east) ++ (-.5em, 0)%
-      rectangle ++ (-.5em, -.8ex);
-    \draw [fill=black, draw=none] (current page.north east) ++ (-.5em, -2ex)%
-      rectangle ++ (-.5em, -3.5ex);
-    \draw [fill=#2, draw=none] (current page.north east) ++ (-1em, 0)%
-      rectangle ++ (-\dimexpr1.1\paperwidth-\beamer@scu@sectionbar\relax, -.8ex);
-    \draw [fill=#1, draw=none, rounded corners=2pt] (current page.north west) ++ (0, .15ex)%
-      [turtle={%
-        rt, fd=\beamer@scu@sectionbar,%
-        rt=135, fd=6.6ex,%
-        rt=45, fd=\dimexpr\beamer@scu@sectionbar-1.6em\relax,%
-        home%
-      }];
-    
-    \node [anchor=north west, xshift=.5em, yshift=-.1ex, align=left] at (current page.north west) {%
-      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
-      \if\EqualOptionsBeamer{LanguageMode}{cn}%
-        \hskip-1em\insertsectionnavigationhorizontal{.69\paperwidth}{}{}%
-      \else\if\EqualOptionsBeamer{LanguageMode}{en}%
-        \insertsectionhead%
-      \fi\fi%
-    };
-    \node [anchor=north east, xshift=-1.2em, yshift=-.5ex] at (current page.north east) {%
-      \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
-      \insertsubsectionhead%
-    };
-    \node [anchor=north east, xshift=-1.2em, yshift=-3.75ex] at (current page.north east) {%
-      \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
-      \insertsubsectionminiframes{1.8pt}{1.5pt}{1.2pt}\hspace*{.1em}%
-    };
-  \end{tikzpicture}%
-}
-
-% 计数器 - 幻灯页数.
-\newcount\beamer@progressbar@currentframe% auxiliary counter
-\newcount\beamer@progressbar@totalframe% auxiliary counter
-% 长度.
-\newdimen\beamer@progressbar@ht% progressbar height
-\newdimen\beamer@progressbar@wd% progressbar width
-\newdimen\beamer@progressbar@tmpdim% auxiliary dimension
-% 设置长度.
-\beamer@progressbar@ht=.4ex
-\beamer@progressbar@wd=\dimexpr\paperwidth-10.5em\relax
-
-% 进度条样式定义.
-\def\beamer@scu@tikz@progressbar#1#2#3{%
-% #1: 未放映部分颜色.
-% #2: 已放映部分颜色.
-% #3: 辅助显示颜色.
-  \beamer@progressbar@currentframe=\insertframenumber%
-  \beamer@progressbar@totalframe=\inserttotalframenumber%
-  \beamer@progressbar@tmpdim=\beamer@progressbar@wd%
-  \divide\beamer@progressbar@tmpdim by 1000%
-  \multiply\beamer@progressbar@tmpdim by \beamer@progressbar@currentframe%
-  \divide\beamer@progressbar@tmpdim by \beamer@progressbar@totalframe%
-  \multiply\beamer@progressbar@tmpdim by 1000%
-  \begin{tikzpicture}[very thin, overlay, remember picture]
-    \draw [fill=#1, draw=none] (current page.south west)%
-      rectangle ++ (1.5em, \beamer@progressbar@ht);
-    \draw [fill=#3, draw=none] (current page.south west) ++ (0, 1.6ex)%
-      rectangle ++ (1.5em, 1.4ex);
-    \draw [fill=white, draw=none] (current page.south west) ++ (1.5em, 0)%
-      rectangle ++ (.5em, \beamer@progressbar@ht);
-    \draw [fill=black, draw=none] (current page.south west) ++ (1.5em, 1.6ex)%
-      rectangle ++ (.5em, 1.4ex);
-    \draw [fill=#1, draw=none] (current page.south west) ++ (2em, 0)%
-      rectangle ++ (\beamer@progressbar@wd, \beamer@progressbar@ht);
-    \draw [fill=#2, draw=none] (current page.south west) ++ (2em, 0)%
-      rectangle ++ (\beamer@progressbar@tmpdim, \beamer@progressbar@ht);
-    
-    \node [anchor=south west, xshift=2.2em, yshift=0ex] at (current page.south west) {%
-      \usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}%
-      \insertshortauthor%
-      \enspace\rule[-.2ex]{.25em}{2ex}\enspace%
-      \usebeamerfont{title in head/foot}\usebeamercolor[fg]{title in head/foot}%
-      \insertshorttitle%
-    };
-  \end{tikzpicture}%
-}
-
-% 设置页码显示为"x / total".
-\def\insertfootlineframe{%
-  \insertframenumber%
-  \Acrobatmenu{GoToPage}{\beamer@linkspace{.275em}}%
-  /\Acrobatmenu{GoToPage}{\beamer@linkspace{.275em}}%
-  \inserttotalframenumber%
-}
-
-% 页脚样式定义.
-\def\beamer@scu@tikz@footline#1#2{%
-% #1: 页码部分颜色.
-% #2: Logo 部分颜色.
-  \begin{tikzpicture}[overlay, remember picture]
-    \draw [fill=#1, draw=none, rounded corners=2pt] (current page.south east) ++ (-7.8em, -.15ex)%
-      [turtle={%
-        lt, fd=10em,%
-        rt=135, fd=5.4ex,%
-        rt=45, fd=8.4em,%
-        home%
-      }];
-    \draw [fill=#2, draw=none, rounded corners=2pt] (current page.south east) ++ (0, -.15ex)%
-      [turtle={%
-        lt, fd=10em,%
-        rt=135, fd=6ex,%
-        rt=45, fd=8.4em,%
-        home%
-      }];
-    
-    \node [anchor=south east, xshift=-9.6em, yshift=-.8ex] at (current page.south east) {%
-      \usebeamerfont{framenumber in head/foot}\usebeamercolor[fg]{framenumber in head/foot}%
-      \insertfootlineframe%
-    };
-    \node [anchor=south east, xshift=-.78em, yshift=-.54ex] at (current page.south east) {%
-      \pgfuseimage{lg}%
-    };
-  \end{tikzpicture}%
-}
-% ----------------
-
-
-% ----------------
-% Headline Layout
-% Confirmed in v1.3b(2022/04/13).
-% Established in v1.0a(2021/12/03).
-% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
-% ----------------
-% FORMAT:: section [cn - ALL; en - CURRENT] | subsection (with mini-frames).
-% ----------------
-\defbeamertemplate*{headline}{SCU headline theme}{%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex]{}
-    \beamer@scu@tikz@headline{PrimaryC}{SecondaryAuxiliaryC}{AuxiliaryC}%
-  \end{beamercolorbox}%
-}
-
-\setbeamertemplate{headline}[SCU headline theme]
-% ----------------
-
-
-% ----------------
-% Frametitle Layout
-% Confirmed in v1.3b(2022/04/13).
-% Established in v1.0a(2021/12/03).
-% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
-% ----------------
-% FORMAT:: frametitle & framesubtitle.
-% ----------------
-%\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]%
-%{beamer@frametitleshade}{\paperheight}%
-%{%
-%  color(0pt)=(frametitle.bg);%
-%  color(\paperwidth)=(frametitle right.bg)
-%}
-\defbeamertemplate*{frametitle}{SCU theme}{%
-  \ifx\insertframesubtitle\@empty%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=.5ex]{}%{frametitle}
-      \textcolor{SecondaryAuxiliaryC}{\rule[-.3ex]{.25em}{2ex}\enspace}%
-      \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-      \insertframetitle%
-    \end{beamercolorbox}%
-  \else%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=4.2ex,dp=.5ex]{}%{frametitle}
-      \textcolor{SecondaryAuxiliaryC}{\rule[-.3ex]{.25em}{2ex}\enspace}%
-      \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-      \insertframetitle\par%
-      \textcolor{SecondaryAuxiliaryC}{\rule[-.18ex]{.25em}{1.6ex}\enspace}%
-      \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-      \insertframesubtitle%
-    \end{beamercolorbox}%
-  \fi%
-}
-
-\setbeamertemplate{frametitle}[SCU theme]
-% ----------------
-
-
-% ----------------
-% Footline Layout
-% Confirmed in v1.3b(2022/04/13).
-% Established in v1.0a(2021/12/03).
-% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
-% ----------------
-% FORMAT:: author | short title | pagenumber | NAME of SCU.
-% ----------------
-\defbeamertemplate*{footline}{SCU footline theme}{%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=3ex]{}
-    \beamer@scu@tikz@progressbar{AuxiliaryC}{PrimaryC}{IntersperseC}%
-    \beamer@scu@tikz@footline{AuxiliaryC}{PrimaryC}%
-  \end{beamercolorbox}%
-}
-
-\setbeamertemplate{footline}[SCU footline theme]
-% ----------------
-
-
-% ----------------
-% Navigation Symbols Layout
-% 格式: TITLE | NAVIGATION SYMBOLS.
-% ----------------
-%\addtobeamertemplate{footline}{%
-%  \leavevmode%
-%  \hbox{%
-%    \begin{beamercolorbox}[wd=0.4\paperwidth,ht=3ex,dp=.75ex,right,rightskip=1.2em]{frametitle}%
-%      \usebeamercolor[fg]{navigation symbols}\insertslidenavigationsymbol%
-%      \insertframenavigationsymbol%
-%      \insertsubsectionnavigationsymbol%
-%      \insertsectionnavigationsymbol%
-%      \insertdocnavigationsymbol%
-%      \insertbackfindforwardnavigationsymbol%
-%    \end{beamercolorbox}%
-%  }}
-% ----------------
-
-
-% ----------------
-% Title Page Layout
-% ----------------
-\setbeamertemplate{title page}%
-{%  
-  
-  \begin{beamercolorbox}[sep=0cm,right,wd=0.0001\paperwidth,ht=\titlepageheaderheight,%
-    rightskip=\headingleftmargin]{pkured!5!white}
-    \vskip0.0361\titlepageheaderheight
-  \end{beamercolorbox}
-  \begin{beamercolorbox}[center,wd=0.92\paperwidth,ht=\titlepagemaintitleblockheight,%
-    rounded=true,shadow=true]{title}
-    \usebeamerfont{title}\inserttitle
-    \vskip\titlepagespaceunderdate%
-    \usebeamerfont{subtitle}\insertsubtitle
-    \vskip\titlepagespaceunderdate%
-  \end{beamercolorbox}
-  \vskip\titlepagespaceundername%
-  \medskip%
-  \begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagenamedateblockheight]{white}
-    \usebeamerfont{author}\insertauthor\\
-    \vskip\titlepagespaceunderdate%
-    %    \medskip%
-    \usebeamerfont{institute}\insertinstitute\\
-    \vskip\titlepagespaceunderdate%
-    %    \medskip%
-    \usebeamerfont{date}\insertdate \;\;
-    \vskip\titlepagespaceunderdate%
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagefooterheight]{titlepagefooter}
-  \end{beamercolorbox}
-
 }
 % ----------------
 
@@ -1234,9 +934,9 @@
 
 % ----------------
 % Listing Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3c(2024/04/16).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3c(2024/04/16).
 % ----------------
 % 定义了一个用作代码演示的 Listing, 和一个不带计数的 Listing.
 % ----------------
@@ -1255,11 +955,13 @@
 % 定理区块参数设置.
 \if\EqualOptionsBeamer{CodeDisplay}{minted}%
   \if\EqualOptionsBeamer{MintedStyle}{lightmode}%
-    \def\minted@style{default}%
+    \tcbset{minted style=default}%
   \else\if\EqualOptionsBeamer{MintedStyle}{darkmode}%
-    \def\minted@style{rrt}%
+    \tcbset{minted style=rrt}%
   \else\if\EqualOptionsBeamer{MintedStyle}{\beamer@scu@MintedStyle}%
-    \def\minted@style{\beamer@scu@MintedStyle}
+    \edef\set@MintedStyle{\noexpand%
+      \pgfkeys{/tcb, minted style=\beamer@scu@MintedStyle}}%
+    \set@MintedStyle%
   \fi\fi\fi
   \renewcommand{\theFancyVerbLine}{%
     \sffamily\textcolor{PrimaryC}{%
@@ -1276,7 +978,6 @@
     number within=section, reset counter on overlays]%
     {scucode}{ O{} m s O{} m !O{} !D''{||} }{%
       listing engine=minted,%
-      minted style={\minted@style},%
       minted language={#5},%
       minted options={%
         autogobble, tabsize=2,%
@@ -1306,7 +1007,6 @@
   % #7: 注释定界符.
 	  {scucode*}{ O{} m s O{} m !O{} !D''{||} }{%
 	  	listing engine=minted,%
-	  	minted style={\minted@style},%
 	  	minted language={#5},%
 	  	minted options={%
 	  		autogobble, tabsize=2,%
@@ -1338,7 +1038,6 @@
     {\scucodeinput}{ O{} m s O{} m O{} m !D''{||} }{%
       listing file={./sourcecode/#7},%
       listing engine=minted,%
-      minted style={\minted@style},%
       minted language={#5},%
       minted options={%
       	autogobble, tabsize=2,%
@@ -1371,7 +1070,6 @@
 	  {\scucodeinputnocounter}{ O{} m s O{} m O{} m !D''{||} }{%
 	  	listing file={./sourcecode/#7},%
 	  	listing engine=minted,%
-	  	minted style={\minted@style},%
 	  	minted language={#5},%
 	  	minted options={%
 	  		autogobble, tabsize=2,%

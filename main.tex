@@ -2,8 +2,8 @@
 % !BIB TS-program = biber
 % !TeX TS-program = xelatex
 % This is file `main.tex'.
-% Copyright (C) 2021-2022 by Linrong Wu.
-% Version: 2022/04/13 v1.3b (Original Version: 2021/11/30 v1.0a).
+% Copyright (C) 2021-2024 by Linrong Wu.
+% Version: 2024/04/16 v1.3c (Original Version: 2021/11/30 v1.0a).
 % 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
 % !使用前请阅读用户手册.
 
@@ -13,10 +13,15 @@
 \documentclass[hyperref, UTF8, CJK]{beamer}
 %\special{dvipdfmx:config z 0}
 
+% \colorlet{PrimaryC}{white}
+% \colorlet{BackgroundC}{black}
+% \colorlet{NomalTextC}{white}
+
 % --------SCU Beamer 模板宏包--------
 % ----------------
-\usetheme[ColorDisplay=BSblue, ContentMuticols=ture,
-	Background=true]{scu}
+\usetheme[ColorDisplay=Custom, ContentMuticols=ture,
+	Background=false]{scu}
+	
 
 % --------不要调用的宏包--------
 % ----------------
@@ -39,7 +44,6 @@
 \usepackage{multicol,multirow}
 \usepackage{ulem} % ulem: 添加线.
 \usepackage{booktabs}
-\usepackage{epstopdf,epsfig}
 \usepackage{cprotect}
 \usepackage{makecell}
 \usepackage{listings}
@@ -56,17 +60,17 @@
 % --------封面信息输入--------
 % [<in footline>], {<in title page>} 方括号内容显示在页脚, 花括号内容为全称显示在封面.
 % ----------------
-\title[四川大学虚拟偶像研究 | Beamer模板使用答辩]{\LARGE 四川大学虚拟偶像研究}
+\title[四川大学虚拟偶像研究 | Beamer模板使用答辩]{四川大学虚拟偶像研究}
 \subtitle{Beamer模板使用答辩} % subtitle 未设置页脚显示项, 请在 title 中设置.
-\author[我不卷, 你才卷]{\noindent 马老卷}
+\author[我不卷, 你才卷]{马老卷\inst{1} \and 马小卷\inst{2}}
 \institute{%
-	\noindent Management Science\\
-	\medskip
-	\noindent Business School, Sichuan University\\
-	\medskip
-	\noindent \textit{MaLSDeDiziMaLJ@scu.edu.cn}
+	\inst{1} 混元形翼太极门
+	~(\textit{MaLJFake@taichi.hunyuan})
+	\vspace*{-6pt} \and
+	\inst{2} Management Science, Business School, Sichuan University
+	\\(\textit{MaXJFake@scu.edu.cn})
 }
-\date{\noindent April 13th, 2022}
+\date{April 16th, 2024}
 
 % ---------------- %
 %      正文区      %
@@ -110,7 +114,7 @@
 	目前仅在制作者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
 \end{frame}
 
-\begin{frame}{使用注意}
+\begin{frame}{使用注意}{雪豹闭嘴}
 	\begin{itemize}
 		\item<1-> \LaTeX 编辑器:
 		\begin{itemize}
@@ -469,22 +473,7 @@ int main()
 
 \subsection{B}
 \begin{frame}{Tikz}
-	\begin{minipage}[c]{0.35\linewidth}
-%		\scalebox{20}{}
-		\begin{figure}[h]
-			\include{tikz-huaji}
-			\vskip-5ex
-			\caption{滑稽 - 向禹}
-		\end{figure}
-	\end{minipage}\quad
-	\begin{minipage}[c]{0.6\linewidth}
-%		\scalebox{20}{}
-		\begin{figure}[h]
-			\include{tikz-Dipolar_magnetic_field}
-			\vskip-5ex
-			\caption{Dipolar Magnetic Field - Cyril Langlois}
-		\end{figure}
-	\end{minipage}
+	无
 \end{frame}
 
 % --------节: 参考文献--------
