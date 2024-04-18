@@ -9,7 +9,7 @@
 
 -GitHub: https://github.com/FvNCCR228/SCU_Beamer_Slide-demo
 
--Gitee: https://gitee.com/NCCR/scu_-beamer_-slide-demo
+-Gitee: https://gitee.com/NCCR/SCU_Beamer_Slide-demo
 
 
 ## 使用说明
