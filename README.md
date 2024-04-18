@@ -11,6 +11,10 @@
 
 -Gitee: https://gitee.com/NCCR/SCU_Beamer_Slide-demo
 
+![image](https://github.com/FvNCCR228/SCU_Beamer_Slide-demo/assets/94803387/84aeb3c5-b9d1-4f61-93fc-6fefa083be8c) ![image](https://github.com/FvNCCR228/SCU_Beamer_Slide-demo/assets/94803387/3c5e7015-a932-43c1-a5a0-81ed77ccdbfb)
+
+
+
 
 ## 使用说明
 
