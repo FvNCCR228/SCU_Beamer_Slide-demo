@@ -1,0 +1,326 @@
+% ----------------
+% 节: 基础设置
+% ----------------
+\section{基础设置}
+\subsection{\cls{beamer} 文档类参数}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍 \cls{beamer} 文档类部分参数.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item \myestablish{v1.3a}{2022/03/16}
+			\item \myupdate{v1.3d}{2024/05/18}
+		\end{itemize}
+	\end{multicols}
+	\vspace{2ex}本小节摘自\textcolor{scugreen}{Beamer User Guide}, 详细内容请在终端输入\alert{\texttt{texdoc beamer}}查看完整手册.
+\end{frame}
+
+\begin{frame}{文档类部分参数}{t\&c\&b, aspectratio}
+	\textbf{调用命令}: \cmd{documentclass}\oarg*{\Arg{key1},\Arg{key2}=\Arg{value2},\ldots}\marg*{beamer}
+
+  \textbf{调用示例}: \cmd{documentclass}\oarg*{hyperref, UTF8, CJK, aspectratio=169}\marg*{beamer}\\
+	
+	\alert{\texttt{t}}\&\alert{\texttt{c}}\&\alert{\texttt{b}}\hfill \textbf{Slide文本位置}
+	\begin{itemize}
+		\item \texttt{t}: 文本置于Slide顶部, 全局设置为\texttt{t}后允许将单个frame设置为\texttt{c}或\texttt{b}.
+		\item \texttt{c}: (Default)文本置于Slide中心, 全局设置为\texttt{c}后允许将单个frame设置为\texttt{t}或\texttt{b}.
+		\item 注: \texttt{b}意为将文本置于Slide底部, 为\texttt{frame}环境选项.
+	\end{itemize}
+	
+	\vspace*{1ex}\alert{\texttt{aspectratio} = \Arg{value}}\hfill \textbf{Slide比例}
+	\begin{itemize}
+		\item \Arg{value} = \texttt{2013}: 比例为20:13 (W-140mm, H-91mm).
+		\item \Arg{value} = \texttt{1610}: 比例为16:10 (W-160mm, H-100mm).
+		\item \Arg{value} = \texttt{169}: 比例为16:9 (W-160mm, H-90mm).
+		\item \Arg{value} = \texttt{149}: 比例为14:9 (W-140mm, H-90mm).
+		\item \Arg{value} = \texttt{141}: 比例为1.41:1 (W-148.5mm, H-105mm).
+		\item \Arg{value} = \texttt{54}: 比例为5:4 (W-125mm, H-100mm).
+		\item \Arg{value} = \texttt{43}: 比例为4:3 (Default, 不可选).
+		\item \Arg{value} = \texttt{32}: 比例为3:2 (W-135mm, H-90mm).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{文档类部分参数}{draft, handout}
+	\textbf{调用命令}: \cmd{documentclass}\oarg*{\Arg{key1},\Arg{key2}=\Arg{value2},\ldots}\marg*{beamer}
+
+  \textbf{调用示例}: \cmd{documentclass}\oarg*{hyperref, UTF8, CJK, aspectratio=169}\marg*{beamer}\\
+
+  \alert{\texttt{draft}}\hfill \textbf{草稿模式}
+
+	初次编译时, 使用草稿模式以隐藏部分宏包(如 \pkg{pgf}, \pkg{hyperref})及headline, footline等的显示效果能较大提高编译速度.\\
+
+	\alert{\texttt{handout}}\hfill \textbf{讲义版本模式}
+
+	生成无Overlay效果的讲义版本, 可缩减页数同时降低编译时间.\\
+	若需实现多合一效果, 使用 \pkg{pgfpages} 宏包(注意使用此项会破坏beamer的hyperref):
+	\begin{center}
+		\begin{minipage}{.8\textwidth}
+			\raggedright
+			\cmd{usepackage}\marg*{pgfpages}\\
+			\cmd{pgfpagesuselayout}\marg*{2 on 1}\oarg*{a4paper,border shrink=5mm}
+		\end{minipage}
+	\end{center}
+\end{frame}
+
+\subsection{\pkg{beamethemescu} 宏包参数}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍 \pkg{beamethemescu} 宏包参数.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item \myestablish{v1.1a}{2021/12/30}
+			\item \myupdate{v1.3a}{2022/03/16}
+			\item \myupdate{v1.3b}{2022/04/13}
+			\item \myupdate{v1.3d}{2024/05/18}
+		\end{itemize}
+	\end{multicols}
+	注: 自 \textcolor{scugreen}{v1.1a (2021/12/30)} 起, 本小节已替代手册中\alert{\textbf{可注释项}}小节.\par
+	\mycopyright
+\end{frame}
+
+\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{MathFont, ColorDisplay, CodeDisplay}
+	\pkg{beamethemescu} 是基于\LaTeX{} beamer开发的四川大学beamer样式主题宏包, 可通过命令 \cmd{usetheme}\marg*{scu}调用.
+
+	\begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.5\textwidth}
+			\textbf{调用命令}(无需额外调用默认键值对):\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}\Arg{key1}=\Arg{value1},\%\\
+				\hspace*{1em}\Arg{key2}=\Arg{value2},\%\\
+				\hspace*{1em}\ldots,\%\\
+			}\marg*{scu}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\textbf{调用示例}:\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}ColorDisplay=BSblue,\%\\
+				\hspace*{1em}BlockDisplay=followtheme,\%\\
+				\hspace*{1em}MathFont=XITS,\%\\
+			}\marg*{scu}
+		\end{column}
+	\end{columns}
+
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
+			\textbf{support version \alert{\Arg{key}}} & \textbf{`C' means the key here supports a custom value.}\\
+			\textbf{\Arg{value}} & \textbf{`D' means the value here is the default one.}\\
+			\midrule
+			v1.1a \alert{\texttt{MathFont}} & \textbf{数学字体设置}\\
+			(D) \texttt{LM} & Latin Modern Math字体.\\
+			\texttt{XITS} & XITS Math字体.\\
+			\midrule
+			v1.3c\&d \alert{\texttt{ColorDisplay}} & \textbf{主题色显示设置}\\
+			(D) \texttt{JXred} & 四川大学锦锈红主题色. \textcolor{scured}{\rule[-.1ex]{1.2em}{1.8ex}} (CMYK 12, 92, 95, 20)\\
+			\texttt{BSblue} & 四川大学宝石蓝主题色. \textcolor{scublue}{\rule[-.1ex]{1.2em}{1.8ex}} (CMYK 100, 60, 00, 15)\\
+			\texttt{Custom} & 自定义主题色模式. (设置前请阅读手册)\\
+			\midrule
+			v1.1a \alert{\texttt{CodeDisplay}} & \textbf{代码高亮显示设置}\\
+			(D) \texttt{listing} & listing排版引擎.\\
+			\texttt{minted} & minted排版引擎. (需Python环境, 设置前请阅读手册)\\
+		\end{tabular}
+	\end{table}
+	\vspace*{-1ex}
+\end{frame}
+
+\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{MintedStyle, BlockDisplay, Miniframes, LanguageMode}
+	\vspace*{-1.6ex}
+	\begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.5\textwidth}
+			\textbf{调用命令}(无需额外调用默认键值对):\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}\Arg{key1}=\Arg{value1},\%\\
+				\hspace*{1em}\ldots,\%\\
+			}\marg*{scu}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\textbf{调用示例}:\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}ColorDisplay=BSblue,\%\\
+				\hspace*{1em}MathFont=XITS,\%\\
+			}\marg*{scu}
+		\end{column}
+	\end{columns}
+
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
+			v1.3c\&d (C) \alert{\texttt{MintedStyle}} & \textbf{minted样式设置(需优先设置 \texttt{\alert{CodeDisplay}=minted})}\\
+			(D) \texttt{lightmode} & 亮色模式, Pygments default样式.\\
+			\texttt{darkmode} & 暗色模式, Pygments rrt样式.\\
+			\Arg{custom} & 自定义值. (设置前请阅读手册)\\
+			\midrule
+			v1.3a \alert{\texttt{BlockDisplay}} & \textbf{区块颜色显示设置}\\
+			(D) \texttt{colorful} & 彩色模式.\\
+			\texttt{followtheme} & 跟随主题色.\\
+			\texttt{allgrey} & 纯灰色模式.\\
+			\midrule
+			v1.3c\&d \alert{\texttt{Miniframes}} & \textbf{页眉小节迷你帧设置}\\
+			(D) \texttt{follow} & 迷你帧跟随页眉小节标题.\\
+			\texttt{separate} & 迷你帧与页眉小节标题分离. (实际位于页眉节导航栏右下方)\\
+			\texttt{negate} & 取消小节迷你帧.\\
+			\midrule
+			v1.3b \alert{\texttt{LanguageMode}} & \textbf{语言模式设置}\\
+			(D) \texttt{cn} & 中文模式.\\
+			\texttt{en} & 英文模式, 支持中文输入, Headline节导航栏更窄且只显示当前节.\\
+		\end{tabular}
+	\end{table}
+	\vspace*{-2ex}
+\end{frame}
+
+\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{BIBMode, BIBStyle, ContentMuticols, Background}
+	\begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.5\textwidth}
+			\textbf{调用命令}(无需额外调用默认键值对):\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}\Arg{key1}=\Arg{value1},\%\\
+				\hspace*{1em}\ldots,\%\\
+			}\marg*{scu}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\textbf{调用示例}:\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}ColorDisplay=BSblue,\%\\
+				\hspace*{1em}MathFont=XITS,\%\\
+			}\marg*{scu}
+		\end{column}
+	\end{columns}
+
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
+			v1.3b \alert{\texttt{BIBMode}} & \textbf{参考文献引擎设置}\\
+			(D) \texttt{biber} & biber引擎.\\
+			\texttt{none} & 无引擎, 不输出参考文献.\\
+			\midrule
+			v1.3b (C) \alert{\texttt{BIBStyle}} & \textbf{参考文献样式设置(设置 \texttt{\alert{BIBMode}=none} 时无效)}\\
+			(D) \texttt{biber-gb7714} & gb7714-2015样式(biber引擎).\\
+			\midrule
+			v1.1a \alert{\texttt{ContentMuticols}} & \textbf{目录帧双栏显示设置}\\
+			(D) \texttt{true} & 是.\\
+			\texttt{false} & 否.\\
+			\midrule
+			v1.1a \alert{\texttt{Background}} & \textbf{背景显示设置}\\
+			(D) \texttt{true} & 是.\\
+			\texttt{false} & 否.\\
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\subsection{文档信息填写}
+\begin{frame}{Info.}
+	\textbf{本小节将介绍 \pkg{scu} 主题样式中封面及页脚基本信息的填写.}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item \myestablish{v1.1a}{2021/12/30}
+			\item \myupdate{v1.3d}{2024/05/18}
+		\end{itemize}
+	\end{multicols}
+	\mycopyright
+\end{frame}
+
+\begin{frame}{封面及页脚信息}
+  \structure{基本使用}
+
+  一个Beamer演示文稿的基本信息包括标题 \alert{\texttt{title}}, 子标题 \alert{\texttt{subtitle}}, 作者 \alert{\texttt{author}}, 机构 \alert{\texttt{institute}} 和时间 \alert{\texttt{date}}. 在本模板中, 可以设置\alert{标题简称}和\alert{作者简称}使其显示在页脚中. 如下是基本的调用命令及示例: 
+
+  \begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.5\textwidth}
+			\textbf{调用命令}:\\
+			\cmd{title}\oarg*{\Arg{short title}}\marg*{title}\\
+      \cmd{subtitle}\marg*{subtitle}\\
+      \cmd{author}\oarg*{\Arg{short author}}\marg*{author}\\
+      \cmd{institute}\marg*{institute}\\
+      \cmd{date}\marg*{date}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\textbf{调用示例}:\\
+			\cmd{title}\oarg*{五连鞭的运气要领}\marg*{马掌门讲五连鞭的运气要领}\\
+      \cmd{subtitle}\marg*{混元形翼太极门弟子的必修课}\\
+      \cmd{author}\oarg*{马老卷}\marg*{掌门人马老卷}\\
+      \cmd{institute}\marg*{混元形翼太极门}\\
+      \cmd{date}\marg*{{2020}年{11}月{15}日}
+		\end{column}
+	\end{columns}
+
+  \vspace*{3ex}\structure{页脚中添加子标题}
+
+  通过修改文档 \cmd{title} 中 \Arg{short title} 可以实现.\\
+  \textbf{调用示例}: \\
+  \cmd{title}\oarg*{马掌门讲五连鞭的运气要领 | 混元形翼太极门弟子的必修课}\marg*{马掌门讲五连鞭的运气要领}\\
+
+  \structure{跟随系统时间}
+
+  使用 \cmd{today} 命令设置时间.\\
+  \textbf{调用示例}: \\
+  \cmd{date}\marg*{\cmd{today}}
+\end{frame}
+
+\begin{frame}{封面及页脚信息}
+  \structure{多个作者和所属机构}
+
+  使用 \cmd{and} 命令分隔不同作者和机构并使用 \cmd{inst} 命令设置机构标签, 并使用命令 \cmd{vspace*}\marg*{-6pt} 抑制 \cmd{institute}\marg*{} 中 \cmd{and} 命令导致的多余空白.
+
+  \begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.77\textwidth}
+			\textbf{调用示例}: (注意 \cmd{inst}\marg*{} 后面若为英文文本, 请如下所示加上 \alert{\textasciitilde} 符号)\\
+      \cmd{author}\oarg*{掌门人, 首席大弟子}\marg*{马老卷\cmd{inst}\marg*{1} \cmd{and} 马小卷\cmd{inst}\marg*{2}}\\
+      \cmd{institute}\marg*{\%\\
+        \hspace*{1em}\cmd{inst}\marg*{1} 混元形翼太极门\\
+        \hspace*{1em}\alert{\textasciitilde}(\cmd{textit}\marg*{MaLJFake@taichi.hunyuan})\\
+        \hspace*{1em}\cmd{vspace*}\marg*{-6pt} \cmd{and}\\
+        \hspace*{1em}\cmd{inst}\marg*{2} \alert{\textasciitilde}Management Science, Business School, Sichuan University\\
+        \hspace*{1em}\alert{\textbackslash\textbackslash}(\cmd{textit}\marg*{MaXJFake@scu.edu.cn})\\
+      }
+		\end{column}
+		\begin{column}{.23\textwidth}
+			\begin{figure}[h]
+        \centering
+        \includegraphics[width=\columnwidth]{manual-sec/base-settings-authors-1.pdf}
+      \end{figure}
+		\end{column}
+	\end{columns}
+  \vspace*{3ex}
+  \begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.77\textwidth}
+			\textbf{也可将机构与邮箱分开}: \\
+      \cmd{author}\oarg*{掌门人, 首席大弟子}\marg*{马老卷\cmd{inst}\marg*{1}\cmd{inst}\marg*{a} \cmd{and} 马小卷\cmd{inst}\marg*{2}\cmd{inst}\marg*{b}}\\
+      \cmd{institute}\marg*{\%\\
+        \hspace*{1em}\cmd{inst}\marg*{1} 混元形翼太极门\\
+        \hspace*{1em}\cmd{vspace*}\marg*{-6pt} \cmd{and}\\
+        \hspace*{1em}\cmd{inst}\marg*{2} \alert{\textasciitilde}Management Science, Business School, Sichuan University\\
+        \hspace*{1em}\cmd{vspace*}\marg*{-6pt} \cmd{and}\\
+        \hspace*{1em}\cmd{inst}\marg*{a} \alert{\textasciitilde}\cmd{textit}\marg*{MaLJFake@mail} \alert{\textasciitilde}\cmd{inst}\marg*{b} \alert{\textasciitilde}\cmd{textit}\marg*{MaXJFake@mail}\\
+      }
+		\end{column}
+		\begin{column}{.23\textwidth}
+			\begin{figure}[h]
+        \centering
+        \includegraphics[width=\columnwidth]{manual-sec/base-settings-authors-2.pdf}
+      \end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+% \begin{frame}[fragile]{封面信息}
+% 	\begin{scucode}[comment={%
+% 			\scriptsize%
+% 			{\color{scured}<text.f>}\\
+% 			\quad 指该部分键入的文字在页脚中显示\\
+% 			{\color{scured}<text.t>}\\
+% 			\quad 指该部分键入的文字在封面页中显示\\
+% 			注意设置页脚显示时, 文字长度尽量不要超出对应位置边框. 实际使用中目标为使显示内容更详细全面, 不必拘泥于模板中信息类型的限制. 如author可置于institute处, institute简写置于author处. \\
+% 			此外, 页脚处的标题可设置为``标题'', ``标题+副标题'', ``副标题''等多种样式.
+% 		},%
+% 		listing side comment]{封面信息设置}[FengmianXx]{tex}
+% 		\title[<text.f>] {\LARGE <text.t>}
+% 		\subtitle{<text.t>}
+% 		\author[<text.f>]{\noindent <text.t>}
+% 		\institute{%
+% 			\noindent <text.t>\\
+% 			\medskip
+% 			\noindent <text.t>\\
+% 			\medskip
+% 			\noindent \textit{<text.t>}
+% 		}
+% 		\date{\noindent <text.t>}
+% 	\end{scucode}
+% \end{frame}
