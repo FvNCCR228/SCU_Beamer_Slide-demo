@@ -19,25 +19,23 @@
 
 % --------SCU Beamer 模板宏包--------
 % ----------------
-\usetheme[ColorDisplay=Custom, ContentMuticols=true,
-	Background=false]{scu}
+\usetheme[ColorDisplay=Custom,
+	ContentMuticols=true,
+	Miniframes=follow,
+	Background=false
+]{scu}
 	
-
 % --------不要调用的宏包--------
 % ----------------
 %\usepackage{pstricks} % pstricks: 绘图. (请勿调用, 本模板中调用的 adjustbox 宏包与之冲突)
-%\usepackage{geometry} % geometry: 页面设置. (请勿在 Beamer 中调用)
 
 % --------宏包调用--------
 % ----------------
 \usepackage{transparent}
-\usepackage[autoplay]{animate}
-\usepackage{tikz}
-\usetikzlibrary{shadings,arrows,calc,decorations.pathmorphing,patterns}
+\usetikzlibrary{shadings,arrows,decorations.pathmorphing,patterns}
 \usepackage{array}
 \usepackage{algorithm,algorithmic}
 \usepackage{amsmath,amsfonts,amssymb} % math equations, symbols
-\usepackage{mathtools}
 \usepackage[english]{babel}
 \usepackage{color}      % color content
 \usepackage{url}        % hyperlinks
@@ -67,7 +65,7 @@
 	\inst{1} 混元形翼太极门
 	~(\textit{MaLJFake@taichi.hunyuan})
 	\vspace*{-6pt} \and
-	\inst{2} Management Science, Business School, Sichuan University
+	\inst{2} ~Management Science, Business School, Sichuan University
 	\\(\textit{MaXJFake@scu.edu.cn})
 }
 \date{April 16th, 2024}
@@ -106,12 +104,9 @@
 		%		\pagebreak
 		\item 联系方式:
 		\begin{itemize}
-			\item 制作者: linrong.wu.interact@outlook.com
-			
-			OR linrong.wu.work@outlook.com
+			\item 制作者: lr.wu.interact@outlook.com
 		\end{itemize}
 	\end{itemize}
-	目前仅在制作者的Windows 11系统上编译通过, Overleaf编译失败(不是完全失败, 我很伤心);
 \end{frame}
 
 \begin{frame}{使用注意}{雪豹闭嘴}
@@ -232,7 +227,7 @@ int main()
 	\end{scucode}
 \end{frame}
 
-\subsection{数学}
+\subsection{数学, 这小节很长很长}
 \begin{frame}[fragile,allowframebreaks]{数学环境}
 	\begin{scutheorem}{切比雪夫大数率}[QiebiXfdsl]
 		对独立随机变量序列$\{X_k\}$, 若$E(X_k)$, $D(X_k)$都存在, $k=1,2,\cdots$, 且有常数$C$, 使得$D(X_k)\leq C$, $k=1,2,\cdots$, 则有
@@ -336,19 +331,11 @@ int main()
 			\oint_S \symbfit{D} \cdot \mathrm{d}\symbfit{S} = \iiint_V \rho \mathrm{d}V
 			\end{dcases}
 		\end{equation}
-	单位矩阵
-		\[
-		\begin{bmatrix}
-		E & 0 \\
-		0 & E \\
-		\end{bmatrix}
-		\begin{pmatrix}
-			E & 0 \\
-			0 & E \\
-		\end{pmatrix}
-		\]
 \end{frame}
 
+% --------节: 总结与思考--------
+% ----------------
+\section{总结与思考}
 \subsection{页面相关}
 \begin{frame}[fragile,label={fra:Fenlan}]{分栏}
 	\vspace{1ex}
@@ -418,62 +405,15 @@ int main()
 
 \begin{frame}[fragile]{参考文献相关}
 	\begin{itemize}[<+-| alert@+>]
-		\item 脚注\footnote{这是方法一.};\\
+		\item 脚注\footnote{这是方法一.};
 		\item 脚注\footnotemark.
 	\end{itemize}
 	\footnotetext{这是方法二.}
-	虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};\\
+	虚拟偶像单篇\cite{__2020-1}, 多篇\cite{__2016,m_possibilities_2018};
 	\begin{itemize}
 		\item 虚拟偶像\footnotemark.\footfullcitetext[3]{_ugc_2018}
-		\item 虚拟偶像\footfullcite[8]{__2018}.\\
+		\item 虚拟偶像\footfullcite[8]{__2018}.
 	\end{itemize}
-\end{frame}
-
-% --------节: 总结与思考--------
-% ----------------
-\section{总结与思考}
-\subsection{A}
-\begin{frame}{Tcolorbox\&Animate}
-	\begin{minipage}[c]{0.725\columnwidth}
-		\begin{scutcbrb}{锦程梦研}
-			锦程梦研主题: 锦秀红与宝石蓝为渐变底色.
-		\end{scutcbrb}
-		\begin{scutcbyg}{浮莲落杏}
-			浮莲落杏主题: 荷叶绿与银杏黄为渐变底色.
-		\end{scutcbyg}
-	\end{minipage}~~~~
-	\begin{minipage}[c]{0.225\columnwidth}
-		\begin{tcolorbox}[enhanced,%
-			size=minimal,auto outer arc,%
-			width=2.1cm,octogon arc,%
-			colback=red,colframe=white,colupper=white,%
-			fontupper=\fontsize{7mm}{7mm}\selectfont\bfseries\sffamily,%
-			halign=center,valign=center,%
-			square,arc is angular,%
-			borderline={0.2mm}{-1mm}{red}]
-			STOP
-		\end{tcolorbox}
-	\end{minipage}
-	\begin{center}
-		\begin{animateinline}[loop]{20}%
-			\multiframe{160  }{rx=0+5}{
-				\begin{tikzpicture}[scale=1.5]
-				\pgfmathsetmacro{\x}{4+1*sin(\rx)}	
-				\coordinate  (P) at (\x,0);	
-				\draw [decorate,decoration={coil,segment length= \x pt, pre length=2mm, post length=2mm
-					,amplitude=2mm}] (0,0)--(P);
-				\shade[ball color=black](P)circle (2mm);
-				\fill [pattern = north east lines] (0,0.-0.2) -- ++ (0,0.4) -- ++ (-0.1,0) -- ++(0,-0.4) --cycle
-				(0,-0.2) -- ++(0,-0.1) -- ++ (5.5,0) -- ++ (0,0.1) -- cycle;
-				\draw (0,0.2) -- (0,-0.2) -- (5.5,-0.2);
-				\end{tikzpicture} 	    }
-		\end{animateinline}
-	\end{center}
-\end{frame}
-
-\subsection{B}
-\begin{frame}{Tikz}
-	无
 \end{frame}
 
 % --------节: 参考文献--------

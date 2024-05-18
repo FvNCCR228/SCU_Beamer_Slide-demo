@@ -1,6 +1,6 @@
 % This is file `beamerthemescu.sty'.
 % Copyright (C) 2021-2024 by Linrong Wu.
-% Version: 2024/04/16 v1.3c (Original Version: 2021/11/30 v1.0a).
+% Version: 2024/05/18 v1.3d (Original Version: 2021/11/30 v1.0a).
 %
 % This file may be distributed and/or modified
 %
@@ -11,10 +11,10 @@
 %
 % Provide options:
 %   MathFont = LM | XITS
-%   BlockDisplay = colorful | followtheme | allgrey
+%   ColorDisplay = JXred | BSblue | Custom
 %   CodeDisplay = listing | minted
 %   MintedStyle = lightmode | darkmode | <custom>
-%   ColorDisplay = JXred | BSblue | Custom
+%   BlockDisplay = colorful | followtheme | allgrey
 %   Miniframes = follow | separate | negate
 %   LanguageMode = cn | en
 %   BIBMode = biber | none
@@ -26,7 +26,7 @@
 % !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{beamerthemescu}[2024/04/16 v1.3c, SCU Beamer Theme(Main Theme)]
+\ProvidesPackage{beamerthemescu}[2024/05/18 v1.3d, SCU Beamer Theme(Main Theme)]
 %%%% ----------------------------------------------------------------
 
 
@@ -34,8 +34,11 @@
 % Declare of Commands
 % Confirmed in v1.3b(2022/04/13).
 % Established in v1.3b(2022/04/13).
+% Updated in v1.3d(2024/05/18).
 % ----------------
 \def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2024 by LR Wu.}% 版权声明.
+\def\myestablish#1#2{Establish: \textcolor{scugreen}{#1 (#2)}}
+\def\myupdate#1#2{Update: \textcolor{scugreen}{#1 (#2)}}
 \def\kvtcb@label@sep{:}% tcolorbox 中 label 分隔符.
 
 % 定义执行命令. 修改自 sjtubeamer.
@@ -73,9 +76,9 @@
 
 % ----------------
 % Declare of Options
-% Confirmed in v1.3c(2024/04/16).
+% Confirmed in v1.3d(2024/05/18).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16), v1.3d(2024/05/18).
 % ----------------
 % CMD:: \DeclareOptionBeamer  - 声明参数.
 % CMD:: \ExecuteOptionsBeamer - 预执行参数.
@@ -141,9 +144,9 @@
 
 % ----------------
 % Declare of Packages
-% Confirmed in v1.3c(2024/04/16).
+% Confirmed in v1.3d(2024/05/18).
 % Established in v1.3b(2022/04/13).
-% Updated in v1.3c(2024/04/16).
+% Updated in v1.3c(2024/04/16), v1.3d(2024/05/18).
 % ----------------
 % CMD:: \RequirePackage - 调用宏包.
 % ----------------
@@ -153,6 +156,7 @@
   \RequirePackage[fontset=none, scheme=plain]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
 \fi\fi
 \RequirePackage{fontspec}% fontspec: 字体设置.
+\RequirePackage{mathtools}
 \RequirePackage{unicode-math}% unicode-math: OpenType 数学字体.
 \RequirePackage{tikz}% tikz: 绘制图像.
 \RequirePackage{comment}% comment: 提供注释环境.
@@ -297,9 +301,9 @@
 
 % ----------------
 % Font Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3d(2024/05/18).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3d(2024/05/18).
 % ----------------
 % 设置了主题数学字体选项 "mathdisplay=XITS" & "mathdisplay=LM".
 % ----------------
@@ -323,6 +327,7 @@
 %\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
 \setCJKsansfont[Scale=0.956]{Microsoft YaHei}
 % \setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
+% \setCJKsansfont{LXGW WenKai Bold}[Scale=0.956,BoldFont={Source Han Sans SC Medium}]
 %\usefonttheme{professionalfonts}
 % ----------------
 
@@ -361,6 +366,7 @@
 % Bibliography Layout
 % Confirmed in v1.3b(2022/04/13).
 % Established in v1.3b(2022/04/13).
+% Updated in v1.3d(2024/05/18).
 % ----------------
 \if\EqualOptionsBeamer{BIBMode}{biber}%
   % 参考文献 bib 库.
@@ -376,15 +382,17 @@
 \fi
 % 设置参考文献脚注引用.
 \newcommand{\footfullcitetext}[2][]{%
-  \footnotetext{\fullcite[#1]{#2}}}
+  \footnotetext{%
+    \ifstrempty{#1}{\fullcite{#2}}{\fullcite[{[#1]}]{#2}}%
+  }}
 % ----------------
 
 
 % ----------------
 % Mini-frames Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3d(2024/05/18).
 % Established in v1.1a(2021/12/31).
-% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3d(2024/05/18).
 % ----------------
 % 参考了: https://tex.stackexchange.com/questions/314847/beamer-theme-antibes-plus-navigation-bar-with-circles-for-subsections/314961#314961.
 % ----------------
@@ -452,21 +460,23 @@
     \setlength{\beamer@scu@miniframesspace}{#1}%
   \fi\fi%
   % foreach 循环控制 mini-frames 输出.
-  \hbox{%
-    \ifnum\c@subsectiontotalframes>1%
-      \foreach \i in {1,...,\c@subsectiontotalframes}{%
-        \usebeamercolor{mini frame}%
-        % 帧数小于当前帧, 则输出实心圆, 否则输出空心圆.
-        \ifnum\i<\numexpr\c@subsectioncurrentframe+1%
-          \hskip\beamer@scu@miniframesspace%
-          \usebeamertemplate{mini frame}%
-        \else%
-          \hskip\beamer@scu@miniframesspace%
-          \usebeamertemplate{mini frame in current section}%
-        \fi%
-      }%
-    \fi%
-  }%
+  \ifnum\c@subsectiontotalframes>1%
+    \foreach \i in {1,...,\c@subsectiontotalframes}{%
+      \usebeamercolor{mini frame}%
+      % 帧数小于当前帧, 则输出实心圆, 否则输出空心圆.
+      \ifnum\i<\numexpr\c@subsectioncurrentframe+1%
+        \usebeamertemplate{mini frame}%
+      \else%
+        \usebeamertemplate{mini frame in current section}%
+      \fi%
+      \ifnum\i<\c@subsectiontotalframes%
+        \hskip\beamer@scu@miniframesspace%
+      \fi%
+      % \ifnum\i=\the\numexpr(\c@subsectiontotalframes+1)/2\relax%
+        % \\[-3pt]%
+      % \fi%
+    }%
+  \fi%
 }
 % ----------------
 
