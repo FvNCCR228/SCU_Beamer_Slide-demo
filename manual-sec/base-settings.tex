@@ -70,6 +70,7 @@
 			\item \myupdate{v1.3a}{2022/03/16}
 			\item \myupdate{v1.3b}{2022/04/13}
 			\item \myupdate{v1.3d}{2024/05/18}
+			\item \myupdate{v1.3e}{2024/10/31}
 		\end{itemize}
 	\end{multicols}
 	注: 自 \textcolor{scugreen}{v1.1a (2021/12/30)} 起, 本小节已替代手册中\alert{\textbf{可注释项}}小节.\par
@@ -100,18 +101,18 @@
 
 	\begin{table}[h]
 		\centering
-		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
-			\textbf{support version \alert{\Arg{key}}} & \textbf{`C' means the key here supports a custom value.}\\
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.25\textwidth}p{0.68\textwidth}}
+			\textbf{Initial supported ver. \alert{\Arg{key}}} & \textbf{`C' means the key here supports a custom value.}\\
 			\textbf{\Arg{value}} & \textbf{`D' means the value here is the default one.}\\
 			\midrule
 			v1.1a \alert{\texttt{MathFont}} & \textbf{数学字体设置}\\
 			(D) \texttt{LM} & Latin Modern Math字体.\\
 			\texttt{XITS} & XITS Math字体.\\
 			\midrule
-			v1.3c\&d \alert{\texttt{ColorDisplay}} & \textbf{主题色显示设置}\\
+			v1.3a \alert{\texttt{ColorDisplay}} & \textbf{主题色显示设置}\label{back:ColorDisplay} \scugoto{goto:ColorDisplay}{PREV}\\
 			(D) \texttt{JXred} & 四川大学锦锈红主题色. \textcolor{scured}{\rule[-.1ex]{1.2em}{1.8ex}} (CMYK 12, 92, 95, 20)\\
 			\texttt{BSblue} & 四川大学宝石蓝主题色. \textcolor{scublue}{\rule[-.1ex]{1.2em}{1.8ex}} (CMYK 100, 60, 00, 15)\\
-			\texttt{Custom} & 自定义主题色模式. (设置前请阅读手册)\\
+			v1.3c \texttt{Custom} & 自定义主题色模式. (设置前请阅读手册)\\
 			\midrule
 			v1.1a \alert{\texttt{CodeDisplay}} & \textbf{代码高亮显示设置}\\
 			(D) \texttt{listing} & listing排版引擎.\\
@@ -121,7 +122,7 @@
 	\vspace*{-1ex}
 \end{frame}
 
-\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{MintedStyle, BlockDisplay, Miniframes, LanguageMode}
+\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{MintedStyle, BlockDisplay, LanguageMode}
 	\vspace*{-1.6ex}
 	\begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
 		\begin{column}{.5\textwidth}
@@ -142,25 +143,57 @@
 
 	\begin{table}[h]
 		\centering
-		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
-			v1.3c\&d (C) \alert{\texttt{MintedStyle}} & \textbf{minted样式设置(需优先设置 \texttt{\alert{CodeDisplay}=minted})}\\
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.25\textwidth}p{0.68\textwidth}}
+			v1.3a (C) \alert{\texttt{MintedStyle}} & \textbf{minted样式设置(需优先设置 \texttt{\alert{CodeDisplay}=minted})}\\
 			(D) \texttt{lightmode} & 亮色模式, Pygments default样式.\\
 			\texttt{darkmode} & 暗色模式, Pygments rrt样式.\\
-			\Arg{custom} & 自定义值. (设置前请阅读手册)\\
+			v1.3c \Arg{custom} & 自定义值. (设置前请阅读手册)\\
 			\midrule
 			v1.3a \alert{\texttt{BlockDisplay}} & \textbf{区块颜色显示设置}\\
 			(D) \texttt{colorful} & 彩色模式.\\
 			\texttt{followtheme} & 跟随主题色.\\
 			\texttt{allgrey} & 纯灰色模式.\\
 			\midrule
-			v1.3c\&d \alert{\texttt{Miniframes}} & \textbf{页眉小节迷你帧设置}\\
+			v1.3b \alert{\texttt{LanguageMode}} & \textbf{语言模式设置}\\
+			(D) \texttt{cn} & 中文模式.\\
+			\texttt{en} & 英文模式, 支持中文输入, Headline节导航栏更窄且只显示当前节.\\
+		\end{tabular}
+	\end{table}
+	\vspace*{-2ex}
+\end{frame}
+
+\begin{frame}{\pkg{beamethemescu} 宏包参数键值对说明}{Miniframes, NavigationTool}
+	\vspace*{-1.6ex}
+	\begin{columns}[T, onlytextwidth]% https://tex.stackexchange.com/questions/7442
+		\begin{column}{.5\textwidth}
+			\textbf{调用命令}(无需额外调用默认键值对):\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}\Arg{key1}=\Arg{value1},\%\\
+				\hspace*{1em}\ldots,\%\\
+			}\marg*{scu}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\textbf{调用示例}:\\
+			\cmd{usetheme}\oarg*{\%\\
+				\hspace*{1em}ColorDisplay=BSblue,\%\\
+				\hspace*{1em}MathFont=XITS,\%\\
+			}\marg*{scu}
+		\end{column}
+	\end{columns}
+
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.25\textwidth}p{0.68\textwidth}}
+			v1.3c \alert{\texttt{Miniframes}} & \textbf{页眉小节迷你帧设置}\label{back:Miniframes} \scugoto{goto:Miniframes}{PREV}\\
 			(D) \texttt{follow} & 迷你帧跟随页眉小节标题.\\
 			\texttt{separate} & 迷你帧与页眉小节标题分离. (实际位于页眉节导航栏右下方)\\
 			\texttt{negate} & 取消小节迷你帧.\\
 			\midrule
-			v1.3b \alert{\texttt{LanguageMode}} & \textbf{语言模式设置}\\
-			(D) \texttt{cn} & 中文模式.\\
-			\texttt{en} & 英文模式, 支持中文输入, Headline节导航栏更窄且只显示当前节.\\
+			v1.3d \alert{\texttt{NavigationTool}} & \textbf{页脚导航工具栏设置}\label{back:NavigationTool} \scugoto{goto:NavigationTool}{DTL}\\
+			(D) \texttt{1-2-3} & 依次显示小节及小节跳转、查询及首尾跳转、放映及历史跳转三种工具. (可调换顺序)\\
+			\texttt{1} & 类似命令为 \texttt{2} 或 \texttt{3}, 工具含义见上.\\
+			\texttt{1-2} & 类似命令为 \texttt{1-3} 或 \texttt{2-3}, 工具含义见上. (可调换顺序)\\
+			\texttt{negate} & 取消小节迷你帧.\\
 		\end{tabular}
 	\end{table}
 	\vspace*{-2ex}
@@ -186,7 +219,7 @@
 
 	\begin{table}[h]
 		\centering
-		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.26\textwidth}p{0.66\textwidth}}
+		\begin{tabular}{>{\raggedleft\arraybackslash}p{0.25\textwidth}p{0.68\textwidth}}
 			v1.3b \alert{\texttt{BIBMode}} & \textbf{参考文献引擎设置}\\
 			(D) \texttt{biber} & biber引擎.\\
 			\texttt{none} & 无引擎, 不输出参考文献.\\
@@ -274,7 +307,7 @@
 		\begin{column}{.23\textwidth}
 			\begin{figure}[h]
         \centering
-        \includegraphics[width=\columnwidth]{manual-sec/base-settings-authors-1.pdf}
+        \includegraphics[width=\columnwidth]{manual-sec/manual-demo/base-settings-authors-1.pdf}
       \end{figure}
 		\end{column}
 	\end{columns}
@@ -294,7 +327,7 @@
 		\begin{column}{.23\textwidth}
 			\begin{figure}[h]
         \centering
-        \includegraphics[width=\columnwidth]{manual-sec/base-settings-authors-2.pdf}
+        \includegraphics[width=\columnwidth]{manual-sec/manual-demo/base-settings-authors-2.pdf}
       \end{figure}
 		\end{column}
 	\end{columns}
