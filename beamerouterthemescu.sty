@@ -59,11 +59,12 @@
 
 % ----------------
 % Beamer Theme Headline Layout
-% Confirmed in v1.3d(2024/05/18).
+% Confirmed in v1.3e(2024/10/31).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16), v1.3d(2024/05/18).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16), v1.3d(2024/05/18), v1.3e(2024/10/31).
 % ----------------
 % 于 v1.3c(2024/04/16) 与 Headline TikZ 绘图部分合并, 强化代码关联度.
+% 于 v1.3e(2024/10/31) 修改 beamerthemescu.sty 中 Miniframe Layout 并合并于此.
 % ----------------
 % CMD:: \newdimen   - 创建长度寄存器.
 % CMD:: \newsavebox - 创建盒子.
@@ -111,6 +112,7 @@
 
 % 插入章节栏水平导航.
 \def\insert@secbar#1{%
+  % #1:: en LanguageMode 下尾部距离.
   \usebeamerfont{section in head/foot}%
   \usebeamercolor[fg]{section in head/foot}%
   \if\EqualOptionsBeamer{LanguageMode}{cn}%
@@ -119,19 +121,142 @@
     \insertsectionhead\hspace*{#1}%
   \fi\fi%
 }
+
 % 插入小节标题.
 \def\insert@subsec{%
   \usebeamerfont{subsection in head/foot}%
   \usebeamercolor[fg]{subsection in head/foot}%
   \insertsubsectionhead%
 }
-% 插入小节帧进度.
-\def\insert@miniframes{%
-  \setlength{\baselineskip}{3.7pt}%
-  % \usebeamerfont{subsection in head/foot}%
+
+% 插入小节迷你帧 [采用 \slideentry 方式生成].
+%% 参考::
+%% Beamer Class beamerbasenavigation.sty - definition of \slideentry
+%% https://tex.stackexchange.com/questions/170122/simple-mini-frames-under-frame-title-beamer
+%% https://tex.stackexchange.com/questions/23151/beamer-infolines-outer-theme-with-miniframe-bullets-only-for-the-current-section
+%% https://tex.stackexchange.com/questions/308343/how-to-create-mini-sections-mini-subsections-and-mini-frames-in-beamer-presenta
+\def\insert@subsecminiframes#1#2{%
+  % #1:: baselineskip.
+  % #2:: mini-frames space.
+  \setlength{\baselineskip}{#1}% 调整 baselineskip 以减小行间距
+  % \usebeamerfont{subsection in head/foot}% 注释 与上行冲突
   \usebeamercolor[fg]{subsection in head/foot}%
-  \insertsubsectionminiframes{1.8pt}{1.5pt}{1.2pt}%
+  \def\sectionentry##1##2##3##4##5{}%
+  \def\slideentry##1##2##3##4##5##6{%
+    %section number, subsection number, slide number, first/last frame, last subsection, part number
+    \ifnum##6=\c@part\ifnum##1=\c@section\ifnum##2>0\ifnum##3>0%
+      \beamer@link(##4){%
+        \usebeamerfont{mini frames}%
+        \ifnum\c@subsection=##2%
+          \usebeamercolor{mini frame}%
+          \ifnum\c@subsectionslide<##3%
+            \usebeamertemplate{mini frame in current subsection}%
+            \hskip#2%\beamer@minisliderowhilight%
+          \else%
+            \usebeamertemplate{mini frame}%
+            \hskip#2%\beamer@minislidehilight%
+          \fi%
+        \fi}%
+        \hskip0pt% 避免换行导致超链接中断
+    \fi\fi\fi\else%
+      \fakeslideentry{##1}{##2}{##3}{##4}{##5}{##6}%
+    \fi%
+    \ignorespaces%
+  }%
+  \setbox\beamer@sectionbox=\hbox{}%
+  \hskip0pt\dohead%
+  \box\beamer@sectionbox%
 }
+% 插入小节帧进度 [已废除 v1.3e(2024/10/31), 此处做整合存档].
+%% 参考::
+%% https://tex.stackexchange.com/questions/314847/beamer-theme-antibes-plus-navigation-bar-with-circles-for-subsections
+% % 计数器 - 小节起始页.
+% \newcount\beamer@subsectionstartframe%
+% \beamer@subsectionstartframe=2%
+% % 使用 etoolbox 宏包修改 `beamerbasesection.sty' 中 \beamer@subsection 命令.
+% \apptocmd{\beamer@subsection}{%
+%   \addtocontents{nav}{\protect\headcommand{%
+%     \protect\beamer@subsectionframes{%
+%       \the\beamer@subsectionstartframe%
+%     }{\the\c@framenumber}%
+%   }}%
+% }{}{}%
+% \apptocmd{\beamer@subsection}{%
+%   \beamer@subsectionstartframe=\c@framenumber\relax%
+% }{}{}%
+% document 结束时设置 \headcommand 写入项. (\noexpand 表示不展开命令)
+% \AtEndDocument{%
+%   \immediate\write\@auxout{\string\@writefile{nav}{%
+%     \noexpand\headcommand{%
+%       \noexpand\beamer@subsectionframes{%
+%         \the\beamer@subsectionstartframe%
+%       }{\the\c@framenumber}}%
+%   }}%
+% }{}{}%
+% % 定义小节结束页命令. (实际此处设置为后续小节起始帧, document 结束时设置为结束帧)
+% \def\beamer@subsectionendframe{2}
+% \def\beamer@subsectionframes#1#2{%
+%   \ifnum\c@framenumber<#1%
+%   \else%
+%     \ifnum\c@framenumber>#2%
+%     \else%
+%       \gdef\beamer@subsectionendframe{#2}%
+%     \fi%
+%   \fi%
+% }% ------
+% % 按照 beamer 方式储存命令.
+% \newcommand\insertsubsectionendframe{\beamer@subsectionendframe}%
+% % 计数器 - 小节中当前幻灯帧数.
+% \newcounter{subsectioncurrentframe}%
+% % 计数器 - 小节中总幻灯帧数.
+% \newcounter{subsectiontotalframes}%
+% % 长度 - 迷你帧间距.
+% \newlength{\beamer@scu@miniframesspace}% ------
+% \def\insertsubsectionminiframes#1#2#3{%
+%   % #1:: 迷你帧间距 - 小节幻灯帧数不大于10.
+%   % #2:: 迷你帧间距 - 小节幻灯帧数大于10且不大于15.
+%   % #3:: 迷你帧间距 - 小节幻灯帧数大于15.
+%   % 小节当前幻灯帧数设置.
+%   \setcounter{subsectioncurrentframe}{\insertframenumber}%
+%   \addtocounter{subsectioncurrentframe}{1}%
+%   \addtocounter{subsectioncurrentframe}{-\beamer@subsectionstartpage}%
+%   % 小节总幻灯帧数设置.
+%   \setcounter{subsectiontotalframes}{\insertsubsectionendframe}%
+%   \addtocounter{subsectiontotalframes}{0}%
+%   \addtocounter{subsectiontotalframes}{-\beamer@subsectionstartpage}%
+%   % 迷你帧间距设置.
+%   \ifnum\c@subsectiontotalframes>15%
+%     \setlength{\beamer@scu@miniframesspace}{#3}%
+%   \else\ifnum\c@subsectiontotalframes>10%
+%     \setlength{\beamer@scu@miniframesspace}{#2}%
+%   \else%
+%     \setlength{\beamer@scu@miniframesspace}{#1}%
+%   \fi\fi%
+%   % foreach 循环控制 mini-frames 输出.
+%   \ifnum\c@subsectiontotalframes>1%
+%     \foreach \i in {1,...,\c@subsectiontotalframes}{%
+%       \usebeamercolor{mini frame}%
+%       % 帧数小于当前帧, 则输出实心圆, 否则输出空心圆.
+%       \ifnum\i<\numexpr\c@subsectioncurrentframe+1%
+%         \usebeamertemplate{mini frame}%
+%       \else%
+%         \usebeamertemplate{mini frame in current section}%
+%       \fi%
+%       \ifnum\i<\c@subsectiontotalframes%
+%         \hskip\beamer@scu@miniframesspace%
+%       \fi%
+%       % \ifnum\i=\the\numexpr(\c@subsectiontotalframes+1)/2\relax%
+%         % \\[-3pt]%
+%       % \fi%
+%     }%
+%   \fi%
+% }% ------
+% \def\insert@miniframes{%
+%   \setlength{\baselineskip}{3.8pt}%
+%   % \usebeamerfont{subsection in head/foot}%
+%   \usebeamercolor[fg]{subsection in head/foot}%
+%   \insertsubsecminiframes{1.8pt}{1.5pt}{1.2pt}%
+% }
 
 % 页眉样式定义.
 \def\beamer@scu@headline{%
@@ -140,7 +265,8 @@
     \coordinate (NorthEast) at (current page.north east);% 东北节点
     \coordinate (NorthWest) at (current page.north west);% 西北节点
     % 图形文字绘制.
-    \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (NorthWest) {\usebox{\beamer@scu@headlinebox}};% 绘制 headline 背景底图
+    \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (NorthWest) {%
+      \usebox{\beamer@scu@headlinebox}};% 绘制 headline 背景底图
     \node[left, inner sep=0pt, outer sep=0pt,%
       yshift=-7pt] at (NorthEast) {\insert@secbar{9pt}};% 绘制章节栏水平导航
     \node[right, inner sep=0pt, outer sep=0pt,%
@@ -148,12 +274,13 @@
     \if\EqualOptionsBeamer{Miniframes}{follow}%
       \path let \p{subsec} = (Subsec.east)%
         in node[right, inner sep=0pt, outer sep=0pt,%
-          xshift=6pt, yshift=.25pt] at (\p{subsec}) {\parbox{%
-          \dimexpr\beamer@scu@len@sectotitleline-\x{subsec}+4pt\relax}{\raggedright\insert@miniframes}};% 绘制小节帧进度
+          xshift=6pt, yshift=-.5pt] at (\p{subsec}) {\parbox{%
+          \dimexpr\beamer@scu@len@sectotitleline-\x{subsec}+4pt\relax}{\raggedright\insert@subsecminiframes{3.8pt}{1.6pt}}};% 绘制小节迷你帧
       % \node[right=6pt of Subsec, inner sep=0pt, outer sep=0pt] {\insert@miniframes};% 绘制小节帧进度
     \else\if\EqualOptionsBeamer{Miniframes}{separate}%
       \node[anchor=north east, inner sep=0pt, outer sep=0pt,%
-        xshift=-9pt, yshift=-15pt] at (NorthEast) {\insert@miniframes};% 绘制小节帧进度
+        xshift=-7.2pt, yshift=-15pt] at (NorthEast) {%
+        \insert@subsecminiframes{3.8pt}{1.6pt}};% 绘制小节迷你帧
     \else\if\EqualOptionsBeamer{Miniframes}{negate}%
       \relax%
     \fi\fi\fi%
