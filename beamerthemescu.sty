@@ -148,9 +148,9 @@
 
 % ----------------
 % Declare of Packages
-% Confirmed in v1.3d(2024/05/18).
+% Confirmed in v1.3e(2024/10/31).
 % Established in v1.3b(2022/04/13).
-% Updated in v1.3c(2024/04/16), v1.3d(2024/05/18).
+% Updated in v1.3c(2024/04/16), v1.3d(2024/05/18), v1.3e(2024/10/31).
 % ----------------
 % CMD:: \RequirePackage - 调用宏包.
 % ----------------
@@ -178,7 +178,7 @@
   \tcbuselibrary{skins, breakable, xparse, listings, minted}
   \PackageWarningNoLine{beamerthemescu}{%
     Option [CodeDisplay=minted] is loaded. %
-    Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+    Please add `-shell-escape' and `-8bit' parameters to XeLaTeX}
 \else\if\EqualOptionsBeamer{CodeDisplay}{listing}%
   \tcbuselibrary{skins, breakable, xparse, listings}
   \PackageWarningNoLine{beamerthemescu}{%
@@ -186,10 +186,10 @@
     If you have configured Python environment, %
     you are recommended to set [CodeDisplay=minted] option and %
     install Pygments through pip. %
-    Additionally, add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+    Additionally, add `-shell-escape' and `-8bit' parameters to XeLaTeX}
 \fi\fi
 \RequirePackage{ifthen}% ifthen: 控制结构语句.
-\RequirePackage{fontawesome}% fontawesome: 提供可缩放矢量图标.
+\RequirePackage{fontawesome5}% fontawesome5: 提供可缩放矢量图标.
 \RequirePackage{tabularx}% tabularx: 智能表格环境.
 \if\EqualOptionsBeamer{BIBMode}{biber}%
   \PassOptionsToPackage{backend=biber}{biblatex}% 后端 biber 引擎.
