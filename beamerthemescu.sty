@@ -1221,14 +1221,31 @@
 
 % ----------------
 % Ref Layout
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3e(2024/10/31).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.1a(2021/12/30), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% Updated in v1.1a(2021/12/30), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3e(2024/10/31).
 % ----------------
 % 重定义了 \vref & \cref 命令, 实现跳转.
 % 重定义了页码计数器 page, 实现环境 frame 输出后值与计数器 framenumber 相同, 从而实现引用时页码不为 pdf 页码.
 % 定义了中文下的 varioref 和 cleveref 包的显示项. (部分具体定义未知, 故未翻译)
 % ----------------
+% Button.
+\NewTotalTCBox{\scuminijump}{ O{} m O{PrimaryC} m }{%
+  standard jigsaw, nobeforeafter, size=fbox, boxsep=.6pt,%
+  IfEmptyF={#4}{after upper={\hskip.8pt\textcolor{#3}{#4}}},%
+  fontupper=\ttfamily\tiny, colframe=#3, opacityback=0, #1%
+}{#2}
+\def\scugoto#1#2{%
+  % #1:: labeluse - goto:xx.
+  % #2:: info.
+  \hyperlink{#1}{\scuminijump{#2}{\setfontscu{5}\faExternalLinkSquare*}}%
+}
+\def\scugoback#1#2{%
+  % #1:: labeluse - back:xx.
+  % #2:: info.
+  \hyperlink{#1}{\scuminijump{#2}{\setfontscu{5}\faReply}}%
+}
+
 % 重定义 \vref & \cref.
 \let\soscref\cref % 储存 \cref 原始命令.
 \let\sosvref\vref % 储存 \vref 原始命令.
