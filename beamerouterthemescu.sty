@@ -333,9 +333,9 @@
 
 % ----------------
 % Beamer Theme Footline Layout
-% Confirmed in v1.3c(2024/04/16).
+% Confirmed in v1.3e(2024/10/31).
 % Established in v1.0a(2021/12/03).
-% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13), v1.3c(2024/04/16), v1.3e(2024/10/31).
 % ----------------
 % 于 v1.3c(2024/04/16) 与 Footline TikZ 绘图部分合并, 强化代码关联度
 % ----------------
@@ -343,7 +343,7 @@
 % CMD:: \newcount   - 创建计数器.
 % CMD:: \newsavebox - 创建盒子.
 % ----------------
-% FORMAT:: NAME of SCU | author | short title | pagenumber.
+% FORMAT:: NAME of SCU | author | short title | navigation tool | framenumber.
 % ----------------
 % DIMEN:: Acrobat 页面跳转按钮宽度 - GoToPage.
 \newdimen\beamer@scu@len@GoToPage
@@ -353,9 +353,9 @@
 % DIMEN:: ProgressBar auxiliary dimension - probartmpdim.
 \newdimen\beamer@scu@len@probartmpdim
 
-% COUNT:: 当前帧页码 - currentframe.
+% COUNT:: 当前帧页码(正文/附录) - currentframe.
 \newcount\beamer@scu@count@currentframe
-% COUNT:: 当前帧页码 - totalframe.
+% COUNT:: 当前总页码(正文/附录) - totalframe.
 \newcount\beamer@scu@count@totalframe
 
 % savebox 存储 TikZ Footline 背景底图绘图.
@@ -382,17 +382,85 @@
   \end{tikzpicture}%
 }%
 
+% 设置帧页码计数器(正文/附录).
+\def\beamer@scu@framenumber{%
+  \ifbeamer@inappendix% 附录帧取附录帧页码
+    \beamer@scu@count@currentframe=\insertframenumberinappendix%
+    \beamer@scu@count@totalframe=\insertappendixframenumber%
+  \else% 正文帧取除开附录帧页码
+    \beamer@scu@count@currentframe=\insertframenumber%
+    \beamer@scu@count@totalframe=\insertmainframenumber%
+  \fi%
+}
+
 % 插入帧页码.
 \def\insert@framenumber{% 页码显示为"x / total"
   \usebeamerfont{framenumber in head/foot}%
   \usebeamercolor[fg]{framenumber in head/foot}%
-  \insertframenumber~/~\inserttotalframenumber%
+  \usebeamertemplate*{page number in head/foot}%
 }
-% 插入 Acrobat 页面跳转按钮.
-\def\insert@AcrobatToPage{%
-  \settowidth{\beamer@scu@len@GoToPage}{\insertframenumber}% 宽度为页码宽度
+
+% 插入带有 Acrobat 页面跳转按钮的页码.
+\def\insert@framenumberwithbutton{%
+  % \raisebox{0pt}[0pt][0pt]{\rlap{xx}xx}%
+  \Acrobatmenu{GoToPage}{%
+    \usebeamerfont{framenumber in head/foot}%
+    \usebeamercolor[fg]{framenumber in head/foot}%
+    \the\beamer@scu@count@currentframe}%
   \usebeamerfont{framenumber in head/foot}%
-  \Acrobatmenu{GoToPage}{\beamer@linkspace{\beamer@scu@len@GoToPage}}%
+  \textcolor{SecondaryAuxiliaryC}{~\scalebox{1.33}[0.9]{\faCaretRight}\,\the\beamer@scu@count@totalframe}%
+}
+
+% Compute Navigation Tool num.
+\if\EqualOptionsBeamer{NavigationTool}{negate}%
+  \relax%
+\else%
+  \StrSubstitute{\beamer@scu@NavigationTool}{-}{, }[\NavigationTool@group]
+  \StrCount{\NavigationTool@group}{,}[\NavigationTool@len]
+\fi%
+% 插入 Navigation Tools.
+\def\insert@footnavigationtool#1#2{%
+  % #1:: 组内工具间距.
+  % #2:: 组间工具间距.
+  \usebeamercolor[fg]{palette quaternary}%\tiny%
+  \foreach \group [count=\c] in \NavigationTool@group {%
+    \IfInteger{\group}{%
+      \ifnum\group=1%
+        % 上一小节 | 当前小节开始 | 下一小节.
+        \setfontscu{5}%
+        \hyperlinksubsectionendprev{\faCaretLeft}\hskip#1%
+        \hyperlinksubsectionstart{\faStream}\hskip#1%
+        \hyperlinksubsectionstartnext{\faCaretRight}%
+      \else\ifnum\group=2%
+        % 初始页 | 查找 | 结尾页.
+        \setfontscu{5}%
+        \hyperlinkpresentationstart{\faCaretLeft\hskip-.05em\faCaretLeft}\hskip#1%
+        \setfontscu{4.5}%
+        \Acrobatmenu{Find}{\faSearch}\hskip#1%
+        \setfontscu{5}%
+        \hyperlinkpresentationend{\faCaretRight\hskip-.05em\faCaretRight}%
+      \else\ifnum\group=3%
+        % 上一视图 | 全屏 | 下一视图.
+        \setfontscu{4.5}%
+        \Acrobatmenu{GoBack}{\faReply}\hskip#1%
+        \setfontscu{5}%
+        \Acrobatmenu{FullScreen}{\faExpand}\hskip#1%
+        \setfontscu{4.5}%
+        \Acrobatmenu{GoForward}{\reflectbox{\faReply}}%
+      \fi\fi\fi%
+      \ifnum\c<\numexpr\NavigationTool@len+1\relax%
+        \hskip#2%
+      \fi%
+    }{%
+      \PackageError{beamerthemescu}{%
+        Improper usage: `\protect\usetheme[...]{scu}' option [NavigationTool=xxx].\MessageBreak%
+        `NavigationTool' should be set to `nagate'\MessageBreak%
+        or an option composed of numbers 1 to 3 and the symbol `-', such as `2', `1-3', and `1-2-3'%
+      }{%
+        `NavigationTool' should be set to `nagate' or an option composed of numbers 1 to 3 and the symbol `-', such as `2', `1-3', and `1-2-3'%
+      }%
+    }%
+  }%
 }
 
 % 页脚样式定义.
@@ -406,29 +474,33 @@
     % 图形文字绘制.
     \node[anchor=south west, inner sep=0pt, outer sep=0pt] at (SouthWest) {\usebox{\beamer@scu@footlinebox}};% 绘制 footline 背景底图
     \node[right, inner sep=0pt, outer sep=0pt,%
-      xshift=64pt, yshift=4.25pt] at (SouthWest) {%
+      xshift=64pt, yshift=4.5pt] at (SouthWest) {%
       \usebeamerfont{author in head/foot}%
       \usebeamercolor[fg]{author in head/foot}%
-      \insertshortauthor\enspace\rule[-.2ex]{.16em}{2ex}\enspace%
+      \insertshortauthor\,%
       \usebeamerfont{title in head/foot}%
+      \textcolor{SecondaryAuxiliaryC}{·\,}%
       \usebeamercolor[fg]{title in head/foot}%
       \insertshorttitle%
     };% 绘制 Beamer 标题
     \node[left, inner sep=0pt, outer sep=0pt,%
-      xshift=-9pt, yshift=4pt] at (SouthEast) (FootlinePage) {\insert@framenumber};% 绘制页码
-    \node[right, inner sep=0pt, outer sep=0pt] at (FootlinePage.west) {%
-      \insert@AcrobatToPage%
-    };% 绘制 Acrobat 页面跳转按钮
+      xshift=-9pt, yshift=4.5pt] at (SouthEast) (FootlinePage) {%
+      \insert@framenumberwithbutton};% 绘制带有 Acrobat 页面跳转按钮的页码
+    \if\EqualOptionsBeamer{NavigationTool}{negate}%
+      \relax%
+    \else%
+      \node[left, inner sep=0pt, outer sep=0pt,%
+        xshift=-6pt] at (FootlinePage.west) {%
+        \insert@footnavigationtool{1.6pt}{4.2pt}};% 绘制 Navigation Tools
+    \fi%
   \end{tikzpicture}%
 }
 
 % 进度条样式定义.
 \def\beamer@scu@progressbar#1#2#3{%
-  % #1: 未放映部分颜色.
-  % #2: 已放映部分颜色.
-  % #3: 辅助色.
-  \beamer@scu@count@currentframe=\insertframenumber%
-  \beamer@scu@count@totalframe=\inserttotalframenumber
+  % #1:: 未放映部分颜色.
+  % #2:: 已放映部分颜色.
+  % #3:: 辅助色.
   \beamer@scu@len@probartmpdim=\beamer@scu@len@probarwd%
   \divide\beamer@scu@len@probartmpdim by 1000%
   \multiply\beamer@scu@len@probartmpdim by \beamer@scu@count@currentframe%
@@ -446,9 +518,13 @@
   \end{tikzpicture}%
 }
 
+% 设置 Page Number 包含附录模式.
+% \setbeamertemplate{page number in head/foot}[appendixframenumber]
+
 % 设置 Footline 主题模板.
 \defbeamertemplate*{footline}{SCU footline theme}{%
   \begin{beamercolorbox}[wd=\paperwidth,ht=12pt]{}%
+    \beamer@scu@framenumber% 优先调用计数器设置
     \beamer@scu@progressbar{AuxiliaryC}{PrimaryC}{BackgroundC}%
     \beamer@scu@footline%
   \end{beamercolorbox}%
