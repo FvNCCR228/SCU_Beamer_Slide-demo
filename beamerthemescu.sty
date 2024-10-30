@@ -1,6 +1,6 @@
 % This is file `beamerthemescu.sty'.
 % Copyright (C) 2021-2024 by Linrong Wu.
-% Version: 2024/05/18 v1.3d (Original Version: 2021/11/30 v1.0a).
+% Version: 2024/10/31 v1.3e (Original Version: 2021/11/30 v1.0a).
 %
 % This file may be distributed and/or modified
 %
@@ -26,15 +26,15 @@
 % !请勿轻易改动此文档中代码.
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{beamerthemescu}[2024/05/18 v1.3d, SCU Beamer Theme(Main Theme)]
+\ProvidesPackage{beamerthemescu}[2024/10/31 v1.3e, SCU Beamer Theme(Main Theme)]
 %%%% ----------------------------------------------------------------
 
 
 % ----------------
 % Declare of Commands
-% Confirmed in v1.3b(2022/04/13).
+% Confirmed in v1.3e(2024/10/31).
 % Established in v1.3b(2022/04/13).
-% Updated in v1.3d(2024/05/18).
+% Updated in v1.3e(2024/10/31).
 % ----------------
 \def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2024 by LR Wu.}% 版权声明.
 \def\myestablish#1#2{Establish: \textcolor{scugreen}{#1 (#2)}}
@@ -46,8 +46,8 @@
   \relax\fi\ifEqualOptionsBeamer%
 }
 \def\ifEqualOptionsBeamer#1#2{%
-% #1: Option - Key.
-% #2: Option - Value.
+% #1:: Option - Key.
+% #2:: Option - Value.
   \newif\ifoption@tmp%
   \edef\optionkey@tmp{%
     \csname beamer@scu@#1\endcsname%
@@ -71,6 +71,9 @@
 \def\@marg#1{\texttt{\{#1\}}}
 \def\@margmeta#1{\@marg{\@meta{#1}}}
 \def\@meta#1{$\m@th\langle$\textnormal{\textit{#1}}$\m@th\rangle$}
+
+% 定义字体命令.
+\def\setfontscu#1{\fontsize{#1}{4}\selectfont}
 % ----------------
 
 
@@ -356,8 +359,8 @@
 \setbeamerfont{section in head/foot}{size=\scriptsize,series=\bfseries}
 \setbeamerfont{subsection in head/foot}{size=\scriptsize,series=\bfseries}
 \setbeamerfont{institute in head/foot}{size=\scriptsize,series=\bfseries}
-\setbeamerfont{author in head/foot}{size=\tiny,series=\bfseries}
-\setbeamerfont{title in head/foot}{size=\tiny,series=\mdseries}
+\setbeamerfont{author in head/foot}{size=\tiny,series=\mdseries}
+\setbeamerfont{title in head/foot}{size=\tiny,series=\bfseries}
 \setbeamerfont{framenumber in head/foot}{size=\scriptsize,series=\bfseries}
 % itemize 环境序号设置.
 % \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
@@ -522,7 +525,7 @@
       \draw [white!80!#1, line width=1pt, rounded corners=1pt]%
         ([xshift=2em]frame.south west) -- ([xshift=5em]frame.south west);
       \node [anchor=north east] at ([xshift=-1.5pt,yshift=-2pt]title.north-|frame.east) {%
-        \textcolor{#1}{\normalsize ##1}%\faCode\faFileCodeO
+        \textcolor{#1}{\normalsize ##1}%\faCode\faFileCode[regular]
       };
     },%
     overlay first={%
@@ -977,7 +980,7 @@
       },%
       before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
       IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
-      nameref={#2}, codestyle={\faFileCodeO}, #1%
+      nameref={#2}, codestyle={\faFileCode[regular]}, #1%
   }
   \DeclareTCBInputListing[no counter]%
   % #1: <可选>附加参数 - Tcolorbox.
@@ -1008,7 +1011,7 @@
 	  	},%
 	  	before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
 	  	IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
-	  	nameref={#2}, codestyle={\faFileCodeO}, #1%
+	  	nameref={#2}, codestyle={\faFileCode[regular]}, #1%
   }
 \else\if\EqualOptionsBeamer{CodeDisplay}{listing}%
   \DeclareTCBListing[use counter=beamer@scu@code@count,%
@@ -1115,7 +1118,7 @@
 	    },%
 	    before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
 	    IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
-	    nameref={#2}, codestyle={\faFileCodeO}, #1%
+	    nameref={#2}, codestyle={\faFileCode[regular]}, #1%
   }
   \DeclareTCBInputListing[no counter]%
   % #1: <可选>附加参数 - Tcolorbox.
@@ -1151,7 +1154,7 @@
 	  	},%
 	  	before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
 	  	IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
-	  	nameref={#2}, codestyle={\faFileCodeO}, #1%
+	  	nameref={#2}, codestyle={\faFileCode[regular]}, #1%
   }
 \fi\fi
 

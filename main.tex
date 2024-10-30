@@ -3,7 +3,7 @@
 % !TeX TS-program = xelatex
 % This is file `main.tex'.
 % Copyright (C) 2021-2024 by Linrong Wu.
-% Version: 2024/04/16 v1.3c (Original Version: 2021/11/30 v1.0a).
+% Version: 2024/10/31 v1.3e (Original Version: 2021/11/30 v1.0a).
 % 本文件为 SCU_Beamer_Slide-demo 主文件源文件.
 % !使用前请阅读用户手册.
 
@@ -188,6 +188,7 @@
 \cprotEnv\begin{frame}
 	\frametitle{表}
 	表格太麻烦了, 掌门说摸摸鱼, 编者觉得不错, 丢一个三线表示例. 当然也可以看看这个手册前面部分表格的源码.
+	\scugoto{fig:ZhangmenWsdzt}{FIG}
 	\begin{table}[htbp]
 		\centering
 		\caption{一些国风音乐}
@@ -445,6 +446,27 @@ int main()
 \begin{frame}{}
 	\centering
 	\Huge 谢谢
+\end{frame}
+
+\appendix
+\section{附录A}
+\subsection[short]{A那你}
+\begin{frame}{beamer宏包}\label{frame:abc}
+	测试
+\end{frame}
+
+\begin{frame}{beamer宏包包}\label{frame:adc}
+	测试
+\end{frame}
+
+\section{附录B}
+\subsection[short]{B那你}
+\begin{frame}{beamer宏包}\label{frame:abd}
+	测试
+\end{frame}
+
+\begin{frame}{beamer宏包包}\label{frame:add}
+	测试
 \end{frame}
 
 \end{document}
